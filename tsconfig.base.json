@@ -14,7 +14,13 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@bearon/autoform": ["libs/autoform/src/index.ts"],
+      "@bearon/card": ["libs/card/src/index.ts"],
+      "@bearon/icon": ["libs/icon/src/index.ts"],
+      "@bearon/ui": ["libs/ui/src/index.ts"],
+      "@bearon/utils": ["libs/utils/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
