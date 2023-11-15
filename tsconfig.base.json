@@ -17,7 +17,12 @@
     "paths": {
       "@bearon/autoform": ["libs/autoform/src/index.ts"],
       "@bearon/card": ["libs/card/src/index.ts"],
+      "@bearon/chart": ["libs/chart/src/index.ts"],
+      "@bearon/hooks": ["libs/hooks/src/index.ts"],
       "@bearon/icon": ["libs/icon/src/index.ts"],
+      "@bearon/nav": ["libs/nav/src/index.ts"],
+      "@bearon/notif": ["libs/notif/src/index.ts"],
+      "@bearon/tailwind": ["libs/tailwind/src/index.ts"],
       "@bearon/ui": ["libs/ui/src/index.ts"],
       "@bearon/utils": ["libs/utils/src/index.ts"]
     }

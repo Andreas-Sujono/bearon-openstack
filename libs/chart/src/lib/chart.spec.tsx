@@ -1,10 +1,10 @@
 import { render } from '@testing-library/react';
 
-import Utils from './utils';
+import Chart from './chart';
 
-describe('Utils', () => {
+describe('Chart', () => {
   it('should render successfully', () => {
-    const { baseElement } = render(<Utils />);
+    const { baseElement } = render(<Chart />);
     expect(baseElement).toBeTruthy();
   });
 });

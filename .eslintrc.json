@@ -18,6 +18,21 @@
               }
             ]
           }
+        ],
+        "import/order": [
+          "error",
+          {
+            "groups": [
+              "builtin",
+              "external",
+              "internal",
+              "parent",
+              "sibling",
+              "type",
+              "index",
+              "object"
+            ]
+          }
         ]
       }
     },
