@@ -1,8 +1,7 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { MyButton } from './Button';
-
 import { within } from '@storybook/testing-library';
 import { expect } from '@storybook/jest';
+import { MyButton } from './Button';
+import type { Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof MyButton> = {
   component: MyButton,

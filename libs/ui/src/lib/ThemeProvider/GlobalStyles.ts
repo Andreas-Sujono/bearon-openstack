@@ -64,6 +64,7 @@ export const createTokenStyles = (
 ) =>
   squish(`
     :root {
+      font-family: ${tokens.base.fontStack};
       ${createThemeProperties(tokens.base)}
     }
   

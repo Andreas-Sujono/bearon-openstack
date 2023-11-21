@@ -1,6 +1,3 @@
-import { randomUUID } from 'crypto';
-
-export * from './styles';
 export * from './func';
 export * from './image';
 export * from './query';
@@ -22,7 +19,7 @@ export const clamp = (number: number, boundOne: number, boundTwo: number) => {
 };
 
 export const generateId = () => {
-  return randomUUID();
+  return Math.floor(Math.random() * 1000000000);
 };
 
 export const getRandomItem = <T>(array: T[]): T =>

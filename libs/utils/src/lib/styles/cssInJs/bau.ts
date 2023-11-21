@@ -7,7 +7,7 @@ const toHash = (str: string) => {
   let i = 0,
     out = 11;
   while (i < str.length) out = (101 * out + str.charCodeAt(i++)) >>> 0;
-  return 'bau' + out;
+  return 'bear' + out;
 };
 
 const addStyle = (
@@ -81,7 +81,8 @@ export default function BauReactCss({
 
   const mergeIt =
     (type?: string) =>
-    (strings: string[], ...args: string[]) =>
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (strings: any, ...args: string[]) =>
       merge(type || '', compileStyles('', strings, args), target);
 
   return {
@@ -91,3 +92,9 @@ export default function BauReactCss({
     createGlobalStyles: mergeIt(),
   };
 }
+
+const { css, styled, keyframes, createGlobalStyles } = BauReactCss();
+export const bearCss = css;
+export const bearStyled = styled;
+export const bearKeyframes = keyframes;
+export const bearCreateGlobalStyles = createGlobalStyles;

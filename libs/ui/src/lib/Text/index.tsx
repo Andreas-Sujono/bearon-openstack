@@ -12,7 +12,7 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
   className?: string;
 }
 
-export const Text = ({
+const Text = ({
   children,
   size = 'm',
   as: Component = 'span',
@@ -24,7 +24,7 @@ export const Text = ({
 }: Props) => {
   return (
     <Component
-      className={classes(styles.text, className)}
+      className={classes(styles.common, styles.text, className)}
       data-align={align}
       data-size={size}
       data-weight={weight}
@@ -35,3 +35,7 @@ export const Text = ({
     </Component>
   );
 };
+
+export default Text;
+
+export * from './Heading';

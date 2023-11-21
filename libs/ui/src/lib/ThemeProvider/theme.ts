@@ -12,7 +12,7 @@ const baseTokens = {
   durationXL: '800ms',
   systemFontStack:
     'system-ui, -apple-system, BlinkMacSystemFont, San Francisco, Roboto, Segoe UI, Ubuntu, Helvetica Neue, sans-serif',
-  fontStack: `Gotham, var(--systemFontStack)`,
+  fontStack: `sans-serif, var(--systemFontStack)`,
   monoFontStack:
     'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace',
   fontWeightRegular: 400,
@@ -114,6 +114,12 @@ const dark = {
   rgbAccent: '0 229 255',
   rgbText: '255 255 255',
   rgbError: '255 55 102',
+
+  colorBackground: 'rgb(var(--rgbBackground) / 1)',
+  colorBackgroundLight: 'rgb(var(--rgbBackgroundLight) / 1)',
+  colorPrimary: 'rgb(var(--rgbPrimary) / 1)',
+  colorAccent: 'rgb(var(--rgbAccent) / 1)',
+  colorError: 'rgb(var(--rgbError) / 1)',
   colorTextTitle: 'rgb(var(--rgbText) / 1)',
   colorTextBody: 'rgb(var(--rgbText) / 0.8)',
   colorTextLight: 'rgb(var(--rgbText) / 0.6)',
@@ -129,6 +135,12 @@ const light = {
   rgbAccent: '64 222 222',
   rgbText: '0 0 0',
   rgbError: '255 0 60',
+
+  colorBackground: 'rgb(var(--rgbBackground) / 1)',
+  colorBackgroundLight: 'rgb(var(--rgbBackgroundLight) / 1)',
+  colorPrimary: 'rgb(var(--rgbPrimary) / 1)',
+  colorAccent: 'rgb(var(--rgbAccent) / 1)',
+  colorError: 'rgb(var(--rgbError) / 1)',
   colorTextTitle: 'rgb(var(--rgbText) / 1)',
   colorTextBody: 'rgb(var(--rgbText) / 0.8)',
   colorTextLight: 'rgb(var(--rgbText) / 0.6)',

@@ -4,7 +4,7 @@ import styles from './styles.module.scss';
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   children?: React.ReactElement | React.ReactElement[] | string;
-  level?: number;
+  level?: number | string;
   as?: React.ElementType;
   align?: string;
   weight?: string;
@@ -20,7 +20,7 @@ export const Heading = ({
   className,
   ...rest
 }: Props) => {
-  const clampedLevel = Math.min(Math.max(level, 0), 5);
+  const clampedLevel = Math.min(Math.max(level as number, 0), 5);
   const Component = (as ||
     `h${Math.max(clampedLevel, 1)}`) as React.ElementType;
 

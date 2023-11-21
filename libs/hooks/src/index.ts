@@ -1,6 +1,9 @@
-//Ref: https://github.com/uidotdev/usehooks
-// https://github.com/juliencrn/usehooks-ts
-// https://github.com/streamich/react-use
+/**
+ * ref:
+ * - https://github.com/uidotdev/usehooks
+ * - https://github.com/juliencrn/usehooks-ts
+ * - https://github.com/streamich/react-use
+ */
 
 export * from './lib/useHasMounted';
 export * from './lib/useInViewport';
@@ -12,9 +15,4 @@ export * from './lib/useCopyToClipboard';
 export * from './lib/useDebounce';
 export * from './lib/useIdle';
 export * from './lib/useIntersectionObserver';
-
-//TODO:
-/**
- * useClickAway
- *
- */
+export * from './lib/useClickOutside';

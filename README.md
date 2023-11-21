@@ -65,4 +65,4 @@ Nx comes with local caching already built-in (check your `nx.json`). On CI you m
 - add storybook: `npx nx g @nx/storybook:configuration`
 - add new library: `npx nx g @nx/react:library ui --directory=libs/ui --bundler vite`
 
-- run storybook: `npx nx run project:storybook`
+- run storybook: `npx nx run project:storybook`, ex: `npx nx run ui:storybook`

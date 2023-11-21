@@ -1,5 +1,24 @@
-.common {
-  &[data-size='xs'] {
+import { bearCss } from '@bearon/utils';
+
+//TODO: change css to use CSS in JS
+export const commonTextStyle = ({
+  size,
+  color,
+  align,
+  weight,
+}: {
+  size?: string;
+  color?: string;
+  align?: string;
+  weight?: string;
+}) => bearCss`
+font-size: ${(() => {
+  if (size === 'xs') return 'var(--fontSizeBodyXs)';
+  return '';
+})()};
+
+
+    &[data-size='xs'] {
     font-size: var(--fontSizeBodyXs);
   }
   &[data-size='s'] {
@@ -22,37 +41,37 @@
   }
 
   &[data-level='0'],
-  &[data-size='h0'] {
+  &[data-level='h0'] {
     letter-spacing: -0.05em;
     font-size: var(--fontSizeH0);
   }
 
   &[data-level='1'],
-  &[data-size='h1'] {
+  &[data-level='h1'] {
     letter-spacing: -0.05em;
     font-size: var(--fontSizeH1);
   }
 
   &[data-level='2'],
-  &[data-size='h2'] {
+  &[data-level='h2'] {
     font-size: var(--fontSizeH2);
     letter-spacing: -0.04em;
   }
 
   &[data-level='3'],
-  &[data-size='h3'] {
+  &[data-level='h3'] {
     font-size: var(--fontSizeH3);
     letter-spacing: -0.02em;
   }
 
   &[data-level='4'],
-  &[data-size='h4'] {
+  &[data-level='h4'] {
     font-size: var(--fontSizeH4);
     letter-spacing: -0.01em;
   }
 
   &[data-level='5'],
-  &[data-size='h5'] {
+  &[data-level='h5'] {
     font-size: var(--fontSizeH5);
   }
 
@@ -78,18 +97,4 @@
   &[data-weight='bold'] {
     font-weight: var(--fontWeightBold);
   }
-}
-
-.text {
-  line-height: var(--lineHeightBody);
-  color: var(--colorTextBody);
-
-  &[data-secondary='true'] {
-    color: var(--colorTextLight);
-  }
-}
-
-.heading {
-  line-height: var(--lineHeightTitle);
-  color: var(--colorTextTitle);
-}
+`;
