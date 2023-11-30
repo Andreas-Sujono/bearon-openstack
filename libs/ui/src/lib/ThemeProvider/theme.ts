@@ -165,6 +165,13 @@ export const media = {
   mobileS: 400,
 };
 
+export const mediaScreen = {
+  minLaptop: `@Screen and (min-width: ${media.laptop}px)`,
+  minTablet: `@Screen and (min-width: ${media.tablet}px)`,
+  minMobile: `@Screen and (min-width: ${media.mobile}px)`,
+  maxMobileS: `@Screen and (max-width: ${media.mobileS}px)`,
+};
+
 export type ThemeToken = typeof baseTokens;
 export type ThemeTokens = Record<string, Partial<ThemeToken>>;
 

@@ -65,3 +65,33 @@ export function cssProps(props: Record<string, string | number>, style = {}) {
 export function classes(...classes: (string | null | undefined)[]) {
   return classes.filter(Boolean).join(' ');
 }
+
+export const convertCssToObject = (styles: string) => {
+  const res = styles
+    .split(';')
+    .map((cur) => cur.split(':'))
+    .reduce((acc: Record<string, string>, val) => {
+      // eslint-disable-next-line prefer-const
+      let [key, value] = val;
+      key = key.replace(/-./g, (css) => css.toUpperCase()[1]);
+      acc[key] = value;
+      return acc;
+    }, {});
+
+  return res;
+};
+
+export const convertObjectToCss = (style: Record<string, string | number>) => {
+  return Object.keys(style).reduce(
+    (acc, key) =>
+      acc +
+      key
+        .split(/(?=[A-Z])/)
+        .join('-')
+        .toLowerCase() +
+      ':' +
+      style[key] +
+      ';',
+    ''
+  );
+};

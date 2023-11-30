@@ -41,7 +41,7 @@ const ClickAwayListener: FunctionComponent<Props> = ({
 }) => {
   const node = useRef<HTMLElement | null>(null);
   const bubbledEventTarget = useRef<EventTarget | null>(null);
-  const mountedRef = useHasMounted() useRef(false);
+  const mountedRef = useRef(false);
 
   /**
    * Prevents the bubbled event from getting triggered immediately
@@ -115,6 +115,7 @@ const ClickAwayListener: FunctionComponent<Props> = ({
   const mappedFocusEvent = eventTypeMapping[focusEvent];
 
   return React.Children.only(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     cloneElement(children as ReactElement<any>, {
       ref: handleChildRef,
       [mappedFocusEvent]: handleBubbledEvents(mappedFocusEvent),
@@ -123,7 +124,5 @@ const ClickAwayListener: FunctionComponent<Props> = ({
     })
   );
 };
-
-ClickAwayListener.displayName = 'ClickAwayListener';
 
 export default ClickAwayListener;
