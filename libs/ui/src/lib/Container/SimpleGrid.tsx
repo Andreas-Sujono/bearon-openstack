@@ -35,6 +35,7 @@ export default function SimpleGrid({
   return (
     <div
       className={classes(
+        'bear-simple-grid',
         simpleGridClass({
           templateColumns,
           templateRows,

@@ -14,7 +14,11 @@ export const Row = forwardRef<any, Props>(function _Row(
   ref
 ) {
   return (
-    <Component className={classes(styles.row, className)} ref={ref} {...rest}>
+    <Component
+      className={classes('bear-row', styles.row, className)}
+      ref={ref}
+      {...rest}
+    >
       {children}
     </Component>
   );

@@ -16,7 +16,7 @@ export const Section = forwardRef<any, Props>(function _Section(
 ) {
   return (
     <Component
-      className={classes(styles.section, className)}
+      className={classes('bear-page-section', styles.section, className)}
       ref={ref}
       {...rest}
     >

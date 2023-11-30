@@ -9,7 +9,7 @@ const boxClass = (props: Props) => bearCss`
 
 export default function Box({ children, className, ...props }: Props) {
   return (
-    <div className={classes(boxClass({}), className)} {...props}>
+    <div className={classes(boxClass({}), 'bear-box', className)} {...props}>
       {children}
     </div>
   );

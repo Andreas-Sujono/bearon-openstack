@@ -39,3 +39,4 @@ const Text = ({
 export default Text;
 
 export * from './Heading';
+export { Text };
