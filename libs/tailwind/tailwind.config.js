@@ -63,7 +63,7 @@ module.exports = {
       // fontSizeBodyXS
       // lineHeightTitle
       // lineHeightBody
-      // maxWidthS
+      // maxWidthSm
       // maxWidthM
       // maxWidthL
       // maxWidthXL

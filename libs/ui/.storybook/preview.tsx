@@ -10,6 +10,21 @@ const preview: Preview = {
       </ThemeProvider>
     ),
   ],
+  parameters: {
+    options: {
+      storySort: {
+        method: 'alphabetical',
+        order: [
+          'Introduction',
+          ['Welcome', 'Principles', 'Research'],
+          'Foundation',
+          ['Layout', 'Heading', 'Typography', 'Theme'],
+          'Components',
+        ],
+        locales: '',
+      },
+    },
+  },
 };
 
 export default preview;

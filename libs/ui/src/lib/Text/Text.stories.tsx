@@ -13,11 +13,11 @@ export const Sizes = {
     return (
       <div>
         <Text size="xs">Typography xs</Text> <br />
-        <Text size="s">Typography s</Text>
+        <Text size="sm">Typography s</Text>
         <br />
-        <Text size="m">Typography m</Text>
+        <Text size="md">Typography m</Text>
         <br />
-        <Text size="l">Typography l</Text>
+        <Text size="lg">Typography l</Text>
         <br />
         <Text size="xl">Typography xl</Text>
         <br />

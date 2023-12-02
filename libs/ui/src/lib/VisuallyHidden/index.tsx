@@ -12,7 +12,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const VisuallyHidden = forwardRef<any, Props>(function _VisuallyHidden(
+const VisuallyHidden = forwardRef<any, Props>(function _VisuallyHidden(
   {
     className,
     showOnFocus,
@@ -35,3 +35,5 @@ export const VisuallyHidden = forwardRef<any, Props>(function _VisuallyHidden(
     </Component>
   );
 });
+
+export default VisuallyHidden;

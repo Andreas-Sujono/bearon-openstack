@@ -1,14 +1,14 @@
 .common {
   &[data-size='xs'] {
-    font-size: var(--fontSizeBodyXs);
+    font-size: var(--fontSizeBodyXS);
   }
-  &[data-size='s'] {
+  &[data-size='sm'] {
     font-size: var(--fontSizeBodyS);
   }
-  &[data-size='m'] {
+  &[data-size='md'] {
     font-size: var(--fontSizeBodyM);
   }
-  &[data-size='l'] {
+  &[data-size='lg'] {
     font-size: var(--fontSizeBodyL);
   }
   &[data-size='xl'] {
@@ -92,4 +92,5 @@
 .heading {
   line-height: var(--lineHeightTitle);
   color: var(--colorTextTitle);
+  margin: 0;
 }

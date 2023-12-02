@@ -5,11 +5,11 @@ const baseTokens = {
   rgbBlack: '0 0 0',
   rgbWhite: '255 255 255',
   bezierFastoutSlowin: 'cubic-bezier(0.4, 0.0, 0.2, 1)',
-  durationXS: '200ms',
-  durationS: '300ms',
-  durationM: '400ms',
-  durationL: '600ms',
-  durationXL: '800ms',
+  durationXs: '200ms',
+  durationSm: '300ms',
+  durationMd: '400ms',
+  durationLg: '600ms',
+  durationXl: '800ms',
   systemFontStack:
     'system-ui, -apple-system, BlinkMacSystemFont, San Francisco, Roboto, Segoe UI, Ubuntu, Helvetica Neue, sans-serif',
   fontStack: `sans-serif, var(--systemFontStack)`,
@@ -24,27 +24,27 @@ const baseTokens = {
   fontSizeH3: pxToRem(38),
   fontSizeH4: pxToRem(28),
   fontSizeH5: pxToRem(24),
-  fontSizeBodyXL: pxToRem(22),
-  fontSizeBodyL: pxToRem(20),
-  fontSizeBodyM: pxToRem(18),
-  fontSizeBodyS: pxToRem(16),
-  fontSizeBodyXS: pxToRem(14),
+  fontSizeBodyXl: pxToRem(22),
+  fontSizeBodyLg: pxToRem(20),
+  fontSizeBodyMd: pxToRem(18),
+  fontSizeBodySm: pxToRem(16),
+  fontSizeBodyXs: pxToRem(14),
   lineHeightTitle: '1.1',
   lineHeightBody: '1.6',
-  maxWidthS: '540px',
-  maxWidthM: '720px',
-  maxWidthL: '1096px',
-  maxWidthXL: '1680px',
+  maxWidthSm: '540px',
+  maxWidthMd: '720px',
+  maxWidthLg: '1096px',
+  maxWidthXl: '1680px',
   spaceOuter: '64px',
-  spaceXS: '4px',
-  spaceS: '8px',
-  spaceM: '16px',
-  spaceL: '24px',
-  spaceXL: '32px',
-  space2XL: '48px',
-  space3XL: '64px',
-  space4XL: '96px',
-  space5XL: '128px',
+  spaceXs: '4px',
+  spaceSm: '8px',
+  spaceMd: '16px',
+  spaceLg: '24px',
+  spaceXl: '32px',
+  space2Xl: '48px',
+  space3Xl: '64px',
+  space4Xl: '96px',
+  space5Xl: '128px',
   zIndex0: 0,
   zIndex1: 4,
   zIndex2: 8,
@@ -60,11 +60,11 @@ const tokensDesktop = {
 };
 
 const tokensLaptop = {
-  maxWidthS: '480px',
-  maxWidthM: '640px',
-  maxWidthL: '1000px',
-  maxWidthXL: '1100px',
-  maxWidth3XL: '1500px',
+  maxWidthSm: '480px',
+  maxWidthMd: '640px',
+  maxWidthLg: '1000px',
+  maxWidthXl: '1100px',
+  maxWidth3Xl: '1500px',
   spaceOuter: '48px',
   fontSizeH0: pxToRem(100),
   fontSizeH1: pxToRem(70),
@@ -108,44 +108,81 @@ const tokensMobileSmall = {
 // Tokens that change based on theme
 const dark = {
   themeId: 'dark',
-  rgbBackground: '17 17 17',
-  rgbBackgroundLight: '26 26 26',
-  rgbPrimary: '0 229 255',
-  rgbAccent: '0 229 255',
+  rgbBackground: '17 17 17', //main page background
+  rgbBackgroundLight: '26 26 26', //secondary background for boxes
+  rgbPrimary: '0 229 255', //cta1
+  rgbSecondary: '255 25 0', //cta2
+  rgbAccent: '0 229 255', //main cta
   rgbText: '255 255 255',
+  rgbSuccess: '12 132 37',
   rgbError: '255 55 102',
+  rgbWarning: '249 115 22',
+  rgbInfo: '30 58 138',
+  rgbGrey: '98 101 99',
 
-  colorBackground: 'rgb(var(--rgbBackground) / 1)',
-  colorBackgroundLight: 'rgb(var(--rgbBackgroundLight) / 1)',
-  colorPrimary: 'rgb(var(--rgbPrimary) / 1)',
-  colorAccent: 'rgb(var(--rgbAccent) / 1)',
-  colorError: 'rgb(var(--rgbError) / 1)',
-  colorTextTitle: 'rgb(var(--rgbText) / 1)',
-  colorTextBody: 'rgb(var(--rgbText) / 0.8)',
-  colorTextLight: 'rgb(var(--rgbText) / 0.6)',
-  colorWhite: '#ffffff',
-  colorBlack: '#000000',
+  background: 'rgb(var(--rgbBackground) / 1)',
+  backgroundLight: 'rgb(var(--rgbBackgroundLight) / 1)',
+  primary: 'rgb(var(--rgbPrimary) / 1)',
+  secondary: 'rgb(var(--rgbSecondary) / 1)',
+  accent: 'rgb(var(--rgbAccent) / 1)',
+  success: 'rgb(var(--rgbSuccess) / 1)',
+  error: 'rgb(var(--rgbError) / 1)',
+  warning: 'rgb(var(--rgbWarning) / 1)',
+  info: 'rgb(var(--rgbInfo) / 1)',
+  grey: 'rgb(var(--rgbGrey) / 1)',
+  textTitle: 'rgb(var(--rgbText) / 1)',
+  textBody: 'rgb(var(--rgbText) / 0.8)',
+  textLight: 'rgb(var(--rgbText) / 0.6)',
+  white: '#ffffff',
+  black: '#000000',
 };
+
+export type ThemeColor =
+  | 'background'
+  | 'backgroundLight'
+  | 'primary'
+  | 'secondary'
+  | 'accent'
+  | 'success'
+  | 'error'
+  | 'warning'
+  | 'info'
+  | 'grey'
+  | 'textTitle'
+  | 'textBody'
+  | 'textLight'
+  | 'white'
+  | 'black';
 
 const light = {
   themeId: 'light',
-  rgbBackground: '242 242 242',
-  rgbBackgroundLight: '255 255 255',
-  rgbPrimary: '0 0 0',
-  rgbAccent: '64 222 222',
+  rgbBackground: '242 242 242', //main page background
+  rgbBackgroundLight: '255 255 255', //secondary background for boxes
+  rgbPrimary: '19 97 240', //cta1
+  rgbSecondary: '222 64 64', //cta2
+  rgbAccent: '64 222 222', //main cta
   rgbText: '0 0 0',
+  rgbSuccess: '12 132 37',
   rgbError: '255 0 60',
+  rgbWarning: '249 115 22',
+  rgbInfo: '30 58 138',
+  rgbGrey: '98 101 99',
 
-  colorBackground: 'rgb(var(--rgbBackground) / 1)',
-  colorBackgroundLight: 'rgb(var(--rgbBackgroundLight) / 1)',
-  colorPrimary: 'rgb(var(--rgbPrimary) / 1)',
-  colorAccent: 'rgb(var(--rgbAccent) / 1)',
-  colorError: 'rgb(var(--rgbError) / 1)',
-  colorTextTitle: 'rgb(var(--rgbText) / 1)',
-  colorTextBody: 'rgb(var(--rgbText) / 0.8)',
-  colorTextLight: 'rgb(var(--rgbText) / 0.6)',
-  colorWhite: '#ffffff',
-  colorBlack: '#000000',
+  background: 'rgb(var(--rgbBackground) / 1)',
+  backgroundLight: 'rgb(var(--rgbBackgroundLight) / 1)',
+  primary: 'rgb(var(--rgbPrimary) / 1)',
+  secondary: 'rgb(var(--rgbSecondary) / 1)',
+  accent: 'rgb(var(--rgbAccent) / 1)',
+  success: 'rgb(var(--rgbSuccess) / 1)',
+  error: 'rgb(var(--rgbError) / 1)',
+  warning: 'rgb(var(--rgbWarning) / 1)',
+  info: 'rgb(var(--rgbInfo) / 1)',
+  grey: 'rgb(var(--rgbGrey) / 1)',
+  textTitle: 'rgb(var(--rgbText) / 1)',
+  textBody: 'rgb(var(--rgbText) / 0.8)',
+  textLight: 'rgb(var(--rgbText) / 0.6)',
+  white: '#ffffff',
+  black: '#000000',
 };
 
 export const tokens = {
@@ -166,10 +203,10 @@ export const media = {
 };
 
 export const mediaScreen = {
-  minLaptop: `@Screen and (min-width: ${media.laptop}px)`,
-  minTablet: `@Screen and (min-width: ${media.tablet}px)`,
-  minMobile: `@Screen and (min-width: ${media.mobile}px)`,
-  maxMobileS: `@Screen and (max-width: ${media.mobileS}px)`,
+  minLaptop: `@media screen and (min-width: ${media.laptop}px)`,
+  minTablet: `@media screen and (min-width: ${media.tablet}px) and (max-width: ${media.laptop}px)`,
+  minMobile: `@media screen and (min-width: ${media.mobileS}px) and (max-width: ${media.tablet}px)`,
+  maxMobileS: `@media screen and (max-width: ${media.mobileS}px)`,
 };
 
 export type ThemeToken = typeof baseTokens;

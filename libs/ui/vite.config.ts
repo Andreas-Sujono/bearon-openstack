@@ -1,14 +1,16 @@
 /// <reference types='vitest' />
+import * as path from 'path';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import dts from 'vite-plugin-dts';
-import * as path from 'path';
 import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
+import svgr from 'vite-plugin-svgr';
 
 export default defineConfig({
   cacheDir: '../../node_modules/.vite/ui',
 
   plugins: [
+    svgr(),
     react(),
     nxViteTsPaths(),
     dts({

@@ -20,7 +20,7 @@ interface TransitionProps {
   in?: boolean;
   unmount?: boolean;
 }
-export const Transition = ({
+const Transition = ({
   children,
   timeout = 0,
   onEnter,
@@ -30,14 +30,14 @@ export const Transition = ({
   in: show,
   unmount,
 }: TransitionProps) => {
-  const enterTimeout = useRef();
-  const exitTimeout = useRef();
+  const enterTimeout = useRef<NodeJS.Timeout>(null);
+  const exitTimeout = useRef<NodeJS.Timeout>(null);
 
   useEffect(() => {
     if (show) {
-      clearTimeout(exitTimeout.current);
+      clearTimeout(exitTimeout.current!);
     } else {
-      clearTimeout(enterTimeout.current);
+      clearTimeout(enterTimeout.current!);
     }
   }, [show]);
 
@@ -69,8 +69,8 @@ interface TransitionContentProps {
         enter: number;
         exit: number;
       };
-  enterTimeout?: React.MutableRefObject<any>;
-  exitTimeout?: React.MutableRefObject<any>;
+  enterTimeout?: React.MutableRefObject<NodeJS.Timeout | null>;
+  exitTimeout?: React.MutableRefObject<NodeJS.Timeout | null>;
   onEnter?: () => void;
   onEntered?: () => void;
   onExit?: () => void;
@@ -100,8 +100,8 @@ const TransitionContent = ({
 
     const actualTimeout = splitTimeout ? timeout.enter : timeout;
 
-    clearTimeout(enterTimeout?.current);
-    clearTimeout(exitTimeout?.current);
+    enterTimeout?.current && clearTimeout(enterTimeout?.current);
+    exitTimeout?.current && clearTimeout(exitTimeout?.current);
 
     setHasEntered(true);
     setStatus('entering');
@@ -120,8 +120,8 @@ const TransitionContent = ({
 
     const actualTimeout = splitTimeout ? timeout.exit : timeout;
 
-    clearTimeout(enterTimeout?.current);
-    clearTimeout(exitTimeout?.current);
+    enterTimeout?.current && clearTimeout(enterTimeout?.current);
+    exitTimeout?.current && clearTimeout(exitTimeout?.current);
 
     setStatus('exiting');
     onExit?.();
@@ -138,3 +138,5 @@ const TransitionContent = ({
 
   return children(hasEntered && show ? isPresent : false, status);
 };
+
+export default Transition;

@@ -9,10 +9,12 @@
     "bignumber.js": "^9.1.2",
     "copy-to-clipboard": "^3.3.3",
     "framer-motion": "^10.16.5",
+    "lucide-react": "^0.294.0",
     "moment": "^2.29.4",
     "numbro": "^2.4.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-popper": "^2.3.0",
     "tslib": "^2.3.0"
   },
   "devDependencies": {
@@ -73,6 +75,7 @@
     "typescript": "~5.2.2",
     "vite": "~4.3.9",
     "vite-plugin-dts": "~2.3.0",
+    "vite-plugin-svgr": "^4.2.0",
     "vitest": "~0.32.0"
   }
 }

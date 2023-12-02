@@ -1,14 +1,41 @@
-import styles from './icon.module.scss';
+import {
+  ArrowRightIcon,
+  ArrowLeftIcon,
+  ArrowUpIcon,
+  ArrowDownIcon,
+  ChevronDownIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  ChevronUpIcon,
+  XCircleIcon as CloseCircleIcon,
+  XIcon as CloseIcon,
+  SettingsIcon,
+  UserIcon,
+  MenuIcon,
+  MoreVerticalIcon,
+  MoreHorizontalIcon,
+  PlusIcon as AddIcon,
+  TrashIcon,
+  LightbulbIcon,
+} from 'lucide-react';
 
-/* eslint-disable-next-line */
-export interface IconProps {}
-
-export function Icon(props: IconProps) {
-  return (
-    <div className={styles['container']}>
-      <h1>Welcome to Icon!</h1>
-    </div>
-  );
-}
-
-export default Icon;
+export {
+  ArrowRightIcon,
+  ArrowLeftIcon,
+  ArrowUpIcon,
+  ArrowDownIcon,
+  ChevronDownIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  ChevronUpIcon,
+  CloseCircleIcon,
+  CloseIcon,
+  SettingsIcon,
+  UserIcon,
+  MenuIcon,
+  MoreVerticalIcon,
+  MoreHorizontalIcon,
+  AddIcon,
+  TrashIcon,
+  LightbulbIcon,
+};

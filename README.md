@@ -66,3 +66,14 @@ Nx comes with local caching already built-in (check your `nx.json`). On CI you m
 - add new library: `npx nx g @nx/react:library ui --directory=libs/ui --bundler vite`
 
 - run storybook: `npx nx run project:storybook`, ex: `npx nx run ui:storybook`
+source $(brew --prefix nvm)/nvm.sh
+
+
+//TODO
+- add more theme color
+- fix skeleton color
+- fix skeleton props
+- add more skeleton example
+- fix theme showcase layout
+- animation
+    - animation on scroll
