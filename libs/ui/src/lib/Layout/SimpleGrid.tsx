@@ -1,12 +1,14 @@
 import { classes } from '@bearon/utils';
-import React from 'react';
+import React, { HTMLAttributes } from 'react';
 import {
   BearStyleProps,
   createBearStyleClass,
   extractStyleProps,
 } from '../utils/styles';
 
-interface Props extends React.HTMLAttributes<HTMLDivElement>, BearStyleProps {
+interface Props
+  extends Omit<HTMLAttributes<HTMLDivElement>, 'color'>,
+    BearStyleProps {
   templateColumns?: string;
   templateRows?: string;
   justifyContent?: string;

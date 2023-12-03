@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { HTMLAttributes, forwardRef } from 'react';
 import { classes } from '@bearon/utils';
 import {
   BearStyleProps,
@@ -6,7 +6,9 @@ import {
   extractStyleProps,
 } from '../utils/styles';
 
-interface Props extends React.HTMLAttributes<HTMLDivElement>, BearStyleProps {
+interface Props
+  extends Omit<HTMLAttributes<HTMLDivElement>, 'color'>,
+    BearStyleProps {
   as?: React.ElementType;
   children?: React.ReactNode;
   className?: string;

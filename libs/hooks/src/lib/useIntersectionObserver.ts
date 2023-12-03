@@ -1,5 +1,6 @@
 import React from 'react';
 
+//https://github.com/thebuilder/react-intersection-observer/blob/main/src/observe.ts
 export function useIntersectionObserver(
   options = {} as {
     threshold?: number;

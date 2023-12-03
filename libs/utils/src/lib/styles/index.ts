@@ -96,3 +96,16 @@ export const convertObjectToCss = (style: Record<string, string | number>) => {
     ''
   );
 };
+
+function componentToHex(c: string | number) {
+  c = Number(c);
+  const hex = c.toString(16);
+  return hex.length === 1 ? '0' + hex : hex;
+}
+
+export function rgbToHex(rgb: string) {
+  let [r, g, b] = rgb.split(',');
+  if (!r || !g || !b) [r, g, b] = rgb.split(' ');
+
+  return '#' + componentToHex(r) + componentToHex(g) + componentToHex(b);
+}

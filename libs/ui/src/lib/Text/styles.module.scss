@@ -1,24 +1,24 @@
 .common {
   &[data-size='xs'] {
-    font-size: var(--fontSizeBodyXS);
+    font-size: var(--fontSizeBodyXs);
   }
   &[data-size='sm'] {
-    font-size: var(--fontSizeBodyS);
+    font-size: var(--fontSizeBodySm);
   }
   &[data-size='md'] {
-    font-size: var(--fontSizeBodyM);
+    font-size: var(--fontSizeBodyMd);
   }
   &[data-size='lg'] {
-    font-size: var(--fontSizeBodyL);
+    font-size: var(--fontSizeBodyLg);
   }
   &[data-size='xl'] {
-    font-size: var(--fontSizeBodyXL);
+    font-size: var(--fontSizeBodyXl);
   }
   &[data-size='2xl'] {
-    font-size: var(--fontSizeBody2xl);
+    font-size: var(--fontSizeBody2Xl);
   }
   &[data-size='3xl'] {
-    font-size: var(--fontSizeBody3xl);
+    font-size: var(--fontSizeBody3Xl);
   }
 
   &[data-level='0'],
@@ -82,15 +82,49 @@
 
 .text {
   line-height: var(--lineHeightBody);
-  color: var(--colorTextBody);
+  // color: var(--textBody);
 
   &[data-secondary='true'] {
-    color: var(--colorTextLight);
+    color: var(--textLight);
   }
 }
 
 .heading {
   line-height: var(--lineHeightTitle);
-  color: var(--colorTextTitle);
+  color: var(--textTitle);
   margin: 0;
+}
+
+.link {
+  --lineStrokeWidth: 2px;
+  --linkColor: var(--primary);
+  --lineOpacity: 0;
+  --filledLineGradient: linear-gradient(var(--linkColor), var(--linkColor));
+  --unfilledLineGradient: linear-gradient(transparent, transparent);
+
+  cursor: pointer;
+  display: inline;
+  color: var(--linkColor);
+  background: var(--filledLineGradient) no-repeat 100% 100% / 0
+      var(--lineStrokeWidth),
+    var(--unfilledLineGradient) no-repeat 0 100% / 100% var(--lineStrokeWidth);
+  padding-bottom: var(--lineStrokeWidth);
+  text-decoration: none;
+
+  &:hover,
+  &:focus {
+    background: var(--filledLineGradient) no-repeat 0 100% / 100%
+        var(--lineStrokeWidth),
+      var(--unfilledLineGradient) no-repeat 0 100% / 100% var(--lineStrokeWidth);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    transition-duration: var(--durationMd);
+    transition-timing-function: var(--bezierFastoutSlowin);
+    transition-property: background-size;
+  }
+
+  &[data-secondary='true'] {
+    --linkColor: var(--textLight);
+  }
 }

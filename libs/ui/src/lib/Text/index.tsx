@@ -19,12 +19,14 @@ export type TextVariant =
   | 'h2'
   | 'h1';
 
-interface Props extends HTMLAttributes<HTMLDivElement>, BearStyleProps {
+interface Props
+  extends Omit<HTMLAttributes<HTMLDivElement>, 'color'>,
+    BearStyleProps {
   children?: React.ReactElement | string[] | string | React.ReactNode;
   size?: TextVariant;
   as?: React.ElementType;
-  align?: string;
-  weight?: string;
+  align?: 'auto' | 'start' | 'center';
+  weight?: 'auto' | 'regular' | 'medium' | 'bold';
   secondary?: boolean;
   className?: string;
   display?: 'block' | 'inline' | 'inline-block';
@@ -32,10 +34,10 @@ interface Props extends HTMLAttributes<HTMLDivElement>, BearStyleProps {
 
 const Text = ({
   children,
-  size = 'md',
+  size,
   as: Component = 'span',
-  align = 'auto',
-  weight = 'auto',
+  align,
+  weight,
   secondary,
   className,
   display,

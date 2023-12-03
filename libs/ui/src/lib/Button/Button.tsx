@@ -28,6 +28,7 @@ export interface ButtonProps
   loaderProps?: LoaderProps; //when loading
   disableRippleEffect?: boolean;
   clip?: boolean;
+  fullWidth?: boolean;
 }
 
 function Button({
@@ -46,6 +47,7 @@ function Button({
   },
   onClick,
   disableRippleEffect,
+  fullWidth,
   clip,
   sx,
   sxS,
@@ -101,12 +103,24 @@ function Button({
           variant === 'outlined' || variant === 'outlined-secondary'
             ? '1px'
             : 0,
+        width: fullWidth ? '100%' : undefined,
       },
       {
         '--btn-background': finalBg,
       }
     );
-  }, [sx, sxS, sxM, sxL, background, textColor, variant, borderColor, clip]);
+  }, [
+    sx,
+    sxS,
+    sxM,
+    sxL,
+    background,
+    textColor,
+    variant,
+    borderColor,
+    clip,
+    fullWidth,
+  ]);
 
   //end of handle style
 

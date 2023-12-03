@@ -1,14 +1,23 @@
-import { bearCss } from '@bearon/utils';
+import { bearCss, classes, rgbToHex } from '@bearon/utils';
+import React from 'react';
+import SimpleGrid from '../Layout/SimpleGrid';
+import Text from '../Text';
+import Box from '../Layout/Box';
+import { themes, tokens } from './theme';
 import type { Meta } from '@storybook/react';
 
 const boxClass = bearCss`
-  width: 300px;
-  height:50px;
+  width: 100%;
+  box-sizing: border-box;
+  height: 100%;
 `;
-const labelClass = bearCss`
-  display: inline-block;
-  margin-bottom: 12px;
-  margin-top: 12px;
+const cellClass = bearCss`
+  padding: 8px 12px;
+  border-bottom: 1px solid #dedcdc;
+  color: var(--textLight);
+`;
+const titleClass = bearCss`
+  color: var(--textTitle);
 `;
 
 const meta: Meta = {
@@ -17,69 +26,134 @@ const meta: Meta = {
 };
 export default meta;
 
-export const ThemeShowcase = {
+const allLightRgbColors = Object.keys(themes.light).filter((item) =>
+  item.startsWith('rgb')
+);
+const allDarkRgbColors = Object.keys(themes.dark).filter((item) =>
+  item.startsWith('rgb')
+);
+
+export const LightTheme = {
   render: () => {
     return (
-      <div>
-        <span className={labelClass}>background: var(--background)</span>
-        <div
-          className={boxClass}
-          style={{ background: 'var(--background)' }}
-        ></div>
+      <Box sx={{ maxWidth: '800px' }}>
+        <SimpleGrid templateColumns="auto auto  auto auto">
+          <Text className={classes(cellClass, titleClass)} weight="medium">
+            Variable
+          </Text>
+          <Text className={classes(cellClass, titleClass)} weight="medium">
+            RGB
+          </Text>
+          <Text className={classes(cellClass, titleClass)} weight="medium">
+            Hex
+          </Text>
+          <Text className={classes(cellClass, titleClass)} weight="medium">
+            Colours
+          </Text>
 
-        <span className={labelClass}>
-          backgroundLight: var(--backgroundLight)
-        </span>
-        <div
-          className={boxClass}
-          style={{ background: 'var(--backgroundLight)' }}
-        ></div>
+          {allLightRgbColors.map((key) => {
+            let varKey = key.replace('rgb', '');
+            varKey = varKey[0].toLowerCase().concat(varKey.slice(1));
+            if (varKey === 'text') {
+              varKey = 'textTitle';
+            }
 
-        <span className={labelClass}>Primary: var(--primary)</span>
-        <div
-          className={boxClass}
-          style={{ background: 'var(--primary)' }}
-        ></div>
+            return (
+              <React.Fragment key={key}>
+                <Text className={cellClass}>--{varKey}</Text>
+                <Text className={cellClass}>
+                  {themes.light[key as 'rgbText']}
+                </Text>
+                <Text className={cellClass}>
+                  {rgbToHex(themes.light[key as 'rgbText'])}
+                </Text>
+                <div
+                  className={classes(boxClass, cellClass)}
+                  style={{
+                    background: `rgb(${themes.light[key as 'rgbText']} / 1)`,
+                  }}
+                ></div>
+              </React.Fragment>
+            );
+          })}
+        </SimpleGrid>
+      </Box>
+    );
+  },
+};
 
-        <span className={labelClass}>Secondary: var(--secondary)</span>
-        <div
-          className={boxClass}
-          style={{ background: 'var(--secondary)' }}
-        ></div>
+export const darkTheme = {
+  render: () => {
+    return (
+      <Box sx={{ maxWidth: '800px' }}>
+        <SimpleGrid templateColumns="auto auto auto auto">
+          <Text className={classes(cellClass, titleClass)} weight="medium">
+            Variable
+          </Text>
+          <Text className={classes(cellClass, titleClass)} weight="medium">
+            RGB
+          </Text>
+          <Text className={classes(cellClass, titleClass)} weight="medium">
+            Hex
+          </Text>
+          <Text className={classes(cellClass, titleClass)} weight="medium">
+            Colours
+          </Text>
 
-        <span className={labelClass}>Accent: var(--accent)</span>
-        <div className={boxClass} style={{ background: 'var(--accent)' }}></div>
+          {allDarkRgbColors.map((key) => {
+            let varKey = key.replace('rgb', '');
+            varKey = varKey[0].toLowerCase().concat(varKey.slice(1));
+            if (varKey === 'text') {
+              varKey = 'textTitle';
+            }
+            return (
+              <React.Fragment key={key}>
+                <Text className={cellClass}>--{varKey}</Text>
+                <Text className={cellClass}>
+                  {themes.dark[key as 'rgbText']}
+                </Text>
+                <Text className={cellClass}>
+                  {rgbToHex(themes.light[key as 'rgbText'])}
+                </Text>
+                <div
+                  className={classes(boxClass, cellClass)}
+                  style={{
+                    background: `rgb(${themes.dark[key as 'rgbText']} / 1)`,
+                  }}
+                ></div>
+              </React.Fragment>
+            );
+          })}
+        </SimpleGrid>
+      </Box>
+    );
+  },
+};
 
-        <span className={labelClass}>textTitle: var(--textTitle)</span>
-        <div
-          className={boxClass}
-          style={{ background: 'var(--textTitle)' }}
-        ></div>
+export const utilities = {
+  render: () => {
+    return (
+      <Box sx={{ maxWidth: '600px' }}>
+        <SimpleGrid templateColumns="auto auto">
+          <Text className={classes(cellClass, titleClass)} weight="medium">
+            Variable
+          </Text>
+          <Text className={classes(cellClass, titleClass)} weight="medium">
+            value
+          </Text>
 
-        <span className={labelClass}>textBody: var(--textBody)</span>
-        <div
-          className={boxClass}
-          style={{ background: 'var(--textBody)' }}
-        ></div>
-
-        <span className={labelClass}>textLight: var(--textLight)</span>
-        <div
-          className={boxClass}
-          style={{ background: 'var(--textLight)' }}
-        ></div>
-
-        <span className={labelClass}>error: var(--error)</span>
-        <div className={boxClass} style={{ background: 'var(--error)' }}></div>
-
-        <span className={labelClass}>warning: var(--warning)</span>
-        <div
-          className={boxClass}
-          style={{ background: 'var(--warning)' }}
-        ></div>
-
-        <span className={labelClass}>info: var(--info)</span>
-        <div className={boxClass} style={{ background: 'var(--info)' }}></div>
-      </div>
+          {Object.keys(tokens.base).map((key) => {
+            return (
+              <React.Fragment key={key}>
+                <Text className={cellClass}>--{key}</Text>
+                <Text className={cellClass}>
+                  {tokens.base[key as 'fontSizeH0']}
+                </Text>
+              </React.Fragment>
+            );
+          })}
+        </SimpleGrid>
+      </Box>
     );
   },
 };

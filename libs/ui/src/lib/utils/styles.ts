@@ -1,6 +1,11 @@
-import { bearCss, convertObjectToCss, numToPx } from '@bearon/utils';
+import {
+  bearCss,
+  cleanObject,
+  convertObjectToCss,
+  numToPx,
+} from '@bearon/utils';
 import React from 'react';
-import { mediaScreen } from '../ThemeProvider';
+import { ThemeColor, mediaScreen } from '../ThemeProvider';
 
 //common style that can be applied to layout components,  and some other components
 export interface BearStyleProps {
@@ -9,6 +14,9 @@ export interface BearStyleProps {
   sxM?: React.CSSProperties; //mobile - laptop
   sxL?: React.CSSProperties; //> laptop
   maxWidth?: 'sm' | 'md' | 'lg' | 'xl';
+  colour?: ThemeColor;
+  background?: ThemeColor;
+  backgroundOpacity?: number | string;
   mt?: string | number;
   mb?: string | number;
   mr?: string | number;
@@ -20,18 +28,30 @@ export const createBearStyleClass = <T>(
   injectedStyle: React.CSSProperties = {},
   customProperties: Record<string, string> = {}
 ) => {
-  props.sx = props.sx || {};
-  props.sx = { ...injectedStyle, ...props.sx };
+  props.sx = cleanObject(props.sx || {});
+  props.sx = cleanObject({ ...injectedStyle, ...props.sx });
 
-  props.sxS = props.sxS || {};
-  props.sxM = props.sxM || {};
-  props.sxL = props.sxL || {};
+  props.sxS = cleanObject(props.sxS || {});
+  props.sxM = cleanObject(props.sxM || {});
+  props.sxL = cleanObject(props.sxL || {});
 
   return bearCss`
     ${props.mt ? `margin-top: ${numToPx(props.mt)};` : ''}
     ${props.ml ? `margin-left: ${numToPx(props.ml)};` : ''}
     ${props.mr ? `margin-right: ${numToPx(props.mr)};` : ''}
     ${props.mb ? `margin-bottom: ${numToPx(props.mb)};` : ''}
+    ${props.colour ? `color: var(--${props.colour});` : ''}
+    ${
+      props.background
+        ? `background: rgb(var(--rgb${props.background[0]
+            .toUpperCase()
+            .concat(props.background.slice(1))})  / ${
+            props.backgroundOpacity || 1
+          }
+          );`
+        : ''
+    }
+
     ${
       props.maxWidth
         ? `max-width: ${
@@ -81,7 +101,21 @@ export const createBearStyleClass = <T>(
 export const extractStyleProps = <T>(
   props: T & BearStyleProps
 ): [BearStyleProps, T] => {
-  const { sx, sxS, sxM, sxL, maxWidth, mt, mb, mr, ml, ...rest } = props;
+  const {
+    sx,
+    sxS,
+    sxM,
+    sxL,
+    maxWidth,
+    mt,
+    mb,
+    mr,
+    ml,
+    background,
+    colour,
+    backgroundOpacity,
+    ...rest
+  } = props;
 
   const styleProps: BearStyleProps = {
     sx,
@@ -93,6 +127,9 @@ export const extractStyleProps = <T>(
     mb,
     mr,
     ml,
+    background,
+    colour,
+    backgroundOpacity,
   };
   return [styleProps, rest as T];
 };

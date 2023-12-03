@@ -1,18 +1,15 @@
 import React, { forwardRef } from 'react';
 import { classes } from '@bearon/utils';
+import {
+  BearStyleProps,
+  createBearStyleClass,
+  extractStyleProps,
+} from '../utils/styles';
 import styles from './styles.module.scss';
 
-// File extensions that can be linked to
-const VALID_EXT = ['txt', 'png', 'jpg'];
-
-function isAnchor(href?: string) {
-  const isValidExtension = VALID_EXT.includes(
-    href?.split('.')?.pop() as string
-  );
-  return href?.includes('://') || href?.[0] === '#' || isValidExtension;
-}
-
-interface LinkProps extends React.HTMLAttributes<HTMLAnchorElement> {
+interface LinkProps
+  extends React.HTMLAttributes<HTMLAnchorElement>,
+    BearStyleProps {
   rel?: string;
   target?: string;
   children?: React.ReactNode;
@@ -21,22 +18,17 @@ interface LinkProps extends React.HTMLAttributes<HTMLAnchorElement> {
   href?: string;
   as?: React.ElementType;
 }
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const Link = forwardRef<any, LinkProps>(function _Link(
-  { href, ...rest },
+  { href, ...props },
   ref
 ) {
-  if (isAnchor(href)) {
-    return <LinkContent href={href} ref={ref} {...rest} />;
-  }
-
-  return (
-    <RouterLink passHref href={href as string} scroll={false} legacyBehavior>
-      <LinkContent ref={ref} {...rest} />
-    </RouterLink>
-  );
+  return <LinkContent href={href} ref={ref} {...props} />;
 });
 
-interface LinkContentProps extends React.HTMLAttributes<HTMLAnchorElement> {
+interface LinkContentProps
+  extends React.HTMLAttributes<HTMLAnchorElement>,
+    BearStyleProps {
   rel?: string;
   target?: string;
   children?: React.ReactNode;
@@ -44,18 +36,25 @@ interface LinkContentProps extends React.HTMLAttributes<HTMLAnchorElement> {
   className?: string;
   href?: string;
 }
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const LinkContent = forwardRef<any, LinkContentProps>(
   function _LinkContent(
-    { rel, target, children, secondary, className, href, ...rest },
+    { rel, target, children, secondary, className, href, ...props },
     ref
   ) {
     const isExternal = href?.includes('://');
     const relValue = rel || (isExternal ? 'noreferrer noopener' : undefined);
     const targetValue = target || (isExternal ? '_blank' : undefined);
+    const [styleProps, rest] = extractStyleProps(props);
+
+    const styleClass = React.useMemo(() => {
+      return createBearStyleClass(styleProps);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [...Object.values(styleProps)]);
 
     return (
       <a
-        className={classes(styles.link, className)}
+        className={classes(styles.link, className, styleClass)}
         data-secondary={secondary}
         rel={relValue}
         href={href}

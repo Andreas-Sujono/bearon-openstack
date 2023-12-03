@@ -24,3 +24,14 @@ export const generateId = () => {
 
 export const getRandomItem = <T>(array: T[]): T =>
   array[Math.floor(Math.random() * array.length)];
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const cleanObject = (obj: Record<string, any>) => {
+  Object.keys(obj).forEach((key) => {
+    if (obj[key] === null || obj[key] === undefined) {
+      delete obj[key];
+    }
+  });
+
+  return obj;
+};

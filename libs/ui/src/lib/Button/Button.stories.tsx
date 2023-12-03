@@ -16,6 +16,14 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
+export const Default: Story = {
+  render: () => <Button>Button</Button>,
+};
+
+export const FullWidth: Story = {
+  render: () => <Button fullWidth>Full Width Button</Button>,
+};
+
 // More on writing stories with args: https://storybook.js.org/docs/react/writing-stories/args
 export const Variant: Story = {
   render: () => (
@@ -47,6 +55,7 @@ export const Color: Story = {
       <Button background="accent">accent</Button>
 
       <Button background="black">black</Button>
+      <Button background="success">success</Button>
       <Button background="error">error</Button>
       <Button background="info">info</Button>
       <Button background="warning">warning</Button>

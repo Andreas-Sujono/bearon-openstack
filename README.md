@@ -28,7 +28,6 @@ BearonUI is part of **Bearon Open Source Project (BearonOS)** that aims to unify
 - Components
    - [ ] Add more theme color, double check with MUI and chakra UI
    - [ ] fix skeleton color, based on theme
-   - [ ] fix showcase layout
    - [ ] fix button docs
 - Animation
    - [ ] Add animation on scroll

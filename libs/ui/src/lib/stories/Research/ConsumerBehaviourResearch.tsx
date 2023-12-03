@@ -8,30 +8,31 @@ export const ConsumerBehaviourResearch = (): JSX.Element => {
   return (
     <PageSection maxWidth="lg">
       <Row gap="1.5rem">
-        <Heading level={2} as="h1" weight="500">
-          Consumer Behaviour Research
+        <Heading level={2} as="h1">
+          UI/UX Research
         </Heading>
         <img src="https://svgshare.com/i/zyf.svg" width={100} alt="Bearon UI" />
       </Row>
 
       <Box mt="3rem">
-        <Heading level={3} weight="500">
-          Searching Experience
+        <Heading level={4} weight="500">
+          Offer Relevant Autocomplete Suggestions for Closely Misspelled Search
+          Terms and Queries (69% Don’t)
         </Heading>
-        <Text>Based on Baymard Insitute </Text>
-      </Box>
-
-      <Heading level={3} mt="4rem">
-        Related Reading
-      </Heading>
-      <Box mt="3rem">
-        <Heading level={4}>
-          Accessibility, how far our site should be accessible?
-        </Heading>
+        <Text display="block">By Baymard Insitute</Text>
+        <Text mt="1rem">
+          https://baymard.com/blog/offer-autocomplete-suggestions-for-misspellings
+        </Text>
       </Box>
 
       <Box mt="3rem">
-        <Heading level={4}>SEO, increasing your site traffic</Heading>
+        <Heading level={4} weight="500">
+          SEO, increasing your site traffic
+        </Heading>
+        <Text display="block">By Andreas Sujono</Text>
+        <Text mt="1rem">
+          https://andreassujono.medium.com/introduction-to-seo-free-marketing-for-your-site-all-you-need-to-know-about-seo-f2902180002e
+        </Text>
       </Box>
     </PageSection>
   );
