@@ -50,6 +50,7 @@
   }
   &:focus-visible {
     outline-color: var(--accent);
+    outline-offset: 3px;
   }
   &:disabled {
     cursor: not-allowed;
@@ -61,6 +62,7 @@
   &[data-variant='text']:hover,
   &[data-variant='outlined']:hover,
   &[data-variant='outlined-secondary']:hover {
+    // background-color: color-mix(in srgb, currentColor 4%, transparent);
     backdrop-filter: brightness(0.96);
     filter: none;
   }
@@ -77,16 +79,16 @@
   // }
 
   &[data-size='xs'] {
-    font-size: var(--fontSizeBodyXS);
+    font-size: var(--fontSizeBodysS);
   }
   &[data-size='sm'] {
-    font-size: var(--fontSizeBodyS);
+    font-size: var(--fontSizeBodySm);
   }
   &[data-size='md'] {
-    font-size: var(--fontSizeBodyM);
+    font-size: var(--fontSizeBodyMd);
   }
   &[data-size='lg'] {
-    font-size: var(--fontSizeBodyL);
+    font-size: var(--fontSizeBodyLg);
   }
   &[data-size='xl'] {
     font-size: var(--fontSizeBodyXL);

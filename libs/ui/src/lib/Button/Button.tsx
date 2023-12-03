@@ -33,7 +33,7 @@ export interface ButtonProps
 
 function Button({
   background = 'primary',
-  borderColor = 'primary',
+  borderColor,
   variant = 'contained',
   textVariant = 'sm',
   textColor = 'white',
@@ -66,7 +66,6 @@ function Button({
 
     if (variant !== 'contained' && background === 'primary') {
       finalBg = `transparent`;
-      finalBorderColor = 'transparent';
     }
 
     if (textColor === 'white') {
@@ -78,7 +77,7 @@ function Button({
       }
     }
 
-    if (borderColor === 'primary') {
+    if (!borderColor) {
       if (variant === 'text') {
         finalBorderColor = 'transparent';
       } else if (variant === 'outlined-secondary') {

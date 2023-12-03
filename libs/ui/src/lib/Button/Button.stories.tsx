@@ -1,7 +1,9 @@
 import React from 'react';
 import { CloseIcon, TrashIcon, AddIcon } from '@bearon/icon';
 import Row from '../Layout/Row';
+import Box from '../Layout/Box';
 import Button from './Button';
+import ButtonGroupComponent from './ButtonGroup';
 import type { Meta, StoryObj } from '@storybook/react';
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction
@@ -105,12 +107,12 @@ export const Loading: Story = {
       <Button
         isLoading
         disabled
-        background="textLight"
+        background="primary"
         loaderProps={{
           color: 'white',
         }}
       >
-        loader + disabled + grey bg
+        loader disabled
       </Button>
     </Row>
   ),
@@ -141,6 +143,55 @@ export const WithIcon: Story = {
         variant="text"
       ></Button>
     </Row>
+  ),
+  args: {},
+  parameters: {
+    docs: {
+      story: { inline: true }, // render the story in an iframe
+      canvas: { sourceState: 'shown' }, // start with the source open
+    },
+  },
+};
+
+export const ButtonGroup: Story = {
+  render: () => (
+    <Box maxWidth="lg">
+      <ButtonGroupComponent spacing="1rem">
+        <Button icon={<AddIcon />}>Add</Button>
+        <Button
+          variant="outlined-secondary"
+          icon={<TrashIcon />}
+          textColor="error"
+          borderColor="error"
+        >
+          Delete
+        </Button>
+      </ButtonGroupComponent>
+
+      <ButtonGroupComponent align="center" spacing="1rem">
+        <Button icon={<AddIcon />}>Add</Button>
+        <Button
+          variant="outlined-secondary"
+          icon={<TrashIcon />}
+          textColor="error"
+          borderColor="error"
+        >
+          Delete
+        </Button>
+      </ButtonGroupComponent>
+
+      <ButtonGroupComponent align="right" spacing="1rem">
+        <Button icon={<AddIcon />}>Add</Button>
+        <Button
+          variant="outlined-secondary"
+          icon={<TrashIcon />}
+          textColor="error"
+          borderColor="error"
+        >
+          Delete
+        </Button>
+      </ButtonGroupComponent>
+    </Box>
   ),
   args: {},
   parameters: {

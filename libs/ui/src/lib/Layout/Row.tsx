@@ -15,7 +15,7 @@ interface Props
   wrap?: boolean;
   justifyContent?: string;
   alignItems?: string;
-  gap?: string;
+  gap?: string | number;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
