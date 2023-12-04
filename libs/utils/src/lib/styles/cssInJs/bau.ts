@@ -35,8 +35,12 @@ const merge = (
   return name;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const compileStyles = (rest: any, strings: string[], args: string[]) =>
+const compileStyles = (
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  rest: any,
+  strings: ReadonlyArray<string>,
+  args: ReadonlyArray<string>
+) =>
   strings.reduce((acc, value, i) => {
     if (typeof args[i] !== 'object') {
       return acc + value + (args[i] ?? '');
@@ -58,21 +62,26 @@ export default function BauReactCss({
   const styled =
     (
       tag: string,
-      props: {
-        [x: string]: string | React.ReactNode;
-        className: string;
-        children: React.ReactNode;
+      props: React.HTMLAttributes<HTMLDivElement> & {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        [x: string]: any;
+        className?: string;
+        children?: React.ReactNode;
       }
     ) =>
-    (strings: string[], ...args: string[]) => {
+    (strings: ReadonlyArray<string>, ...args: ReadonlyArray<string>) => {
       const { className, children, ...rest } = props;
       const compiledStyles = compileStyles(rest, strings, args);
       const name = merge('.', compiledStyles, target);
 
+      Object.keys(rest).forEach((key) => {
+        if (key.startsWith('$')) delete rest[key];
+      });
+
       return createElement(
         tag,
         {
-          className: classNames(name, className),
+          className: classNames(name, className || ''),
           ...rest,
         },
         children

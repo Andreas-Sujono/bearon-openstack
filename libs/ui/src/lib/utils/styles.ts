@@ -23,6 +23,18 @@ export interface BearStyleProps {
   ml?: string | number;
 }
 
+export const parseBackgroundColorCss = (
+  background: string,
+  backgroundOpacity?: number | string
+) => `rgb(var(--rgb${background[0]
+  .toUpperCase()
+  .concat(background.slice(1))})  / ${backgroundOpacity || 1}
+)`;
+
+export const parseThemeSizeCss = () => {
+  //
+};
+
 export const createBearStyleClass = <T>(
   props: T & BearStyleProps,
   injectedStyle: React.CSSProperties = {},
@@ -43,12 +55,10 @@ export const createBearStyleClass = <T>(
     ${props.colour ? `color: var(--${props.colour});` : ''}
     ${
       props.background
-        ? `background: rgb(var(--rgb${props.background[0]
-            .toUpperCase()
-            .concat(props.background.slice(1))})  / ${
-            props.backgroundOpacity || 1
-          }
-          );`
+        ? `background: ${parseBackgroundColorCss(
+            props.background,
+            props.backgroundOpacity
+          )};`
         : ''
     }
 
