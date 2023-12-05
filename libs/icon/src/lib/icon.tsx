@@ -17,6 +17,11 @@ import {
   PlusIcon as AddIcon,
   TrashIcon,
   LightbulbIcon,
+  FileWarningIcon,
+  CheckIcon as SuccessIcon,
+  CheckCircleIcon as SuccessCircleIcon,
+  AlertCircleIcon as WarningCircleIcon,
+  InfoIcon,
 } from 'lucide-react';
 
 export {
@@ -38,4 +43,9 @@ export {
   AddIcon,
   TrashIcon,
   LightbulbIcon,
+  FileWarningIcon,
+  SuccessIcon,
+  SuccessCircleIcon,
+  WarningCircleIcon,
+  InfoIcon,
 };

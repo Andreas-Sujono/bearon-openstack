@@ -5,31 +5,22 @@ import {
   createBearStyleClass,
   extractStyleProps,
 } from '../utils/styles';
-import Text, { TextVariant } from '../Text';
-import { ThemeColor } from '../ThemeProvider';
-import { StyledAvatar } from './Styles';
+import { TextVariant } from '../Text';
+import { StyledBadge } from './Styles';
 
-export interface AvatarProps
+export interface BadgeProps
   extends HTMLAttributes<HTMLDivElement>,
     BearStyleProps {
   children?: React.ReactNode;
-  name?: string;
   size?: TextVariant;
-  withNotif?: boolean;
-  abbreviation?: string;
-  textColor?: ThemeColor;
 }
 
-export default function Avatar({
+export default function Badge({
   children,
   className,
-  name,
-  size,
-  withNotif,
-  abbreviation,
-  textColor,
+  size = 'xs',
   ...props
-}: AvatarProps) {
+}: BadgeProps) {
   const [styleProps, rest] = extractStyleProps(props);
 
   const styleClass = React.useMemo(() => {
@@ -39,18 +30,12 @@ export default function Avatar({
   }, [...Object.values(styleProps)]);
 
   return (
-    <StyledAvatar
-      className={classes(styleClass, 'bear-avatar', className)}
+    <StyledBadge
+      className={classes(styleClass, 'bear-badge', className)}
       $size={size}
-      $background={props.background}
-      $withNotif={withNotif}
       {...rest}
     >
-      {children || (
-        <Text size={size} colour={textColor}>
-          {abbreviation || name?.charAt(0) || ''}
-        </Text>
-      )}
-    </StyledAvatar>
+      {children}
+    </StyledBadge>
   );
 }

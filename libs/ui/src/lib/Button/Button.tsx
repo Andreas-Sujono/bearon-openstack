@@ -1,6 +1,10 @@
 import React from 'react';
 import { classes } from '@bearon/utils';
-import { BearStyleProps, createBearStyleClass } from '../utils/styles';
+import {
+  BearStyleProps,
+  createBearStyleClass,
+  extractStyleProps,
+} from '../utils/styles';
 import Loader, { LoaderProps } from '../Loader/Loader';
 import Text, { TextVariant } from '../Text';
 import { ThemeColor } from '../ThemeProvider/theme';
@@ -57,6 +61,7 @@ function Button({
 }: ButtonProps) {
   const [coords, setCoords] = React.useState({ x: -1, y: -1 });
   const [isRippling, setIsRippling] = React.useState(false);
+  const [styleProps, rest] = extractStyleProps(props);
 
   //handle style
   const styleClass = React.useMemo(() => {
@@ -88,12 +93,7 @@ function Button({
     }
 
     return createBearStyleClass(
-      {
-        sx,
-        sxS,
-        sxM,
-        sxL,
-      },
+      styleProps,
       {
         background: clip ? 'transparent' : finalBg,
         color: finalTextColor,
@@ -103,17 +103,16 @@ function Button({
             ? '1px'
             : 0,
         width: fullWidth ? '100%' : undefined,
+        padding: !children ? '0.5em' : '0.5em 1em',
       },
       {
         '--btn-background': finalBg,
       }
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
-    sx,
-    sxS,
-    sxM,
-    sxL,
-    background,
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    ...Object.values(styleProps),
     textColor,
     variant,
     borderColor,
@@ -146,7 +145,7 @@ function Button({
       }}
       data-size={textVariant}
       data-variant={variant}
-      {...props}
+      {...rest}
     >
       {iconPosition === 'left' && icon}
       {isLoading && (

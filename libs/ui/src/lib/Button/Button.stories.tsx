@@ -106,6 +106,16 @@ export const Loading: Story = {
       </Button>
       <Button
         isLoading
+        variant="outlined-secondary"
+        loaderProps={{
+          color: 'var(--grey)',
+          size: '16px',
+        }}
+      >
+        base loader
+      </Button>
+      <Button
+        isLoading
         disabled
         background="primary"
         loaderProps={{

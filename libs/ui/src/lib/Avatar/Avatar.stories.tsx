@@ -1,3 +1,4 @@
+import { UserIcon, LightbulbIcon } from '@bearon/icon';
 import Box from '../Layout/Box';
 import Row from '../Layout/Row';
 import Avatar from './Avatar';
@@ -51,6 +52,64 @@ export const Colours = {
   },
 };
 
+export const SubtleColours = {
+  render: () => {
+    return (
+      <Row gap="1rem">
+        <Avatar
+          name="Andreas"
+          size="md"
+          background="primary"
+          textColor="primary"
+          backgroundOpacity={0.2}
+        />
+        <Avatar
+          name="Andreas"
+          size="md"
+          background="secondary"
+          textColor="secondary"
+          backgroundOpacity={0.2}
+        />
+        <Avatar
+          name="Andreas"
+          size="md"
+          background="success"
+          textColor="success"
+          backgroundOpacity={0.2}
+        />
+        <Avatar
+          name="Andreas"
+          size="md"
+          background="warning"
+          textColor="warning"
+          backgroundOpacity={0.2}
+        />
+        <Avatar
+          name="Andreas"
+          size="md"
+          background="error"
+          textColor="error"
+          backgroundOpacity={0.2}
+        />
+        <Avatar
+          name="Andreas"
+          size="md"
+          background="info"
+          textColor="info"
+          backgroundOpacity={0.2}
+        />
+        <Avatar
+          name="Andreas"
+          size="md"
+          background="grey"
+          textColor="grey"
+          backgroundOpacity={0.2}
+        />
+      </Row>
+    );
+  },
+};
+
 export const WithNotification = {
   render: () => {
     return (
@@ -62,6 +121,21 @@ export const WithNotification = {
         <Avatar name="Andreas" size="md" background="error" withNotif />
         <Avatar name="Andreas" size="md" background="info" withNotif />
         <Avatar name="Andreas" size="md" background="grey" withNotif />
+      </Row>
+    );
+  },
+};
+
+export const WithIcon = {
+  render: () => {
+    return (
+      <Row gap="1rem">
+        <Avatar name="Andreas" size="md" background="primary">
+          <UserIcon />
+        </Avatar>
+        <Avatar name="Andreas" size="md" background="primary">
+          <LightbulbIcon />
+        </Avatar>
       </Row>
     );
   },

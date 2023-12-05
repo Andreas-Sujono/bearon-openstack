@@ -5,7 +5,7 @@ import React, { useEffect, useRef, useState } from 'react';
  * A Framer Motion AnimatePresence implementation of `react-transition-group`
  * to be used for vanilla css transitions
  */
-interface TransitionProps {
+export interface TransitionProps {
   children: (visible: boolean, status: string) => React.ReactElement;
   timeout?:
     | number
