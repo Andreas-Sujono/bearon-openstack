@@ -28,8 +28,11 @@ BearonUI is part of **Bearon Open Source Project (BearonOS)** that aims to unify
 - Components
    - [ ] Add more theme color, double check with MUI and chakra UI
    - [ ] fix skeleton color, based on theme
-   - [ ] fix button docs
-- Animation
+   - [ ] add progress, top of the page
    - [ ] Add animation on scroll
+   - [ ] enable passing styled component recursive function to `sx`
+   - [ ] Add dropdown menu (text based, on hover, offset menu --> similar with nav)
+   - [ ] Test performance of bearStyle
+   - [ ] remove `any` in bearStyle in every component
 
 
