@@ -93,11 +93,11 @@ function Button({
     }
 
     return createBearStyleClass(
-      styleProps,
+      { ...styleProps, background: undefined },
       {
-        background: clip ? 'transparent' : finalBg,
         color: finalTextColor,
         borderColor: finalBorderColor,
+        borderStyle: 'solid',
         borderWidth:
           variant === 'outlined' || variant === 'outlined-secondary'
             ? '1px'
@@ -107,6 +107,8 @@ function Button({
       },
       {
         '--btn-background': finalBg,
+        '--btn-color': finalTextColor,
+        '--final-btn-background': finalBg,
       }
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -145,6 +147,7 @@ function Button({
       }}
       data-size={textVariant}
       data-variant={variant}
+      data-clip={clip}
       {...rest}
     >
       {iconPosition === 'left' && icon}

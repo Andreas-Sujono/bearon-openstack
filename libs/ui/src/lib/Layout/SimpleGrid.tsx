@@ -6,7 +6,7 @@ import {
   extractStyleProps,
 } from '../utils/styles';
 
-interface Props
+interface SimpleGridProps
   extends Omit<HTMLAttributes<HTMLDivElement>, 'color'>,
     BearStyleProps {
   templateColumns?: string;
@@ -15,9 +15,11 @@ interface Props
   alignItems?: string;
   spacing?: string;
   children?: React.ReactNode;
+  as?: React.ElementType;
 }
 
 export default function SimpleGrid({
+  as: Component = 'div',
   children,
   className,
   templateColumns,
@@ -26,7 +28,7 @@ export default function SimpleGrid({
   alignItems,
   spacing,
   ...props
-}: Props) {
+}: SimpleGridProps) {
   const [styleProps, rest] = extractStyleProps(props);
 
   const styleClass = React.useMemo(() => {
@@ -50,11 +52,11 @@ export default function SimpleGrid({
   ]);
 
   return (
-    <div
+    <Component
       className={classes('bear-simple-grid', styleClass, className)}
       {...rest}
     >
       {children}
-    </div>
+    </Component>
   );
 }

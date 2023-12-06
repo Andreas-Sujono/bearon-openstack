@@ -24,3 +24,22 @@ export const Sizes = {
     );
   },
 };
+
+export const NoUnderline = {
+  render: () => {
+    return (
+      <div>
+        <Link href="https://www.google.com" disableUnderline>
+          External Link
+        </Link>
+        <br />
+        <br />
+
+        <Link href="https://www.google.com" secondary disableUnderline>
+          Secondary Link
+        </Link>
+        <br />
+      </div>
+    );
+  },
+};

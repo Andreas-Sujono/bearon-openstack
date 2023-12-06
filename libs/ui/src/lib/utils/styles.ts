@@ -38,7 +38,7 @@ export const parseThemeSizeCss = () => {
 export const createBearStyleClass = <T>(
   props: T & BearStyleProps,
   injectedStyle: React.CSSProperties = {},
-  customProperties: Record<string, string> = {}
+  customProperties: Record<string, string | number> = {}
 ) => {
   props.sx = cleanObject(props.sx || {});
   props.sx = cleanObject({ ...injectedStyle, ...props.sx });

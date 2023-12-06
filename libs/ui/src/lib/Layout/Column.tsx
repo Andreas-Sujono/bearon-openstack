@@ -6,27 +6,25 @@ import {
   extractStyleProps,
 } from '../utils/styles';
 
-interface RowProps
+interface ColumnProps
   extends Omit<HTMLAttributes<HTMLDivElement>, 'color'>,
     BearStyleProps {
   as?: React.ElementType;
   children?: React.ReactNode;
   className?: string;
-  wrap?: boolean;
   justifyContent?: string;
   alignItems?: string;
   gap?: string | number;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const Row = forwardRef<any, RowProps>(function _Row(
+const Column = forwardRef<any, ColumnProps>(function _Row(
   {
     as: Component = 'div',
     children,
     className,
     justifyContent = 'flex-start',
-    alignItems = 'center',
-    wrap = false,
+    alignItems = 'flex-start',
     gap,
     ...props
   },
@@ -36,17 +34,17 @@ const Row = forwardRef<any, RowProps>(function _Row(
   const styleClass = React.useMemo(() => {
     return createBearStyleClass(styleProps, {
       display: 'flex',
+      flexDirection: 'column',
       justifyContent: justifyContent,
       alignItems: alignItems,
       gap: gap,
-      flexWrap: wrap ? 'wrap' : 'nowrap',
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [...Object.values(styleProps), justifyContent, alignItems, gap, wrap]);
+  }, [...Object.values(styleProps), justifyContent, alignItems, gap]);
 
   return (
     <Component
-      className={classes('bear-row', styleClass, className)}
+      className={classes('bear-column', styleClass, className)}
       ref={ref}
       {...rest}
     >
@@ -55,4 +53,4 @@ const Row = forwardRef<any, RowProps>(function _Row(
   );
 });
 
-export default Row;
+export default Column;

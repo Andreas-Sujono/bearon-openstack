@@ -18,7 +18,9 @@
   border-radius: 0.5rem;
   text-transform: none;
   padding: 0.5em 1em;
-  transition: all 90ms ease-in-out;
+  transition-property: opacity, color, background;
+  transition-duration: var(--durationSm);
+  transition-timing-function: var(--bezierFastoutSlowin);
   position: relative;
   overflow: hidden;
   outline-color: transparent;
@@ -26,6 +28,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  background: var(--final-btn-background);
+
+  &[data-clip='true'] {
+    background-color: transparent;
+  }
 
   > *:nth-child(2) {
     margin-left: 0.3rem;
@@ -45,25 +52,42 @@
   }
 
   &:hover {
-    backdrop-filter: brightness(0.9);
-    filter: brightness(0.9);
+    --final-btn-background: color-mix(
+      in srgb,
+      var(--btn-background) 90%,
+      black
+    );
+  }
+  &:active {
+    --final-btn-background: color-mix(
+      in srgb,
+      var(--btn-background) 86%,
+      black
+    );
   }
   &:focus-visible {
     outline-color: var(--accent);
     outline-offset: 3px;
+    outline-width: 5px;
+    // box-shadow: var(--accent) 1px 1px 1px 0px;
   }
   &:disabled {
     cursor: not-allowed;
     filter: brightness(0.9);
-    //   background: ${(props) => props.theme.bg.secondary};
-
-    //   color: ${(props) => props.theme.text.secondary};
+    --final-btn-background: color-mix(
+      in srgb,
+      var(--btn-background) 90%,
+      black
+    );
   }
   &[data-variant='text']:hover,
   &[data-variant='outlined']:hover,
   &[data-variant='outlined-secondary']:hover {
-    // background-color: color-mix(in srgb, currentColor 4%, transparent);
-    backdrop-filter: brightness(0.96);
+    --final-btn-background: color-mix(
+      in srgb,
+      var(--btn-color) 8%,
+      transparent
+    );
     filter: none;
   }
 
@@ -79,7 +103,7 @@
   // }
 
   &[data-size='xs'] {
-    font-size: var(--fontSizeBodysS);
+    font-size: var(--fontSizeBodyXS);
   }
   &[data-size='sm'] {
     font-size: var(--fontSizeBodySm);
@@ -138,9 +162,9 @@
   &[data-variant='contained']::after {
     content: '';
     transition-property: opacity, color, background;
-    transition-duration: var(--durationM);
+    transition-duration: var(--durationSm);
     transition-timing-function: var(--bezierFastoutSlowin);
-    background: var(--btn-background);
+    background: var(--final-btn-background);
     position: absolute;
     inset: 0;
     z-index: -1;

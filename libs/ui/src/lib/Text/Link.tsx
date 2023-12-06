@@ -7,7 +7,7 @@ import {
 } from '../utils/styles';
 import styles from './styles.module.scss';
 
-interface LinkProps
+export interface LinkProps
   extends React.HTMLAttributes<HTMLAnchorElement>,
     BearStyleProps {
   rel?: string;
@@ -17,6 +17,8 @@ interface LinkProps
   className?: string;
   href?: string;
   as?: React.ElementType;
+  disableUnderline?: boolean;
+  disabled?: boolean;
 }
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const Link = forwardRef<any, LinkProps>(function _Link(
@@ -35,11 +37,25 @@ interface LinkContentProps
   secondary?: boolean;
   className?: string;
   href?: string;
+  as?: React.ElementType;
+  disableUnderline?: boolean;
+  disabled?: boolean;
 }
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const LinkContent = forwardRef<any, LinkContentProps>(
   function _LinkContent(
-    { rel, target, children, secondary, className, href, ...props },
+    {
+      rel,
+      target,
+      children,
+      secondary,
+      className,
+      href,
+      as: Component = 'a',
+      disableUnderline,
+      disabled,
+      ...props
+    },
     ref
   ) {
     const isExternal = href?.includes('://');
@@ -48,22 +64,24 @@ export const LinkContent = forwardRef<any, LinkContentProps>(
     const [styleProps, rest] = extractStyleProps(props);
 
     const styleClass = React.useMemo(() => {
-      return createBearStyleClass(styleProps);
+      return createBearStyleClass(styleProps, {});
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [...Object.values(styleProps)]);
 
     return (
-      <a
+      <Component
         className={classes(styles.link, className, styleClass)}
         data-secondary={secondary}
+        data-disable-underline={disableUnderline}
         rel={relValue}
         href={href}
         target={targetValue}
         ref={ref}
+        disabled={disabled}
         {...rest}
       >
         {children}
-      </a>
+      </Component>
     );
   }
 );

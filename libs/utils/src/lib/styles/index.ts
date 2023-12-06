@@ -8,8 +8,10 @@ export const pxToNum = (px: string) => Number(px.replace('px', ''));
 /**
  * Convert a number to a px string
  */
-export const numToPx = (num: number | string) =>
-  typeof num === 'number' ? `${num}px` : num;
+export const numToPx = (
+  num: number | string | undefined | null,
+  default_: string = '0'
+) => (!num ? default_ : typeof num === 'number' ? `${num}px` : num);
 
 /**
  * Convert pixel values to rem for a11y

@@ -127,4 +127,15 @@
   &[data-secondary='true'] {
     --linkColor: var(--textLight);
   }
+  &[data-disable-underline='true'],
+  &:disabled,
+  &[disabled] {
+    --filledLineGradient: transparent;
+    --unfilledLineGradient: transparent;
+  }
+
+  &:hover,
+  &:active {
+    filter: brightness(0.5);
+  }
 }

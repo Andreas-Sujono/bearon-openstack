@@ -6,13 +6,19 @@ import {
   extractStyleProps,
 } from '../utils/styles';
 
-interface Props
+interface BoxProps
   extends Omit<HTMLAttributes<HTMLDivElement>, 'color'>,
     BearStyleProps {
   children?: React.ReactNode;
+  as?: React.ElementType;
 }
 
-export default function Box({ children, className, ...props }: Props) {
+export default function Box({
+  children,
+  className,
+  as: Component = 'div',
+  ...props
+}: BoxProps) {
   const [styleProps, rest] = extractStyleProps(props);
 
   const styleClass = React.useMemo(() => {
@@ -21,8 +27,8 @@ export default function Box({ children, className, ...props }: Props) {
   }, [...Object.values(styleProps)]);
 
   return (
-    <div className={classes(styleClass, 'bear-box', className)} {...rest}>
+    <Component className={classes(styleClass, 'bear-box', className)} {...rest}>
       {children}
-    </div>
+    </Component>
   );
 }

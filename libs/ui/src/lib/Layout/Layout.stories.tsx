@@ -2,6 +2,7 @@ import { bearCss } from '@bearon/utils';
 import SimpleGrid from './SimpleGrid';
 import Box from './Box';
 import RowComponent from './Row';
+import ColumnComponent from './Column';
 import type { Meta } from '@storybook/react';
 
 const meta: Meta<typeof SimpleGrid> = {
@@ -85,6 +86,29 @@ export const Row = {
         <Box className={rowClass}>2</Box>
         <Box className={rowClass}>3</Box>
       </RowComponent>
+    );
+  },
+};
+
+const columnClass = bearCss`
+  padding: 1rem;
+  height: 200px;
+  background-color: grey;
+  color: white;
+  flex: 1 1 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+`;
+export const Column = {
+  render: () => {
+    return (
+      <ColumnComponent gap="1rem">
+        <Box className={columnClass}>column 1</Box>
+        <Box className={columnClass}>column 2</Box>
+        <Box className={columnClass}>column 3</Box>
+      </ColumnComponent>
     );
   },
 };
