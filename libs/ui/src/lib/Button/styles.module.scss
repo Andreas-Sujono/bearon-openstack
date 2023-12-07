@@ -30,6 +30,10 @@
   justify-content: center;
   background: var(--final-btn-background);
 
+  &:empty {
+    padding: 0.5em;
+  }
+
   &[data-clip='true'] {
     background-color: transparent;
   }
@@ -74,11 +78,14 @@
   &:disabled {
     cursor: not-allowed;
     filter: brightness(0.9);
-    --final-btn-background: color-mix(
-      in srgb,
-      var(--btn-background) 90%,
-      black
-    );
+
+    &[data-variant='contained'] {
+      --final-btn-background: color-mix(
+        in srgb,
+        var(--btn-background) 90%,
+        black
+      );
+    }
   }
   &[data-variant='text']:hover,
   &[data-variant='outlined']:hover,
