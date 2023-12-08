@@ -8,7 +8,6 @@ BearonUI is part of **Bearon Open Source Project (BearonOS)** that aims to unify
 
 - Reference: [https://design.open.gov.sg/](https://design.open.gov.sg/)
 
-
 ## Command
 
 - add storybook config: `npx nx g @nx/storybook:configuration`
@@ -17,22 +16,20 @@ BearonUI is part of **Bearon Open Source Project (BearonOS)** that aims to unify
 - run storybook: `npx nx run project:storybook`, ex: `npx nx run ui:storybook`
 - nvm sources: `source $(brew --prefix nvm)/nvm.sh`
 
-
 ### TODO
 
 - Documentation
-   - [x] add Welcome section
-   - [ ] finish UI Framework Research
-   - [ ] finish Consumer Behaviour Research
-   - [ ] finish sources Research
+  - [x] add Welcome section
+  - [ ] finish UI Framework Research
+  - [ ] finish Consumer Behaviour Research
+  - [ ] finish sources Research
 - Components
-   - [ ] Add more theme color, double check with MUI and chakra UI
-   - [ ] fix skeleton color, based on theme
-   - [ ] add progress, top of the page
-   - [ ] Add animation on scroll
-   - [ ] enable passing styled component recursive function to `sx`
-   - [ ] Add dropdown menu (text based, on hover, offset menu --> similar with nav)
-   - [ ] Test performance of bearStyle
-   - [ ] remove `any` in bearStyle in every component
-
-
+  - [ ] Add more theme color, double check with MUI and chakra UI
+  - [ ] fix skeleton color, based on theme
+  - [ ] add progress, top of the page
+  - [ ] Add animation on scroll
+  - [ ] enable passing styled component recursive function to `sx`
+  - [ ] Add dropdown menu (text based, on hover, offset menu --> similar with nav)
+  - [ ] Test performance of bearStyle
+  - [ ] remove `any` in bearStyle in every component
+  - [ ] fix portal has access to themeProvider
