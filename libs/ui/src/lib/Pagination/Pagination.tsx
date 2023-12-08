@@ -6,7 +6,7 @@ import {
   createBearStyleClass,
   extractStyleProps,
 } from '../utils/styles';
-import { TextVariant } from '../Text';
+import Text, { TextVariant } from '../Text';
 import { ThemeColor } from '../ThemeProvider';
 import Button from '../Button/Button';
 import { StyledPagination, StyledPaginationItem } from './Styles';
@@ -21,12 +21,11 @@ export interface PaginationProps
   totalCount?: number;
   disabled?: boolean;
   totalPageShown?: [number, number, number]; //by default 1 in left, 3 in middle, and 1 in right
-  onClickPrev?: (prevPage: number) => void;
-  onClickNext?: (next: number) => void;
+  setPage?: (page: number) => void;
   gap?: string | number;
 }
 
-export default function Pagination({
+export function Pagination({
   className,
   size = 'sm',
   currentPage = 5,
@@ -35,8 +34,7 @@ export default function Pagination({
   disabled,
   totalPageShown = [1, 3, 1],
   activeBackground = 'grey',
-  onClickPrev,
-  onClickNext,
+  setPage,
   gap,
   ...props
 }: PaginationProps) {
@@ -53,52 +51,48 @@ export default function Pagination({
 
   const leftItems = array.slice(0, totalPageShown[0]);
   const rightItems = array
-    .slice(totalPageShown[0] + totalPageShown[1])
-    .slice(-totalPageShown[2]);
+    .slice(-totalPageShown[2])
+    .filter((item) => !leftItems.includes(item));
 
-  const midLeftItems = array.slice(
-    Math.max(currentPage - 1 - Math.floor(totalPageShown[1] / 2), 0),
-    currentPage - 1
-  );
-  const midRightItems = array.slice(
-    currentPage,
-    currentPage + 1 + totalPageShown[1] - midLeftItems.length
-  );
-  const allMidItems = midLeftItems
-    .concat(currentPage)
-    .concat(midRightItems)
-    .filter((item) => !leftItems.includes(item) && !rightItems.includes(item));
+  const shouldRenderDot =
+    totalPageShown.reduce((acc, cur) => acc + cur) < totalPage - 1;
+  const shouldRenderLeftDot =
+    shouldRenderDot && currentPage >= totalPageShown[0] + totalPageShown[1];
+  const shouldRenderRightDot =
+    shouldRenderDot &&
+    currentPage <=
+      totalPage - totalPageShown[0] - totalPageShown[1] - totalPageShown[2] + 1;
 
-  let midItems = [...allMidItems];
-  const shouldRenderLeftDot = (leftItems.at(-1) || 0) + 1 !== midItems[0];
-  const shouldRenderRightDot = rightItems.at(0) !== (midItems.at(-1) || 0) + 1;
-
-  console.log('midItems: ', midItems);
+  let midItems = [] as number[];
   if (shouldRenderLeftDot && shouldRenderRightDot) {
-    midItems = allMidItems.slice(0, totalPageShown[1]);
-  } else if (shouldRenderLeftDot) {
-    //when no right dot, need to replace with next page
-    midItems = allMidItems.slice(0, totalPageShown[1]);
-    midItems = midItems
-      .concat((midItems.at(-1) || 0) + 1)
-      .filter(
-        (item) => !leftItems.includes(item) && !rightItems.includes(item)
-      );
+    //get middle items
+    midItems = array
+      .slice(
+        Math.max(currentPage - 1 - Math.floor(totalPageShown[1] / 2), 0),
+        currentPage - 1
+      )
+      .concat(currentPage)
+      .concat(array.slice(currentPage, currentPage + 1 + totalPageShown[1]))
+      .filter((item) => !leftItems.includes(item) && !rightItems.includes(item))
+      .slice(0, totalPageShown[1]);
   } else if (shouldRenderRightDot) {
-    //when no left dot, need to replace with prev page
-    const start = Math.max(-totalPageShown[1] - 2, 0);
-    midItems = allMidItems.slice(start, start + totalPageShown[1] + 1);
+    midItems = array.slice(totalPageShown[0], totalPageShown[1] + 2);
+  } else if (shouldRenderLeftDot) {
+    midItems = array.slice(-totalPageShown[1] - 2, -rightItems.length);
+  } else {
+    //get middle items
+    midItems = array.slice(totalPageShown[0], -rightItems.length);
   }
 
   const handleClickPrev = () => {
-    if (currentPage !== 1 && onClickPrev) {
-      onClickPrev(currentPage - 1);
+    if (currentPage !== 1 && setPage) {
+      setPage(currentPage - 1);
     }
   };
 
   const handleClickNext = () => {
-    if (currentPage !== totalPage && onClickNext) {
-      onClickNext(currentPage + 1);
+    if (currentPage !== totalPage && setPage) {
+      setPage(currentPage + 1);
     }
   };
 
@@ -113,6 +107,8 @@ export default function Pagination({
         variant="text"
         disabled={currentPage === 1}
         onClick={handleClickPrev}
+        textColor={activeBackground}
+        className="bear-pagination-arrow-btn"
         icon={
           <ChevronLeftIcon
             color="var(--textLight)"
@@ -126,6 +122,8 @@ export default function Pagination({
           key={item}
           data-active={currentPage === item}
           $activeBackground={activeBackground}
+          onClick={() => setPage && setPage(item)}
+          $size={size}
         >
           {item}
         </StyledPaginationItem>
@@ -136,6 +134,8 @@ export default function Pagination({
           key={item}
           data-active={currentPage === item}
           $activeBackground={activeBackground}
+          onClick={() => setPage && setPage(item)}
+          $size={size}
         >
           {item}
         </StyledPaginationItem>
@@ -146,6 +146,8 @@ export default function Pagination({
           key={item}
           data-active={currentPage === item}
           $activeBackground={activeBackground}
+          onClick={() => setPage && setPage(item)}
+          $size={size}
         >
           {item}
         </StyledPaginationItem>
@@ -153,6 +155,8 @@ export default function Pagination({
       <Button
         variant="text"
         disabled={currentPage === totalPage}
+        textColor={activeBackground}
+        className="bear-pagination-arrow-btn"
         icon={
           <ChevronRightIcon
             color="var(--textLight)"
@@ -165,3 +169,75 @@ export default function Pagination({
     </StyledPagination>
   );
 }
+
+export const MinimalPagination = ({
+  className,
+  size = 'xs',
+  currentPage = 5,
+  pageSize = 10,
+  totalCount = 1,
+  disabled,
+  setPage,
+  gap,
+  ...props
+}: PaginationProps) => {
+  const [styleProps, rest] = extractStyleProps(props);
+
+  const styleClass = React.useMemo(() => {
+    styleProps.background = undefined;
+    return createBearStyleClass(styleProps);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [...Object.values(styleProps)]);
+
+  const totalPage = Math.ceil(totalCount / pageSize);
+
+  const handleClickPrev = () => {
+    if (currentPage !== 1 && setPage) {
+      setPage(currentPage - 1);
+    }
+  };
+
+  const handleClickNext = () => {
+    if (currentPage !== totalPage && setPage) {
+      setPage(currentPage + 1);
+    }
+  };
+
+  return (
+    <StyledPagination
+      className={classes(styleClass, 'bear-pagination', className)}
+      $size={size}
+      $gap={gap}
+      {...rest}
+    >
+      <Button
+        variant="text"
+        disabled={currentPage === 1}
+        onClick={handleClickPrev}
+        textColor={'grey'}
+        className="bear-pagination-arrow-btn"
+        icon={
+          <ChevronLeftIcon color="var(--textBody)" width="18px" height="18px" />
+        }
+      ></Button>
+      <Text size={size} colour="textLight">
+        Page {currentPage} of {totalPage}
+      </Text>
+
+      <Button
+        variant="text"
+        disabled={currentPage === totalPage}
+        textColor="grey"
+        className="bear-pagination-arrow-btn"
+        icon={
+          <ChevronRightIcon
+            color="var(--textBody)"
+            width="18px"
+            height="18px"
+          />
+        }
+        onClick={handleClickNext}
+      ></Button>
+    </StyledPagination>
+  );
+};

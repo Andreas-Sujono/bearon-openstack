@@ -2,7 +2,7 @@ import { bearStyled, numToPx } from '@bearon/utils';
 import React from 'react';
 import { TextVariant } from '../Text';
 import { ThemeColor } from '../ThemeProvider';
-import { parseBackgroundColorCss } from '../utils/styles';
+import { parseBackgroundColorCss, parseFontSize } from '../utils/styles';
 
 export const StyledPagination = (
   props: {
@@ -15,8 +15,13 @@ export const StyledPagination = (
     align-items: center;
     position: relative;
     border-radius: 0.2rem;
-    gap: ${numToPx(props.$gap, '6[x')};
+    gap: ${numToPx(props.$gap, '2px')};
     padding-right: 2rem;
+    font-size: ${parseFontSize(props.$size || 'sm')};
+
+    .bear-pagination-arrow-btn:disabled{
+      background: transparent !important;
+    }
 `;
 
 export const StyledPaginationItem = (
@@ -26,7 +31,8 @@ export const StyledPaginationItem = (
     $activeBackground?: ThemeColor;
   } & React.HTMLAttributes<HTMLDivElement>
 ) => bearStyled('button', props)`
-    padding: 8px 12px;
+    font-size: ${parseFontSize(props.$size || 'sm')};
+    padding: 0.4em 0.725em;
     border-radius: 0.5rem;
     border: 0;
     background: transparent;

@@ -35,7 +35,7 @@ export interface ButtonProps
   fullWidth?: boolean;
 }
 
-function Button({
+export function Button({
   background = 'primary',
   borderColor,
   variant = 'contained',
@@ -69,7 +69,7 @@ function Button({
     let finalTextColor = `var(--${textColor})`;
     let finalBorderColor = `var(--${borderColor})`;
 
-    if (variant !== 'contained' && background === 'primary') {
+    if (variant !== 'contained') {
       finalBg = `transparent`;
     }
 
@@ -173,5 +173,3 @@ function Button({
     </button>
   );
 }
-
-export default Button;

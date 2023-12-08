@@ -143,3 +143,17 @@ export const extractStyleProps = <T>(
   };
   return [styleProps, rest as T];
 };
+
+export const parseFontSize = (size?: string) => {
+  if (size === 'xs') return `var(--fontSizeBodyXs)`;
+  if (size === 'sm') return `var(--fontSizeBodySm)`;
+  if (size === 'md') return `var(--fontSizeBodyMd)`;
+  if (size === 'lg') return `var(--fontSizeBodyLg)`;
+  if (size === 'xl') return `var(--fontSizeBodyXl)`;
+  if (size === 'h5') return `2rem`;
+  if (size === 'h4') return `3rem`;
+  if (size === 'h3') return `4rem`;
+  if (size === 'h2') return `5rem`;
+  if (size === 'h1') return `6rem`;
+  return `var(--fontSizeBodySm)`;
+};

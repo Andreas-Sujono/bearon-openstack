@@ -19,14 +19,29 @@ export const StyledModal = (
   overflow: hidden;
   z-index: 999;
   padding: 40px 20px 20px;
-  transition: opacity 100ms ease-in-out;
+  transition: all 200ms ease-in-out;
   opacity: 0;
+  box-shadow: 0px 0px 20px 0px rgba(104, 104, 104, 0.3);
 
   &[data-status='entering'],&[data-status='entered']{
     opacity: 1;
   }
   &[data-status='exiting'],&[data-status='exited']{
-    transition: opacity 300ms ease-in-out;
+    transition: all 300ms ease-in-out;
     opacity: 0;
+  }
+
+  .bear-modal-content{
+    transition: all 150ms ease-in-out;
+    transform: scale(0.8);
+    &[data-status='entering'],&[data-status='entered']{
+      opacity: 1;
+      transform: scale(1);
+    }
+    &[data-status='exiting'],&[data-status='exited']{
+      transition: all 300ms ease-in-out;
+      opacity: 0;
+      transform: scale(0.8);
+    }
   }
 `;

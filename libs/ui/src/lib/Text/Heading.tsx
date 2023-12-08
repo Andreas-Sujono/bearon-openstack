@@ -12,7 +12,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement>, BearStyleProps {
   level?: number | string;
   as?: React.ElementType;
   align?: string;
-  weight?: string;
+  weight?: 'auto' | 'regular' | 'medium' | 'bold';
   className?: string;
 }
 

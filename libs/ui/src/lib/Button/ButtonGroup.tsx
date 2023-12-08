@@ -14,7 +14,7 @@ export interface ButtonGroupProps
   spacing?: string | number;
 }
 
-function ButtonGroup({
+export function ButtonGroup({
   align = 'left',
   className,
   children,
@@ -46,5 +46,3 @@ function ButtonGroup({
     </Row>
   );
 }
-
-export default ButtonGroup;
