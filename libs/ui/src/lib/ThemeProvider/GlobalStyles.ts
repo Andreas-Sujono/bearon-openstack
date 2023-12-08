@@ -66,10 +66,10 @@ export const createTokenStyles = (
     :root {
       font-family: ${tokens.base.fontStack};
       ${createThemeProperties(tokens.base)}
-    }
-  
-    ${createMediaTokenProperties(media, tokens)}
-  
+      ${createThemeProperties(themes.light)}
+      ${createMediaTokenProperties(media, tokens)}
+    }  
+
     [data-theme='dark'] {
       ${createThemeProperties(themes.dark)}
     }
