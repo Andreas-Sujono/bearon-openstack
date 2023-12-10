@@ -8,7 +8,7 @@ import {
 } from '../utils/styles';
 import styles from './Divider.module.css';
 
-export interface DividerProps
+interface DividerProps
   extends React.HTMLAttributes<HTMLDivElement>,
     BearStyleProps {
   lineWidth?: string | number;
@@ -56,3 +56,5 @@ export const Divider = ({
     </div>
   );
 };
+
+export { DividerProps };

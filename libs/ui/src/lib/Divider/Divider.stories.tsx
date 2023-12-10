@@ -24,7 +24,7 @@ export const NotchDivider = {
 
 export const LineWidthAndHeight = {
   render: () => {
-    return <Divider lineWidth="50%" lineHeight="2px" />;
+    return <Divider lineWidth="50%" lineHeight="2px" background="primary" />;
   },
 };
 

@@ -166,7 +166,7 @@
     font-size: var(--fontSizeH5);
   }
 
-  &[data-variant='contained']::after {
+  &[data-clip='true'][data-variant='contained']::after {
     content: '';
     transition-property: opacity, color, background;
     transition-duration: var(--durationSm);

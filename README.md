@@ -19,7 +19,6 @@ BearonUI is part of **Bearon Open Source Project (BearonOS)** that aims to unify
 ### TODO
 
 - Documentation
-  - [x] add Welcome section
   - [ ] finish UI Framework Research
   - [ ] finish Consumer Behaviour Research
   - [ ] finish sources Research
@@ -33,3 +32,5 @@ BearonUI is part of **Bearon Open Source Project (BearonOS)** that aims to unify
   - [ ] Test performance of bearStyle
   - [ ] remove `any` in bearStyle in every component
   - [ ] fix portal has access to themeProvider
+  - [ ] fix acceesiblity for tab
+  - [ ] improve table to include sorting, virtualized list, sticky headers

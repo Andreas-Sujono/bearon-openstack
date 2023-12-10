@@ -8,7 +8,7 @@ import {
 } from '../utils/styles';
 import Text, { TextVariant } from '../Text';
 import { ThemeColor } from '../ThemeProvider';
-import Button from '../Button/Button';
+import { Button } from '../Button/Button';
 import { StyledPagination, StyledPaginationItem } from './Styles';
 
 export interface PaginationProps
@@ -124,6 +124,7 @@ export function Pagination({
           $activeBackground={activeBackground}
           onClick={() => setPage && setPage(item)}
           $size={size}
+          aria-selected={currentPage === item}
         >
           {item}
         </StyledPaginationItem>
@@ -136,6 +137,7 @@ export function Pagination({
           $activeBackground={activeBackground}
           onClick={() => setPage && setPage(item)}
           $size={size}
+          aria-selected={currentPage === item}
         >
           {item}
         </StyledPaginationItem>
@@ -148,6 +150,7 @@ export function Pagination({
           $activeBackground={activeBackground}
           onClick={() => setPage && setPage(item)}
           $size={size}
+          aria-selected={currentPage === item}
         >
           {item}
         </StyledPaginationItem>

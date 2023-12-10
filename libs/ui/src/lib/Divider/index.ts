@@ -1,2 +1,4 @@
-export { Divider, DividerProps } from './Divider';
-export { NotchDivider, NotchDividerProps } from './NotchDivider';
+import { Divider } from './Divider';
+import { NotchDivider } from './NotchDivider';
+
+export { Divider, NotchDivider };
