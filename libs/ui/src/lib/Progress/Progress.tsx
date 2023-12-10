@@ -5,46 +5,74 @@ import {
   createBearStyleClass,
   extractStyleProps,
 } from '../utils/styles';
-import { TextVariant } from '../Text';
+import Text from '../Text';
 import { ThemeColor } from '../ThemeProvider';
+import Box from '../Layout/Box';
 import { StyledProgress } from './Styles';
 
 export interface ProgressProps
   extends HTMLAttributes<HTMLDivElement>,
     BearStyleProps {
-  size?: TextVariant;
+  height?: string;
   progressColor?: ThemeColor;
-  showedLabel?: boolean;
+  textColor?: ThemeColor;
+  showLabel?: boolean;
   label?: string; //custom label
-  progress?: number; //[0 to 100]
+  progress: number; //[0 to 100]
   duration?: number; //duration until full, run it automatically
 }
 
 export function Progress({
   className,
-  size = 'sm',
-  progressColor,
-  showedLabel,
+  height = '14px',
+  progressColor = 'primary',
+  textColor = 'white',
+  showLabel = true,
   label,
   progress,
   duration,
   ...props
 }: ProgressProps) {
   const [styleProps, rest] = extractStyleProps(props);
+  progress = Math.min(progress, 100);
 
   const styleClass = React.useMemo(() => {
-    styleProps.background = undefined;
-    return createBearStyleClass(styleProps);
+    styleProps.background = styleProps.background || 'grey';
+    styleProps.backgroundOpacity = styleProps.backgroundOpacity || '0.2';
+    return createBearStyleClass(
+      styleProps,
+      {
+        height,
+      },
+      {
+        '--progress': (progress || 0) + '%',
+      }
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [...Object.values(styleProps)]);
+  }, [...Object.values(styleProps), progress]);
 
   return (
     <StyledProgress
       className={classes(styleClass, 'bear-progress', className)}
-      $size={size}
       {...rest}
     >
-      <div />
+      <Box
+        className="bear-progress-active"
+        background={progressColor}
+        data-full={progress >= 100}
+      >
+        {showLabel ? (
+          label ? (
+            label
+          ) : (
+            <Text colour={textColor} size="xs">
+              {progress}%
+            </Text>
+          )
+        ) : (
+          ''
+        )}
+      </Box>
     </StyledProgress>
   );
 }
