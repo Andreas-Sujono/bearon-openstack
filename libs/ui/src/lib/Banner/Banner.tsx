@@ -8,7 +8,7 @@ import {
 } from '../utils/styles';
 import Text, { TextVariant } from '../Text';
 import { ThemeColor } from '../ThemeProvider';
-import Button from '../Button/Button';
+import { Button } from '../Button/Button';
 import Transition from '../Animation/Transition';
 import { StyledBanner } from './Styles';
 
