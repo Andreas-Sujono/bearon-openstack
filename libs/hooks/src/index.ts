@@ -16,3 +16,6 @@ export * from './lib/useDebounce';
 export * from './lib/useIdle';
 export * from './lib/useIntersectionObserver';
 export * from './lib/useClickOutside';
+export * from './lib/useIsUserVisible';
+export * from './lib/useSearch';
+export * from './lib/useSort';

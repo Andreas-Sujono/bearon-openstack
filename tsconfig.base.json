@@ -24,6 +24,7 @@
       "@bearon/notif": ["libs/notif/src/index.ts"],
       "@bearon/tailwind": ["libs/tailwind/src/index.ts"],
       "@bearon/ui": ["libs/ui/src/index.ts"],
+      "@bearon/styled-ui": ["libs/styled-ui/src/index.ts"],
       "@bearon/utils": ["libs/utils/src/index.ts"]
     }
   },
