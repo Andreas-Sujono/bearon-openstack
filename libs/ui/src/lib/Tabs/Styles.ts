@@ -1,14 +1,19 @@
-import { bearStyled, numToPx } from '@bearon/utils';
-import React, { HTMLAttributes } from 'react';
+import styled from 'styled-components';
+import {
+  InternalCommonStyleProps,
+  getDefaultClassName,
+  numToPx,
+  parseColor,
+} from '../utils';
 
-export const StyledTabs = (
-  props: {
+export const StyledTabs = styled.div<
+  InternalCommonStyleProps & {
     $spacing?: string | number;
-    children?: React.ReactNode;
     $variant?: 'background' | 'underline';
-  } & Omit<HTMLAttributes<HTMLDivElement>, 'onClick'>
-) => bearStyled('div', props)`
-  .bear-tabs-ul {
+    $background?: string;
+  }
+>`
+  ${'.' + getDefaultClassName('tabs-ul')} {
     list-style: none;
     margin: 0;
     padding: 0;
@@ -16,7 +21,7 @@ export const StyledTabs = (
     position: relative;
     width: fit-content;
 
-    ${
+    ${(props) =>
       props.$variant === 'underline'
         ? `&::after {
       content: "";
@@ -29,17 +34,15 @@ export const StyledTabs = (
       translate: var(--_left, 0) 0;
       transform-origin: left;
       transition: scale 120ms, translate 120ms;
-      background-color: var(--tabs-bg);
+      background-color: ${parseColor(props.$background)};
     }`
-        : ''
-    }
-    
-    
-    & li{
+        : ''}
+
+    & li {
       overflow: hidden;
-     	position: relative;
-      padding-right: ${numToPx(props.$spacing, '0.5rem')};
-      padding-left: ${numToPx(props.$spacing, '0.5rem')};
+      position: relative;
+      padding-right: ${(props) => numToPx(props.$spacing, '0.5rem')};
+      padding-left: ${(props) => numToPx(props.$spacing, '0.5rem')};
       &:first-child {
         padding-left: 0;
       }
@@ -49,19 +52,20 @@ export const StyledTabs = (
       cursor: pointer;
       opacity: 0.7;
     }
-    & a:hover, & a:focus-visible{
+    & a:hover,
+    & a:focus-visible {
       opacity: 1;
     }
   }
 `;
 
-export const StyledTabsHover = (
-  props: {
+export const StyledTabsHover = styled.div<
+  InternalCommonStyleProps & {
     $spacing?: string | number;
-    children?: React.ReactNode;
-  } & Omit<HTMLAttributes<HTMLDivElement>, 'onClick'>
-) => bearStyled('div', props)`
-  .bear-tabs-ul {
+    $background?: string;
+  }
+>`
+  ${'.' + getDefaultClassName('tabs-ul')} {
     list-style: none;
     margin: 0;
     padding: 0;
@@ -72,12 +76,12 @@ export const StyledTabsHover = (
       --_translate: 100%;
       --_scale-delay: 200ms;
     }
-    
-    & li{
+
+    & li {
       overflow: hidden;
-     	position: relative;
-      padding-right: ${numToPx(props.$spacing, '0.5rem')};
-      padding-left: ${numToPx(props.$spacing, '0.5rem')};
+      position: relative;
+      padding-right: ${(props) => numToPx(props.$spacing, '0.5rem')};
+      padding-left: ${(props) => numToPx(props.$spacing, '0.5rem')};
       &:first-child {
         padding-left: 0;
       }
@@ -88,20 +92,18 @@ export const StyledTabsHover = (
         inset-inline: 0;
         inset-block-end: 0;
         block-size: 3px;
-        background-color: var(--tabs-bg);
-      
+        background-color: ${(props) => parseColor(props.$background)};
+
         translate: var(--_translate, 0);
         scale: var(--_scale, 0) 1;
-        transition:
-          scale 100ms var(--_scale-delay, 0ms), 
-          translate 200ms;
+        transition: scale 100ms var(--_scale-delay, 0ms), translate 200ms;
       }
 
       &:hover ~ li {
         --_translate: -100%;
         --_scale-delay: 200ms;
       }
-      
+
       &:hover {
         --_scale: 1;
         --_translate: 0;
@@ -113,7 +115,8 @@ export const StyledTabsHover = (
       cursor: pointer;
       opacity: 0.7;
     }
-    & a:hover, & a:focus-visible{
+    & a:hover,
+    & a:focus-visible {
       opacity: 1;
     }
   }

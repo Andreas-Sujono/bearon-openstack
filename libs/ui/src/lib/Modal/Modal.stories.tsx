@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Button } from '../Button/Button';
-import Box from '../Layout/Box';
-import Text from '../Text';
+import { Box } from '../Layout';
+import { Text } from '../Text';
 import { ButtonGroup } from '../Button';
 import { Modal, ModalHeader } from './ModalPortal';
 import type { Meta } from '@storybook/react';

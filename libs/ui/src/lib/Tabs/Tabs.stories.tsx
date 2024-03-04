@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import Box from '../Layout/Box';
-import Column from '../Layout/Column';
+import { Box, Column } from '../Layout';
 import { Tabs, TabsProps } from './Tabs';
 import { TabsHover as TabsHoverComponent } from './TabsHover';
 import type { Meta } from '@storybook/react';

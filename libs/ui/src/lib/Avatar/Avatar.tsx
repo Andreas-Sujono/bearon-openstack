@@ -1,17 +1,17 @@
-import { classes } from '@bearon/utils';
 import React, { HTMLAttributes } from 'react';
-import {
-  BearStyleProps,
-  createBearStyleClass,
-  extractStyleProps,
-} from '../utils/styles';
-import Text, { TextVariant } from '../Text';
+import { Text, TextVariant } from '../Text';
 import { ThemeColor } from '../ThemeProvider';
 import { StyledAvatar } from './Styles';
+import {
+  CommonStyleProps,
+  classes,
+  getDefaultClassName,
+  parseProps,
+} from '../utils';
 
 export interface AvatarProps
-  extends HTMLAttributes<HTMLDivElement>,
-    BearStyleProps {
+  extends Omit<HTMLAttributes<HTMLDivElement>, 'color'>,
+    CommonStyleProps {
   children?: React.ReactNode;
   name?: string;
   size?: TextVariant;
@@ -28,29 +28,23 @@ export default function Avatar({
   withNotif,
   abbreviation,
   textColor,
+  background = 'primary',
   ...props
 }: AvatarProps) {
-  const [styleProps, rest] = extractStyleProps(props);
-
-  const styleClass = React.useMemo(() => {
-    styleProps.background = styleProps.background || 'primary';
-    return createBearStyleClass(styleProps);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [...Object.values(styleProps)]);
-
   return (
     <StyledAvatar
-      className={classes(styleClass, 'bear-avatar', className)}
+      className={classes(className, getDefaultClassName('avatar'))}
       $size={size}
-      $background={props.background}
+      $background={background}
       $withNotif={withNotif}
-      {...rest}
+      {...parseProps(props)}
     >
       {children || (
         <Text size={size} colour={textColor}>
           {abbreviation || name?.charAt(0) || ''}
         </Text>
       )}
+      <span />
     </StyledAvatar>
   );
 }

@@ -1,9 +1,9 @@
-import React from 'react';
-import Column from '../Layout/Column';
+import { Column } from '../Layout';
 import { ThemeColor } from '../ThemeProvider';
 import { TextVariant } from '../Text';
 import { MinimalPagination, Pagination } from './Pagination';
 import type { Meta } from '@storybook/react';
+import React from 'react';
 
 const meta: Meta<typeof Pagination> = {
   title: 'Components/Pagination',

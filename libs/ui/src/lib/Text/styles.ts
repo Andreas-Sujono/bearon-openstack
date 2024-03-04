@@ -1,100 +1,142 @@
-import { bearCss } from '@bearon/utils';
+import styled from 'styled-components';
+import { FontWeight, TextVariant } from './types';
+import { InternalCommonStyleProps, parseCommonProps } from '../utils';
 
-//TODO: change css to use CSS in JS
-export const commonTextStyle = ({
-  size,
-  color,
-  align,
-  weight,
-}: {
-  size?: string;
-  color?: string;
-  align?: string;
-  weight?: string;
-}) => bearCss`
-font-size: ${(() => {
-  if (size === 'xs') return 'var(--fontSizeBodyXs)';
-  return '';
-})()};
+export const parseFontSize = (size?: TextVariant | string) => {
+  if (size === 'xxs') return `var(--fontSizeBodyXxs)`;
+  if (size === 'xs') return `var(--fontSizeBodyXs)`;
+  if (size === 'sm') return `var(--fontSizeBodySm)`;
+  if (size === 'md') return `var(--fontSizeBodyMd)`;
+  if (size === 'lg') return `var(--fontSizeBodyLg)`;
+  if (size === 'xl') return `var(--fontSizeBodyXl)`;
+  if (size === 'h5' || size === '5') return `var(--fontSizeH5)`;
+  if (size === 'h4') return `var(--fontSizeH4)`;
+  if (size === 'h3') return `var(--fontSizeH3)`;
+  if (size === 'h2') return `var(--fontSizeH2)`;
+  if (size === 'h1') return `var(--fontSizeH1)`;
+  return `inherit`;
+};
 
+export const parseFontWeight = (weight?: FontWeight) => {
+  if (weight === 'auto') return `inherit`;
+  if (weight === 'regular') return `var(--fontWeightRegular);`;
+  if (weight === 'medium') return `var(--fontWeightMedium);`;
+  if (weight === 'bold') return `var(--fontWeightBold);`;
+  return `${weight || 'inherit'}`;
+};
 
-    &[data-size='xs'] {
-    font-size: var(--fontSizeBodyXs);
-  }
-  &[data-size='s'] {
-    font-size: var(--fontSizeBodyS);
-  }
-  &[data-size='m'] {
-    font-size: var(--fontSizeBodyM);
-  }
-  &[data-size='l'] {
-    font-size: var(--fontSizeBodyL);
-  }
-  &[data-size='xl'] {
-    font-size: var(--fontSizeBodyXL);
-  }
-  &[data-size='2xl'] {
-    font-size: var(--fontSizeBody2xl);
-  }
-  &[data-size='3xl'] {
-    font-size: var(--fontSizeBody3xl);
-  }
+export const StyledText = styled.div<
+  {
+    $size?: TextVariant;
+    $color?: string;
+    $align?: string;
+    $weight?: FontWeight;
+    $display?: string;
+    $ff?: string;
+    $maxLine?: number;
+  } & InternalCommonStyleProps
+>`
+  font-size: ${(props) => parseFontSize(props.$size)};
+  font-weight: ${(props) => parseFontWeight(props.$weight)};
+  text-align: ${(props) => props.$align || 'initial'};
+  line-height: var(--lineHeightBody);
+  color: inherit;
+  display: ${(props) => props.$display || 'inline'};
+  ${(props) => props.$ff && { fontFamily: `var(--${props.$ff})` }};
 
-  &[data-level='0'],
-  &[data-level='h0'] {
-    letter-spacing: -0.05em;
-    font-size: var(--fontSizeH0);
-  }
-
-  &[data-level='1'],
-  &[data-level='h1'] {
-    letter-spacing: -0.05em;
-    font-size: var(--fontSizeH1);
+  &[data-secondary='true'] {
+    color: var(--textLight);
   }
 
-  &[data-level='2'],
-  &[data-level='h2'] {
-    font-size: var(--fontSizeH2);
-    letter-spacing: -0.04em;
+  ${(props) =>
+    props.$maxLine && {
+      overflow: 'hidden',
+      display: '-webkit-box',
+      WebkitLineClamp: props.$maxLine,
+      lineClamp: props.$maxLine,
+      WebkitBoxOrient: 'vertical',
+    }}
+
+  ${(props) => parseCommonProps(props)}
+`;
+
+export const StyledHeading = styled.div<
+  {
+    $size?: TextVariant;
+    $align?: string;
+    $weight?: FontWeight;
+    $ff?: string;
+  } & InternalCommonStyleProps
+>`
+  font-size: ${(props) => parseFontSize(props.$size)};
+  font-weight: ${(props) => parseFontWeight(props.$weight)};
+  text-align: ${(props) => props.$align};
+  line-height: var(--lineHeightTitle);
+  color: var(--textTitle);
+  margin: 0;
+  ${(props) => props.$ff && { fontFamily: `var(--${props.$ff})` }};
+
+  &[data-secondary='true'] {
+    color: var(--textLight);
   }
 
-  &[data-level='3'],
-  &[data-level='h3'] {
-    font-size: var(--fontSizeH3);
-    letter-spacing: -0.02em;
+  ${(props) => parseCommonProps(props)}
+`;
+
+export const StyledLink = styled.a<
+  {
+    $size?: TextVariant;
+    $align?: string;
+    $weight?: FontWeight;
+    $disabled?: boolean;
+  } & InternalCommonStyleProps
+>`
+  font-size: ${(props) => parseFontSize(props.$size)};
+  font-weight: ${(props) => parseFontWeight(props.$weight)};
+  text-align: ${(props) => props.$align};
+
+  --lineStrokeWidth: 2px;
+  --linkColor: var(--primary);
+  --lineOpacity: 0;
+  --filled-line-gradient: linear-gradient(var(--linkColor), var(--linkColor));
+  --unfilled-line-gradient: linear-gradient(transparent, transparent);
+
+  ${(props) =>
+    props.$disabled && {
+      '--filled-line-gradient': 'transparent',
+      '--unfilled-line-gradient': 'transparent',
+    }}
+
+  cursor: pointer;
+  display: inline;
+  color: var(--linkColor);
+  background: var(--filled-line-gradient) no-repeat 100% 100% / 0
+      var(--lineStrokeWidth),
+    var(--unfilled-line-gradient) no-repeat 0 100% / 100% var(--lineStrokeWidth);
+  padding-bottom: var(--lineStrokeWidth);
+  text-decoration: none;
+
+  &:hover,
+  &:focus {
+    background: var(--filled-line-gradient) no-repeat 0 100% / 100%
+        var(--lineStrokeWidth),
+      var(--unfilled-line-gradient) no-repeat 0 100% / 100%
+        var(--lineStrokeWidth);
   }
 
-  &[data-level='4'],
-  &[data-level='h4'] {
-    font-size: var(--fontSizeH4);
-    letter-spacing: -0.01em;
+  @media (prefers-reduced-motion: no-preference) {
+    transition-duration: var(--durationMd);
+    transition-timing-function: var(--bezierFastoutSlowin);
+    transition-property: background-size;
   }
 
-  &[data-level='5'],
-  &[data-level='h5'] {
-    font-size: var(--fontSizeH5);
+  &[data-secondary='true'] {
+    --linkColor: var(--textLight);
   }
 
-  &[data-align='auto'] {
-    text-align: inherit;
+  &:hover,
+  &:active {
+    filter: brightness(0.5);
   }
-  &[data-align='start'] {
-    text-align: start;
-  }
-  &[data-align='center'] {
-    text-align: center;
-  }
-
-  &[data-weight='auto'] {
-    font-weight: inherit;
-  }
-  &[data-weight='regular'] {
-    font-weight: var(--fontWeightRegular);
-  }
-  &[data-weight='medium'] {
-    font-weight: var(--fontWeightMedium);
-  }
-  &[data-weight='bold'] {
-    font-weight: var(--fontWeightBold);
-  }
+  ${(props) => parseCommonProps(props)}
 `;

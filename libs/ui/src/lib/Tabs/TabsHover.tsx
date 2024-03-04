@@ -1,17 +1,16 @@
-import { classes } from '@bearon/utils';
 import React, { HTMLAttributes } from 'react';
-import {
-  BearStyleProps,
-  createBearStyleClass,
-  extractStyleProps,
-  parseBackgroundColorCss,
-} from '../utils/styles';
 import { Button } from '../Button';
 import { StyledTabsHover } from './Styles';
+import {
+  CommonStyleProps,
+  classes,
+  getDefaultClassName,
+  parseProps,
+} from '../utils';
 
 export interface TabsHoverProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, 'onClick'>,
-    BearStyleProps {
+  extends Omit<HTMLAttributes<HTMLDivElement>, 'onClick' | 'color'>,
+    CommonStyleProps {
   items: {
     label: string;
     value: string | number;
@@ -35,34 +34,26 @@ export function TabsHover({
   onClick,
   ...props
 }: TabsHoverProps) {
-  const [styleProps, rest] = extractStyleProps(props);
-
-  const styleClass = React.useMemo(() => {
-    styleProps.background = undefined;
-    return createBearStyleClass(
-      styleProps,
-      {},
-      {
-        '--tabs-bg': parseBackgroundColorCss(background),
-      }
-    );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [...Object.values(styleProps)]);
+  const parsedProps = parseProps(props);
 
   return (
     <StyledTabsHover
-      className={classes('bear-tabs', className, styleClass)}
+      className={classes(getDefaultClassName('tabs'), className)}
       $spacing={spacing}
-      {...rest}
+      $background={background}
+      {...parsedProps}
     >
-      <ul aria-labelledby={ariaLabelledBy} className="bear-tabs-ul">
+      <ul
+        aria-labelledby={ariaLabelledBy}
+        className={getDefaultClassName('tabs-ul')}
+      >
         {items.map((item) => (
           <li key={item.value} data-active={item.value === value}>
             <Button
               id={item.id}
               variant={'text'}
               backgroundOpacity={backgroundOpacity}
-              textColor={item.value === value ? undefined : background}
+              textColor={item.value === value ? background : 'textLight'}
               background={background}
               style={{
                 borderRadius: '0.5rem 0.5rem 0 0',

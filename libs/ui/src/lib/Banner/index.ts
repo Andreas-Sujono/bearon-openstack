@@ -1,1 +1,1 @@
-export { default as Banner, BannerProps } from './Banner';
+export { default as Banner } from './Banner';

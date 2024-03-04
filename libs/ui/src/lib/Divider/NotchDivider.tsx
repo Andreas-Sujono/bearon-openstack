@@ -1,21 +1,19 @@
 import React from 'react';
-import { classes, cssProps, numToMs } from '@bearon/utils';
 import {
-  BearStyleProps,
-  createBearStyleClass,
-  extractStyleProps,
-  parseBackgroundColorCss,
+  CommonStyleProps,
+  getDefaultClassName,
+  parseProps,
 } from '../utils/styles';
-import styles from './Divider.module.css';
+import { StyledDivider, StyledNotch } from './Styles';
+import { classes } from '../utils';
 
 export interface NotchDividerProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    BearStyleProps {
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'color'>,
+    CommonStyleProps {
   lineWidth?: string | number;
   lineHeight?: string | number;
   notchWidth?: string | number;
   notchHeight?: string | number;
-  collapseDelay?: number;
   collapsed?: boolean;
 }
 export const NotchDivider = ({
@@ -23,50 +21,30 @@ export const NotchDivider = ({
   lineHeight,
   notchWidth,
   notchHeight,
-  collapseDelay,
   collapsed,
   className,
   style,
   ...props
 }: NotchDividerProps) => {
-  const [styleProps, rest] = extractStyleProps(props);
-
-  const styleClass = React.useMemo(() => {
-    styleProps.background = styleProps.background || 'primary';
-    return createBearStyleClass(
-      styleProps,
-      {},
-      {
-        '--line-width': lineWidth || '100%',
-        '--line-height': lineHeight || '1px',
-        '--collapse-delay': numToMs(collapseDelay || 0),
-        '--line-color': parseBackgroundColorCss(
-          styleProps.background,
-          styleProps.backgroundOpacity
-        ),
-        '--notch-width': notchWidth || '90px',
-        '--notch-height': notchHeight || '10px',
-      }
-    );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [...Object.values(styleProps)]);
-
   return (
-    <div
+    <StyledDivider
       className={classes(
-        styles.divider,
         className,
-        styleClass,
-        'bear-notch-divider'
+        getDefaultClassName('divider'),
+        getDefaultClassName('notchDivider')
       )}
-      {...rest}
+      $background={props.background || 'grey'}
+      $backgroundOpacity={props.backgroundOpacity || 0.5}
+      $lineWidth={lineWidth || '100%'}
+      $lineHeight={lineHeight || '1px'}
+      {...parseProps(props)}
     >
-      <div className={styles.line} data-collapsed={collapsed} />
-      <div
-        className={styles.notch}
+      <div data-collapsed={collapsed} />
+      <StyledNotch
         data-collapsed={collapsed}
-        style={cssProps({ collapseDelay: numToMs((collapseDelay || 0) + 160) })}
+        $notchWidth={notchWidth || 'clamp(20px, 50%, 90px)'}
+        $notchHeight={notchHeight || '8px'}
       />
-    </div>
+    </StyledDivider>
   );
 };

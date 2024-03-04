@@ -5,13 +5,6 @@
   "projectType": "library",
   "tags": [],
   "targets": {
-    "lint": {
-      "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["libs/ui/**/*.{ts,tsx,js,jsx}"]
-      }
-    },
     "build": {
       "executor": "@nx/vite:build",
       "outputs": ["{options.outputPath}"],
@@ -64,18 +57,6 @@
       "executor": "nx:run-commands",
       "options": {
         "command": "test-storybook -c libs/ui/.storybook --url=http://localhost:4400"
-      }
-    },
-    "static-storybook": {
-      "executor": "@nx/web:file-server",
-      "options": {
-        "buildTarget": "ui:build-storybook",
-        "staticFilePath": "dist/storybook/ui"
-      },
-      "configurations": {
-        "ci": {
-          "buildTarget": "ui:build-storybook:ci"
-        }
       }
     }
   }

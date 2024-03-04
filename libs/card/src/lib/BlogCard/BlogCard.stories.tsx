@@ -1,14 +1,14 @@
 import React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import { Column, Row } from '@bearon/ui';
 import { BlogAuthor, BlogCard1 as BlogCard } from './BlogCard1';
 import { BlogCard1Skeleton } from './Skeleton/BlogCard1Skeleton';
 import { BlogCard2 as BlogCard2Comp } from './BlogCard2';
 import { BlogCard3 as BlogCard3Comp } from './BlogCard3';
 import { BlogCard4 as BlogCard4Comp } from './BlogCard4';
-import { Column, Row } from '../../Layout';
+import type { Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof BlogCard> = {
-  title: 'Card/BlogCard',
+  title: 'BlogCard',
   component: BlogCard,
   tags: ['autodocs'],
 };

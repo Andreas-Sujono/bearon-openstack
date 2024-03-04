@@ -11,6 +11,12 @@ const config: StorybookConfig = {
       },
     },
   },
+  refs: {
+    Card: {
+      title: 'Card',
+      url: 'http://localhost:4401',
+    },
+  },
 };
 
 export default config;

@@ -1,39 +1,48 @@
-import Loader from './Loader';
-import type { Meta } from '@storybook/react';
+import React from 'react';
+import type { Meta, StoryObj } from '@storybook/react';
+import Loader, { ThinCircularLoader } from '.';
 
-const meta: Meta<typeof Loader> = {
+// More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction
+const meta = {
   title: 'Components/Loader',
   component: Loader,
-  tags: ['autodocs'],
-};
+  tags: ['autodocs', 'Loader'],
+  argTypes: {},
+} satisfies Meta<typeof Loader>;
+
 export default meta;
 
-export const Spinner = {
-  render: () => {
-    return <Loader type="spinner" />;
+type Story = StoryObj<typeof meta>;
+
+// More on writing stories with args: https://storybook.js.org/docs/react/writing-stories/args
+export const Circular: Story = {
+  args: {
+    color: '#ff0000',
+    size: '36px',
+  },
+  parameters: {
+    docs: {
+      story: { inline: true }, // render the story in an iframe
+      canvas: { sourceState: 'shown' }, // start with the source open
+      // source: { type: 'code' }, // forces the raw source code (rather than the rendered JSX).
+    },
   },
 };
 
-export const Bars = {
+// More on writing stories with args: https://storybook.js.org/docs/react/writing-stories/args
+export const ThinCircular: Story = {
   render: () => {
-    return <Loader type="bars" />;
+    return <ThinCircularLoader color="red" size="100px" />;
   },
-};
-
-export const Bubbles = {
-  render: () => {
-    return <Loader type="bubbles" color="blue" />;
+  args: {
+    color: '#ff0000',
+    size: '100px',
   },
-};
-
-export const Spokes = {
-  render: () => {
-    return <Loader type="spokes" />;
-  },
-};
-
-export const Cyclon = {
-  render: () => {
-    return <Loader type="cyclon" />;
+  parameters: {
+    docs: {
+      story: { inline: true }, // render the story in an iframe
+      canvas: { sourceState: 'shown' }, // start with the source open
+      // source: { type: 'code' }, // forces the raw source code (rather than the rendered JSX).
+    },
   },
 };

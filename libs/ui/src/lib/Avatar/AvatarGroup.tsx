@@ -1,17 +1,17 @@
-import { classes } from '@bearon/utils';
 import React, { HTMLAttributes, cloneElement } from 'react';
 import {
-  BearStyleProps,
-  createBearStyleClass,
-  extractStyleProps,
+  CommonStyleProps,
+  getDefaultClassName,
+  parseProps,
 } from '../utils/styles';
 import { ThemeColor } from '../ThemeProvider';
 import { StyledAvatarGroup } from './Styles';
 import Avatar from './Avatar';
+import { classes } from '../utils';
 
 export interface AvatarGroupProps
-  extends HTMLAttributes<HTMLDivElement>,
-    BearStyleProps {
+  extends Omit<HTMLAttributes<HTMLDivElement>, 'color'>,
+    CommonStyleProps {
   children?: React.ReactNode | React.ReactNode[];
   max?: number;
   borderColor?: string;
@@ -22,17 +22,10 @@ export default function AvatarGroup({
   children,
   className,
   max = 3,
-  borderColor,
+  borderColor = 'white',
   badgeColor = 'primary',
   ...props
 }: AvatarGroupProps) {
-  const [styleProps, rest] = extractStyleProps(props);
-
-  const styleClass = React.useMemo(() => {
-    return createBearStyleClass(styleProps);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [...Object.values(styleProps)]);
-
   const maxLeft = Math.max(
     ((children as React.ReactNode[])?.length || 0) - max,
     0
@@ -43,24 +36,24 @@ export default function AvatarGroup({
 
   const clones = reversedChildren.map((child, index) => {
     return cloneElement(child as React.ReactElement, {
-      className: 'bear-avatar-item',
+      className: getDefaultClassName('avatarGroup-avatarItem'),
       key: index,
     });
   });
 
   return (
     <StyledAvatarGroup
-      className={classes(styleClass, 'bear-avatar', className)}
+      className={classes(className, getDefaultClassName('avatarGroup'))}
       role="group"
       $borderColor={borderColor}
-      {...rest}
+      {...parseProps(props)}
     >
       {!!maxLeft && (
         <Avatar
           abbreviation={`+${maxLeft}`}
           background={badgeColor}
           backgroundOpacity={0.5}
-          className="bear-avatar-item"
+          className={getDefaultClassName('avatarGroup-avatarItem')}
         />
       )}
       {clones}

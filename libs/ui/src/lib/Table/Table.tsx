@@ -1,85 +1,217 @@
-import { classes } from '@bearon/utils';
-import React, { HTMLAttributes } from 'react';
+import React from 'react';
+import { CSSProps, CommonStyleProps, parseProps } from '../utils';
+import { Text } from '../Text';
 import {
-  BearStyleProps,
-  createBearStyleClass,
-  extractStyleProps,
-} from '../utils/styles';
-import Text, { TextVariant } from '../Text';
-import { ThemeColor } from '../ThemeProvider';
-import { StyledTable } from './Styles';
+  StyledTableBody,
+  StyledTable,
+  StyledTableRow,
+  TableContainer,
+  StyledTableHead,
+  StyledTableCell,
+  StyledTableHeadCell,
+} from './Styles';
+import { ArrowDownIcon, ArrowUpIcon } from '../Icon';
+import { Row } from '../Layout';
 
-export interface TableHeaderItem {
-  label: string;
-  value?: string | number;
-  align?: 'left' | 'center' | 'right' | string;
-}
+type TableHeadItem =
+  | string
+  | {
+      sortable?: boolean;
+      key?: string | number;
+      label?: string;
+    };
+type SortDirection = 'asc' | 'desc' | (string & Record<never, never>);
 
 export interface TableProps<T>
-  extends HTMLAttributes<HTMLDivElement>,
-    BearStyleProps {
-  headers: TableHeaderItem[];
-  onSort?: (headerValue?: string | number) => void;
-  headerSize?: TextVariant;
-  headerColor?: ThemeColor;
-  renderItem: (item: T, idx: number) => React.ReactNode;
-  data: T[];
+  extends CommonStyleProps,
+    Omit<React.HTMLAttributes<HTMLTableElement>, 'color'> {
+  heads: TableHeadItem[];
+  items?: T[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  renderItem?: (item: T | any, index: number) => React.ReactElement;
+  children?: React.ReactNode;
+  renderHead?: (
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    headName: any,
+    idx?: number
+  ) => React.ReactElement | null;
+  onSort?: (sortKey: string, sortDirection: string) => void;
+  sortKey?: string;
+  sortDirection?: SortDirection;
+
+  widths?: string[];
+  sx?: CSSProps;
+  theadSx?: CSSProps;
+  containerSx?: CSSProps;
+  leftAlignAll?: boolean;
+  isLoading?: boolean;
+  loaderElement?: React.ReactElement;
+  borderColor?: string;
 }
-/**
- * simple table with simple header
- * TODO featurus: sticky header, virtualized table, sorting
- */
-export function Table<T>({
-  className,
-  headers,
-  onSort,
-  headerSize,
-  headerColor,
-  renderItem,
-  data,
-  ...props
-}: TableProps<T>) {
-  const [styleProps, rest] = extractStyleProps(props);
+export interface TableRowProps
+  extends CommonStyleProps,
+    Omit<React.HTMLAttributes<HTMLTableRowElement>, 'color'> {
+  align?: 'left' | 'right' | 'center';
+  clickable?: boolean;
+}
+export interface TableCellProps
+  extends CommonStyleProps,
+    Omit<React.HTMLAttributes<HTMLTableCellElement>, 'color'> {
+  align?: 'left' | 'right' | 'center';
+}
 
-  const styleClass = React.useMemo(() => {
-    return createBearStyleClass(styleProps);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [...Object.values(styleProps)]);
-
+export const TableRow = ({ children, clickable, ...props }: TableRowProps) => {
   return (
-    <StyledTable
-      className={classes(styleClass, 'bear-progress', className)}
-      {...rest}
-    >
-      <thead>
-        <tr>
-          {headers.map((item) => (
-            <th
-              data-value={item.value}
-              key={item.value}
-              align={item.align as 'left'}
-            >
-              <Text size={headerSize} colour={headerColor}>
-                {item.label}
-              </Text>
-            </th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>{data.map((item, idx) => renderItem(item, idx))}</tbody>
-    </StyledTable>
+    <StyledTableRow $clickable={clickable} {...parseProps(props)}>
+      {children}
+    </StyledTableRow>
   );
-}
-
-export const TableRow = (
-  props: React.HTMLAttributes<HTMLTableRowElement> & BearStyleProps
-) => {
-  const [styleProps, rest] = extractStyleProps(props);
-
-  const styleClass = React.useMemo(() => {
-    return createBearStyleClass(styleProps);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [...Object.values(styleProps)]);
-
-  return <tr className={classes(styleClass, props.className)} {...rest}></tr>;
 };
+
+export const TableCell = ({ children, ...props }: TableCellProps) => {
+  return <StyledTableCell {...parseProps(props)}>{children}</StyledTableCell>;
+};
+
+export const TableRowGap = ({
+  sx = {},
+  height = '8px',
+}: TableRowProps & { height: string }) => {
+  return (
+    <StyledTableRow
+      $sx={{
+        height,
+        ...sx,
+      }}
+    />
+  );
+};
+
+export const TableHeadCell = ({
+  children,
+  sortable,
+  sortDirection,
+  onSort,
+  active,
+  sortKey,
+  ...props
+}: TableCellProps & {
+  sortable?: boolean;
+  sortDirection?: SortDirection;
+  active?: boolean;
+  sortKey?: string;
+  onSort?: (sortKey: string, sortDirection: string) => void;
+}) => {
+  return (
+    <StyledTableHeadCell {...parseProps(props)} $sortable={sortable}>
+      <Row
+        gap="3px"
+        sx={{ width: '100%' }}
+        onClick={() =>
+          onSort &&
+          onSort(
+            sortKey as string,
+            active && sortDirection === 'asc' ? 'desc' : 'asc'
+          )
+        }
+      >
+        {children}
+        {sortable && sortDirection === 'asc' && active && (
+          <ArrowUpIcon size="16px" />
+        )}
+        {sortable && sortDirection === 'desc' && active && (
+          <ArrowDownIcon size="16px" />
+        )}
+        {sortable && !active && (
+          <ArrowUpIcon
+            sx={{ opacity: '0.2' }}
+            size="16px"
+            className="hovered-arrow"
+          />
+        )}
+      </Row>
+    </StyledTableHeadCell>
+  );
+};
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const Table = <T, K extends keyof T>({
+  heads,
+  items,
+  renderItem,
+  children,
+  renderHead = () => null,
+  sx = {},
+  theadSx = {},
+  containerSx = {},
+  leftAlignAll = false,
+  widths = [],
+  isLoading,
+  loaderElement,
+  borderColor,
+  onSort,
+  sortKey,
+  sortDirection,
+}: TableProps<T>) => {
+  return (
+    <TableContainer $sx={containerSx}>
+      <StyledTable $sx={sx}>
+        <StyledTableHead
+          $sx={{
+            padding: '0.5rem 1rem',
+            borderRadius: '0.5rem 0.5rem 0 0',
+            ...theadSx,
+          }}
+          $background={(theadSx.background as string) || 'background'}
+        >
+          <StyledTableRow $borderColor={borderColor}>
+            {heads.map(
+              (
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                item: any,
+                idx
+              ) =>
+                renderHead(item, idx) || (
+                  <TableHeadCell
+                    key={item?.key || (item as string)}
+                    sx={{
+                      width: widths[idx],
+                    }}
+                    sortable={item?.sortable || false}
+                    sortDirection={sortDirection}
+                    sortKey={item.key}
+                    active={sortKey === item?.key}
+                    onSort={onSort}
+                  >
+                    <Text
+                      sx={{
+                        ml:
+                          idx === heads.length - 1 && !leftAlignAll
+                            ? 'auto'
+                            : 'initial',
+                        width: 'max-content',
+                        display: 'block',
+                        fontWeight: '500',
+                      }}
+                      colour="textLight"
+                    >
+                      {item?.label || (item as string)}
+                    </Text>
+                  </TableHeadCell>
+                )
+            )}
+          </StyledTableRow>
+        </StyledTableHead>
+        <StyledTableBody>
+          {!isLoading &&
+            items?.map(
+              (item, index: number) => renderItem && renderItem(item, index)
+            )}
+          {children}
+        </StyledTableBody>
+      </StyledTable>
+      {isLoading && loaderElement}
+    </TableContainer>
+  );
+};
+
+export { Table };

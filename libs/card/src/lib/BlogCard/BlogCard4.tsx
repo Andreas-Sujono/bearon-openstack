@@ -1,10 +1,15 @@
-import { Image } from '../../Image';
-import { Box, Row, SimpleGrid } from '../../Layout';
-import { Text } from '../../Text';
-import { CommonStyleProps, parseProps } from '../../utils';
+import {
+  Text,
+  Image,
+  Box,
+  Row,
+  CommonStyleProps,
+  parseProps,
+  SimpleGrid,
+  Button,
+  NotchDivider,
+} from '@bearon/ui';
 import { BlogTags } from './BlogCard1';
-import { NotchDivider } from '../../Divider';
-import { Button } from '../../Button';
 
 interface BlogCard4Props
   extends React.HTMLAttributes<HTMLDivElement>,

@@ -1,14 +1,17 @@
-import { classes } from '@bearon/utils';
 import React, { HTMLAttributes } from 'react';
+import styled from 'styled-components';
 import {
-  BearStyleProps,
-  createBearStyleClass,
-  extractStyleProps,
-} from '../utils/styles';
+  CommonStyleProps,
+  InternalCommonStyleProps,
+  parseCommonProps,
+  parseProps,
+  classes,
+  getDefaultClassName,
+} from '../utils';
 
-interface SimpleGridProps
+export interface SimpleGridProps
   extends Omit<HTMLAttributes<HTMLDivElement>, 'color'>,
-    BearStyleProps {
+    CommonStyleProps {
   templateColumns?: string;
   templateRows?: string;
   justifyContent?: string;
@@ -18,7 +21,7 @@ interface SimpleGridProps
   as?: React.ElementType;
 }
 
-export default function SimpleGrid({
+export function SimpleGrid({
   as: Component = 'div',
   children,
   className,
@@ -29,34 +32,39 @@ export default function SimpleGrid({
   spacing,
   ...props
 }: SimpleGridProps) {
-  const [styleProps, rest] = extractStyleProps(props);
-
-  const styleClass = React.useMemo(() => {
-    return createBearStyleClass(styleProps, {
-      display: 'grid',
-      gap: spacing?.startsWith('space') ? `var(--${spacing})` : spacing || 0,
-      gridTemplateColumns: templateColumns,
-      gridTemplateRows: templateRows,
-      justifyContent,
-      alignItems,
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    ...Object.values(styleProps),
-    spacing,
-    templateColumns,
-    templateRows,
-    justifyContent,
-    alignItems,
-  ]);
-
   return (
-    <Component
-      className={classes('bear-simple-grid', styleClass, className)}
-      {...rest}
+    <StyledDiv
+      className={classes(className, getDefaultClassName('simpleGrid'))}
+      as={Component}
+      $templateColumns={templateColumns}
+      $templateRows={templateRows}
+      $justifyContent={justifyContent}
+      $alignItems={alignItems}
+      $spacing={spacing}
+      {...parseProps(props)}
     >
       {children}
-    </Component>
+    </StyledDiv>
   );
 }
+
+const StyledDiv = styled.div<
+  {
+    $spacing?: string;
+    $templateColumns?: string;
+    $templateRows?: string;
+    $justifyContent?: string;
+    $alignItems?: string;
+  } & InternalCommonStyleProps
+>`
+  display: grid;
+  gap: ${(props) =>
+    props?.$spacing?.startsWith('space')
+      ? `var(--${props.$spacing})`
+      : props.$spacing || 0};
+  grid-template-columns: ${(props) => props.$templateColumns};
+  grid-template-rows: ${(props) => props.$templateRows};
+  justify-content: ${(props) => props.$justifyContent};
+  align-items: ${(props) => props.$alignItems};
+  ${(props) => parseCommonProps(props)}
+`;

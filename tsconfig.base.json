@@ -22,9 +22,9 @@
       "@bearon/icon": ["libs/icon/src/index.ts"],
       "@bearon/nav": ["libs/nav/src/index.ts"],
       "@bearon/notif": ["libs/notif/src/index.ts"],
+      "@bearon/raw-ui": ["libs/raw-ui/src/index.ts"],
       "@bearon/tailwind": ["libs/tailwind/src/index.ts"],
       "@bearon/ui": ["libs/ui/src/index.ts"],
-      "@bearon/styled-ui": ["libs/styled-ui/src/index.ts"],
       "@bearon/utils": ["libs/utils/src/index.ts"]
     }
   },

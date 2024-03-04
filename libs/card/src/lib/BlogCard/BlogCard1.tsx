@@ -1,9 +1,15 @@
-import { Badge } from '../../Badge';
-import { DateIcon, UserIcon } from '../../Icon';
-import { Image } from '../../Image';
-import { Box, Row } from '../../Layout';
-import { Text, TextVariant } from '../../Text';
-import { CommonStyleProps, parseProps } from '../../utils';
+import {
+  Text,
+  TextVariant,
+  Badge,
+  DateIcon,
+  UserIcon,
+  Image,
+  Box,
+  Row,
+  CommonStyleProps,
+  parseProps,
+} from '@bearon/ui';
 
 interface BlogCard1Props
   extends React.HTMLAttributes<HTMLDivElement>,

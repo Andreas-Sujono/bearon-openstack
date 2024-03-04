@@ -1,6 +1,7 @@
 {
-  "extends": ["plugin:@nx/react", "../../.eslintrc.json"],
+  "extends": ["plugin:@nx/react", "../../.eslintrc.base.json"],
   "ignorePatterns": ["!**/*"],
+  "plugins": ["react-refresh"],
   "overrides": [
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
@@ -14,5 +15,8 @@
       "files": ["*.js", "*.jsx"],
       "rules": {}
     }
-  ]
+  ],
+  "rules": {
+    "react-refresh/only-export-components": "warn"
+  }
 }

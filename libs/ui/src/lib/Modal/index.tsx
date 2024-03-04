@@ -1,2 +1,1 @@
-export { Portal } from './Portal';
-export { Modal } from './ModalPortal';
+export { Modal, ModalHeader, ModalClose } from './ModalPortal';

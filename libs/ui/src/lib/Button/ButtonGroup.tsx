@@ -1,15 +1,15 @@
 import React from 'react';
-import { classes } from '@bearon/utils';
+import { Row } from '../Layout';
 import {
-  BearStyleProps,
-  createBearStyleClass,
-  extractStyleProps,
-} from '../utils/styles';
-import Row from '../Layout/Row';
+  CommonStyleProps,
+  classes,
+  getDefaultClassName,
+  parseProps,
+} from '../utils';
 
 export interface ButtonGroupProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    BearStyleProps {
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'color'>,
+    CommonStyleProps {
   align?: 'left' | 'center' | 'right';
   spacing?: string | number;
 }
@@ -21,16 +21,9 @@ export function ButtonGroup({
   spacing,
   ...props
 }: ButtonGroupProps) {
-  const [styleProps, rest] = extractStyleProps(props);
-
-  const styleClass = React.useMemo(() => {
-    return createBearStyleClass(styleProps);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [...Object.values(styleProps)]);
-
   return (
     <Row
-      className={classes(className, styleClass)}
+      className={classes(className, getDefaultClassName('btnGroup'))}
       justifyContent={
         align === 'center'
           ? 'center'
@@ -40,7 +33,7 @@ export function ButtonGroup({
       }
       gap={spacing}
       wrap
-      {...rest}
+      {...parseProps(props)}
     >
       {children}
     </Row>

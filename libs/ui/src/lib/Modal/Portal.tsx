@@ -1,7 +1,10 @@
-import { useState, useLayoutEffect } from 'react';
+import { useState, useLayoutEffect, ReactPortal } from 'react';
 import { createPortal } from 'react-dom';
+import { getDefaultClassName } from '../utils';
 
-function createWrapperAndAppendToBody(wrapperId = 'bear-portal') {
+function createWrapperAndAppendToBody(
+  wrapperId = getDefaultClassName('portal')
+) {
   const wrapperElement = document.createElement('div');
   wrapperElement.setAttribute('id', wrapperId);
   document.body.appendChild(wrapperElement);
@@ -10,11 +13,12 @@ function createWrapperAndAppendToBody(wrapperId = 'bear-portal') {
 
 export function Portal({
   children,
-  wrapperId = 'bear-portal',
+  wrapperId = getDefaultClassName('portal'),
 }: {
   children: React.ReactNode;
   wrapperId?: string;
-}) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+}): ReactPortal | null {
   const [wrapperElement, setWrapperElement] = useState<HTMLElement | null>(
     null
   );

@@ -1,22 +1,23 @@
-import { bearCss, classes, rgbToHex } from '@bearon/utils';
 import React from 'react';
-import SimpleGrid from '../Layout/SimpleGrid';
-import Text from '../Text';
-import Box from '../Layout/Box';
+import { css } from 'goober';
+import { Text } from '../Text/Text';
 import { themes, tokens } from './theme';
 import type { Meta } from '@storybook/react';
+import { Box } from '../Layout/Box';
+import { SimpleGrid } from '../Layout/SimpleGrid';
+import { classes } from '../utils';
 
-const boxClass = bearCss`
+const boxClass = css`
   width: 100%;
   box-sizing: border-box;
   height: 100%;
 `;
-const cellClass = bearCss`
+const cellClass = css`
   padding: 8px 12px;
   border-bottom: 1px solid #dedcdc;
   color: var(--textLight);
 `;
-const titleClass = bearCss`
+const titleClass = css`
   color: var(--textTitle);
 `;
 
@@ -26,51 +27,39 @@ const meta: Meta = {
 };
 export default meta;
 
-const allLightRgbColors = Object.keys(themes.light).filter((item) =>
-  item.startsWith('rgb')
+const allLightRgbColors = Object.keys(themes.light).filter(
+  (item) => item !== 'themeId'
 );
-const allDarkRgbColors = Object.keys(themes.dark).filter((item) =>
-  item.startsWith('rgb')
+const allDarkRgbColors = Object.keys(themes.dark).filter(
+  (item) => item !== 'themeId'
 );
 
 export const LightTheme = {
   render: () => {
     return (
       <Box sx={{ maxWidth: '800px' }}>
-        <SimpleGrid templateColumns="auto auto  auto auto">
+        <SimpleGrid templateColumns="auto auto  auto">
           <Text className={classes(cellClass, titleClass)} weight="medium">
             Variable
           </Text>
           <Text className={classes(cellClass, titleClass)} weight="medium">
-            RGB
-          </Text>
-          <Text className={classes(cellClass, titleClass)} weight="medium">
-            Hex
+            RGB/Hex
           </Text>
           <Text className={classes(cellClass, titleClass)} weight="medium">
             Colours
           </Text>
 
           {allLightRgbColors.map((key) => {
-            let varKey = key.replace('rgb', '');
-            varKey = varKey[0].toLowerCase().concat(varKey.slice(1));
-            if (varKey === 'text') {
-              varKey = 'textTitle';
-            }
-
             return (
               <React.Fragment key={key}>
-                <Text className={cellClass}>--{varKey}</Text>
+                <Text className={cellClass}>{key}</Text>
                 <Text className={cellClass}>
-                  {themes.light[key as 'rgbText']}
-                </Text>
-                <Text className={cellClass}>
-                  {rgbToHex(themes.light[key as 'rgbText'])}
+                  {themes.light[key as 'background']}
                 </Text>
                 <div
                   className={classes(boxClass, cellClass)}
                   style={{
-                    background: `rgb(${themes.light[key as 'rgbText']} / 1)`,
+                    background: `${themes.light[key as 'background']}`,
                   }}
                 ></div>
               </React.Fragment>
@@ -86,39 +75,28 @@ export const darkTheme = {
   render: () => {
     return (
       <Box sx={{ maxWidth: '800px' }}>
-        <SimpleGrid templateColumns="auto auto auto auto">
+        <SimpleGrid templateColumns="auto auto auto">
           <Text className={classes(cellClass, titleClass)} weight="medium">
             Variable
           </Text>
           <Text className={classes(cellClass, titleClass)} weight="medium">
-            RGB
-          </Text>
-          <Text className={classes(cellClass, titleClass)} weight="medium">
-            Hex
+            RGB/Hex
           </Text>
           <Text className={classes(cellClass, titleClass)} weight="medium">
             Colours
           </Text>
 
           {allDarkRgbColors.map((key) => {
-            let varKey = key.replace('rgb', '');
-            varKey = varKey[0].toLowerCase().concat(varKey.slice(1));
-            if (varKey === 'text') {
-              varKey = 'textTitle';
-            }
             return (
               <React.Fragment key={key}>
-                <Text className={cellClass}>--{varKey}</Text>
+                <Text className={cellClass}>{key}</Text>
                 <Text className={cellClass}>
-                  {themes.dark[key as 'rgbText']}
-                </Text>
-                <Text className={cellClass}>
-                  {rgbToHex(themes.light[key as 'rgbText'])}
+                  {themes.dark[key as 'background']}
                 </Text>
                 <div
                   className={classes(boxClass, cellClass)}
                   style={{
-                    background: `rgb(${themes.dark[key as 'rgbText']} / 1)`,
+                    background: `${themes.dark[key as 'background']}`,
                   }}
                 ></div>
               </React.Fragment>

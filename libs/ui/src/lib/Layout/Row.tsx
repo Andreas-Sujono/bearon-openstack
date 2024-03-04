@@ -1,14 +1,17 @@
 import React, { HTMLAttributes, forwardRef } from 'react';
-import { classes } from '@bearon/utils';
+import styled from 'styled-components';
 import {
-  BearStyleProps,
-  createBearStyleClass,
-  extractStyleProps,
-} from '../utils/styles';
+  CommonStyleProps,
+  InternalCommonStyleProps,
+  parseCommonProps,
+  parseProps,
+  classes,
+  getDefaultClassName,
+} from '../utils';
 
-interface RowProps
+export interface RowProps
   extends Omit<HTMLAttributes<HTMLDivElement>, 'color'>,
-    BearStyleProps {
+    CommonStyleProps {
   as?: React.ElementType;
   children?: React.ReactNode;
   className?: string;
@@ -32,27 +35,40 @@ const Row = forwardRef<any, RowProps>(function _Row(
   },
   ref
 ) {
-  const [styleProps, rest] = extractStyleProps(props);
-  const styleClass = React.useMemo(() => {
-    return createBearStyleClass(styleProps, {
-      display: 'flex',
-      justifyContent: justifyContent,
-      alignItems: alignItems,
-      gap: gap,
-      flexWrap: wrap ? 'wrap' : 'nowrap',
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [...Object.values(styleProps), justifyContent, alignItems, gap, wrap]);
-
   return (
-    <Component
-      className={classes('bear-row', styleClass, className)}
+    <StyledDiv
+      className={classes(className, getDefaultClassName('Row'))}
       ref={ref}
-      {...rest}
+      as={Component}
+      $justifyContent={justifyContent}
+      $alignItems={alignItems}
+      $wrap={wrap}
+      $gap={gap}
+      {...parseProps(props)}
     >
       {children}
-    </Component>
+    </StyledDiv>
   );
 });
 
-export default Row;
+export { Row };
+
+const StyledDiv = styled.div<
+  {
+    spacing?: string;
+    $gap?: string;
+    $wrap?: boolean;
+    $justifyContent?: string;
+    $alignItems?: string;
+  } & InternalCommonStyleProps
+>`
+  display: flex;
+  gap: ${(props) =>
+    props?.$gap?.startsWith('space')
+      ? `var(--${props.$gap})`
+      : props.$gap || 0};
+  justify-content: ${(props) => props.$justifyContent};
+  align-items: ${(props) => props.$alignItems};
+  flex-wrap: ${(props) => (props.$wrap ? 'wrap' : 'nowrap')};
+  ${(props) => parseCommonProps(props)}
+`;

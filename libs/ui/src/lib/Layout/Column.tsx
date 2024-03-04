@@ -1,14 +1,17 @@
 import React, { HTMLAttributes, forwardRef } from 'react';
-import { classes } from '@bearon/utils';
+import styled from 'styled-components';
 import {
-  BearStyleProps,
-  createBearStyleClass,
-  extractStyleProps,
-} from '../utils/styles';
+  CommonStyleProps,
+  InternalCommonStyleProps,
+  parseCommonProps,
+  parseProps,
+  getDefaultClassName,
+  classes,
+} from '../utils';
 
-interface ColumnProps
+export interface ColumnProps
   extends Omit<HTMLAttributes<HTMLDivElement>, 'color'>,
-    BearStyleProps {
+    CommonStyleProps {
   as?: React.ElementType;
   children?: React.ReactNode;
   className?: string;
@@ -30,27 +33,38 @@ const Column = forwardRef<any, ColumnProps>(function _Row(
   },
   ref
 ) {
-  const [styleProps, rest] = extractStyleProps(props);
-  const styleClass = React.useMemo(() => {
-    return createBearStyleClass(styleProps, {
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: justifyContent,
-      alignItems: alignItems,
-      gap: gap,
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [...Object.values(styleProps), justifyContent, alignItems, gap]);
-
   return (
-    <Component
-      className={classes('bear-column', styleClass, className)}
+    <StyledDiv
+      className={classes(className, getDefaultClassName('column'))}
       ref={ref}
-      {...rest}
+      $justifyContent={justifyContent}
+      $alignItems={alignItems}
+      $gap={gap}
+      as={Component}
+      {...parseProps(props)}
     >
       {children}
-    </Component>
+    </StyledDiv>
   );
 });
 
-export default Column;
+export { Column };
+
+const StyledDiv = styled.div<
+  {
+    spacing?: string;
+    $gap?: string;
+    $justifyContent?: string;
+    $alignItems?: string;
+  } & InternalCommonStyleProps
+>`
+  display: flex;
+  flex-direction: column;
+  gap: ${(props) =>
+    props?.$gap?.startsWith('space')
+      ? `var(--${props.$gap})`
+      : props.$gap || 0};
+  justify-content: ${(props) => props.$justifyContent};
+  align-items: ${(props) => props.$alignItems};
+  ${(props) => parseCommonProps(props)}
+`;

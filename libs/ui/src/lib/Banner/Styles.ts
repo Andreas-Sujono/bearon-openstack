@@ -1,6 +1,10 @@
-import { bearStyled } from '@bearon/utils';
-import React from 'react';
 import { TextVariant } from '../Text';
+import {
+  InternalCommonStyleProps,
+  getDefaultClassName,
+  parseCommonProps,
+} from '../utils';
+import styled from 'styled-components';
 
 const parseSize = (size?: TextVariant) => {
   if (size === 'xs') return `0.325rem 0.5rem`;
@@ -16,37 +20,38 @@ const parseSize = (size?: TextVariant) => {
   return `0.5rem 0.725rem`;
 };
 
-export const StyledBanner = (
-  props: {
+export const StyledBanner = styled.div<
+  {
     $size?: TextVariant;
-    children?: React.ReactNode;
-  } & React.HTMLAttributes<HTMLDivElement>
-) => bearStyled('div', props)`
-    color: white;
-    padding: ${parseSize(props.$size)};
-    display: flex;
-    align-items: center;
-    position: relative;
-    border-radius: 0.2rem;
-    gap: 8px;
-    padding-right: 2rem;
+  } & InternalCommonStyleProps
+>`
+  color: white;
+  padding: ${(props) => parseSize(props.$size)};
+  display: flex;
+  align-items: center;
+  position: relative;
+  border-radius: 0.2rem;
+  gap: 8px;
+  padding-right: 2rem;
 
-    &[data-status='exiting']{
-      transform: scaleY(0);    
-      transform-origin: top;
-      overflow: hidden;
-      opacity: 0;
-    }
+  &[data-status='exiting'] {
+    transform: scaleY(0);
+    transform-origin: top;
+    overflow: hidden;
+    opacity: 0;
+  }
 
-    @media (prefers-reduced-motion: no-preference) {
-      transition-duration: var(--durationMd);
-      transition-timing-function: var(--bezierFastoutSlowin);
-      transition-property: opacity, transform ;
-    }
+  @media (prefers-reduced-motion: no-preference) {
+    transition-duration: var(--durationMd);
+    transition-timing-function: var(--bezierFastoutSlowin);
+    transition-property: opacity, transform;
+  }
 
-    .bear-banner-close-btn{
-      position: absolute;
-      top: 15%;
-      right: 4px;
-    }
+  ${'.' + getDefaultClassName('banner-closeBtn')} {
+    position: absolute;
+    top: 15%;
+    right: 4px;
+  }
+
+  ${(props) => parseCommonProps(props)};
 `;

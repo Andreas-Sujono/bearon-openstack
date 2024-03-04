@@ -1,8 +1,7 @@
-import { UserIcon, LightbulbIcon } from '@bearon/icon';
-import Box from '../Layout/Box';
-import Row from '../Layout/Row';
+import { Box, Row } from '../Layout';
 import Avatar from './Avatar';
 import AvatarGroupComponent from './AvatarGroup';
+import { UserIcon, LightbulbIcon } from '../Icon';
 import type { Meta } from '@storybook/react';
 
 const meta: Meta<typeof Avatar> = {

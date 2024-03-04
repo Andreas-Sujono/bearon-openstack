@@ -1,4 +1,4 @@
-import { InfoIcon } from '@bearon/icon';
+import { InfoIcon } from '../Icon';
 import Banner from './Banner';
 import type { Meta } from '@storybook/react';
 
@@ -173,8 +173,7 @@ export const Dismissable = {
           text="This is a primary banner."
           icon={<InfoIcon fill="var(--primary)" />}
           background="primary"
-          backgroundOpacity={0.2}
-          textColor="black"
+          textColor="white"
           dismissable
         />
         <br />
@@ -182,8 +181,7 @@ export const Dismissable = {
           text="This is a secondary banner"
           icon={<InfoIcon fill="var(--secondary)" />}
           background="secondary"
-          backgroundOpacity={0.2}
-          textColor="black"
+          textColor="white"
           dismissable
         />
         <br />
@@ -191,8 +189,7 @@ export const Dismissable = {
           text="This is a success banner"
           icon={<InfoIcon fill="var(--success)" />}
           background="success"
-          backgroundOpacity={0.2}
-          textColor="black"
+          textColor="white"
           dismissable
         />
         <br />
@@ -200,8 +197,7 @@ export const Dismissable = {
           text="This is a warning banner"
           icon={<InfoIcon fill="var(--warning)" />}
           background="warning"
-          backgroundOpacity={0.2}
-          textColor="black"
+          textColor="white"
           dismissable
         />
         <br />
@@ -209,8 +205,7 @@ export const Dismissable = {
           text="This is an error banner"
           icon={<InfoIcon fill="var(--error)" />}
           background="error"
-          backgroundOpacity={0.2}
-          textColor="black"
+          textColor="white"
           dismissable
         />
       </div>

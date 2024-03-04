@@ -1,34 +1,38 @@
-import { classes } from '@bearon/utils';
 import React, { HTMLAttributes } from 'react';
+import styled from 'styled-components';
 import {
-  BearStyleProps,
-  createBearStyleClass,
-  extractStyleProps,
-} from '../utils/styles';
+  CommonStyleProps,
+  InternalCommonStyleProps,
+  getDefaultClassName,
+  parseCommonProps,
+  parseProps,
+  classes,
+} from '../utils';
 
-interface BoxProps
+export interface BoxProps
   extends Omit<HTMLAttributes<HTMLDivElement>, 'color'>,
-    BearStyleProps {
+    CommonStyleProps {
   children?: React.ReactNode;
   as?: React.ElementType;
 }
 
-export default function Box({
+export function Box({
   children,
   className,
   as: Component = 'div',
   ...props
 }: BoxProps) {
-  const [styleProps, rest] = extractStyleProps(props);
-
-  const styleClass = React.useMemo(() => {
-    return createBearStyleClass(styleProps);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [...Object.values(styleProps)]);
-
   return (
-    <Component className={classes(styleClass, 'bear-box', className)} {...rest}>
+    <StyledDiv
+      as={Component}
+      className={classes(className, getDefaultClassName('box'))}
+      {...parseProps(props)}
+    >
       {children}
-    </Component>
+    </StyledDiv>
   );
 }
+
+const StyledDiv = styled.div<InternalCommonStyleProps>`
+  ${(props) => parseCommonProps(props)}
+`;

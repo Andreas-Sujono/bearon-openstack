@@ -1,37 +1,112 @@
-import { bearStyled } from '@bearon/utils';
-import React from 'react';
-import { TextVariant } from '../Text';
+import styled from 'styled-components';
+import {
+  InternalCommonStyleProps,
+  parseColor,
+  parseCommonProps,
+} from '../utils';
+import tinycolor from 'tinycolor2';
 
-export const StyledTable = (
-  props: {
-    $size?: TextVariant;
-    children?: React.ReactNode;
-  } & React.HTMLAttributes<HTMLDivElement>
-) => bearStyled('table', props)`
-  display: table;
+export const TableContainer = styled.div<InternalCommonStyleProps>`
+  width: 100%;
+  overflow: auto;
+  ${(props) => parseCommonProps(props)}
+`;
+
+export const StyledTable = styled.table<InternalCommonStyleProps>`
+  border-radius: 0.5rem;
   width: 100%;
   border-collapse: collapse;
-  border-spacing: 0px;
-  border-radius: 0.5rem;
+  ${(props) => parseCommonProps(props)}
+`;
 
-  & tr{
-    color: inherit;
-    display: table-row;
-    vertical-align: middle;
-    outline: 0px;
+export const StyledTableRow = styled.tr<
+  InternalCommonStyleProps & { $borderColor?: string; $clickable?: boolean }
+>`
+  padding: 0.5rem 1rem;
+  box-sizing: border-box;
+  &:last-child td,
+  &:last-child th {
+    border: 0;
+  }
+  border-bottom: 1px solid
+    ${(props) =>
+      props.$borderColor
+        ? parseColor(props.$borderColor || 'grey')
+        : tinycolor(props.theme.grey || '#bfbfbf')
+            .setAlpha(0.4)
+            .toRgbString()};
+
+  ${(props) =>
+    props.$clickable && {
+      transition: 'all 0.16s ease-in-out',
+      cursor: 'pointer',
+      '&:hover': {
+        background: `color-mix(
+        in srgb,
+        var(--grey) 4%,
+        transparent
+      )`,
+      },
+    }};
+  ${(props) => parseCommonProps(props)}
+`;
+
+export const StyledTableCell = styled.td<InternalCommonStyleProps>`
+  border: 0;
+  padding: 0.8rem 1rem;
+  ${(props) => parseCommonProps(props)}
+`;
+
+export const StyledTableHeadCell = styled.th<
+  InternalCommonStyleProps & {
+    $sortable?: boolean;
+  }
+>`
+  border: 0;
+  padding: 0.4rem 1rem;
+
+  &:first-of-type {
+    border-radius: 0.5rem 0 0 0;
+  }
+  &:last-child {
+    border-radius: 0 0.5rem 0 0;
   }
 
-  & th, & td{
-    font-size: 0.875rem;
-    line-height: 1.5rem;
-    letter-spacing: 0.01071em;
-    display: table-cell;
-    vertical-align: inherit;
-    border-bottom: 1px solid rgb(var(--rgbGrey) / 0.3);
-    padding: 0.5rem 1rem;
+  .hovered-arrow {
+    transition: all 0.12s ease-in-out;
+    visibility: hidden;
+    opacity: 0;
   }
-  & th{
-    font-weight: 500;
-    font-size: 0.875rem;
+  ${(props) =>
+    props.$sortable && {
+      transition: 'all 0.12s ease-in-out',
+      cursor: 'pointer',
+      '> div:hover': {
+        opacity: 0.7,
+        '.hovered-arrow': {
+          visibility: 'visible',
+          opacity: 1,
+        },
+      },
+    }}
+  ${(props) => parseCommonProps(props)}
+`;
+
+export const StyledTableHead = styled.thead<InternalCommonStyleProps>`
+  ${(props) => parseCommonProps(props)}
+`;
+
+export const StyledTableBodyCell = styled(
+  StyledTableCell
+)<InternalCommonStyleProps>`
+  &:first-of-type {
+    padding-left: 1rem;
   }
+  &:last-child {
+    padding-right: 1rem;
+  }
+`;
+
+export const StyledTableBody = styled.tbody<InternalCommonStyleProps>`
+  padding: 1rem;
 `;

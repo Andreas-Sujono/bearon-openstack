@@ -1,4 +1,5 @@
-import { Themes, ThemeTokens } from './theme';
+import { createGlobalStyle } from 'styled-components';
+import { MediaType, Theme, ThemeTokens } from './theme';
 
 /**
  * Squeeze out spaces and newlines
@@ -39,42 +40,51 @@ export function createThemeStyleObject(theme: Record<string, string | number>) {
  * Generate media queries for tokens
  */
 export function createMediaTokenProperties(
-  media: Record<string, number>,
+  media: Record<MediaType, number>,
   tokens: ThemeTokens
 ) {
   return squish(
-    Object.keys(media)
-      .map((key) => {
-        return `
-          @media (max-width: ${media[key as 'desktop']}px) {
-            :root {
-              ${createThemeProperties(tokens[key as 'desktop'] || tokens.base)}
-            }
-          }
-        `;
-      })
-      .join('\n')
+    `
+    @media (max-width: ${media.desktop}px) {
+      :root {
+        ${createThemeProperties(tokens.desktop || tokens.base)}
+      }
+    }
+    @media (max-width: ${media.laptop}px) {
+      :root {
+        ${createThemeProperties(tokens.laptop || tokens.base)}
+      }
+    }
+    @media (max-width: ${media.tablet}px) {
+      :root {
+        ${createThemeProperties(tokens.tablet || tokens.base)}
+      }
+    }
+    @media (max-width: ${media.mobile}px) {
+      :root {
+        ${createThemeProperties(tokens.mobile || tokens.base)}
+      }
+    }
+    @media (max-width: ${media.mobileSm}px) {
+      :root {
+        ${createThemeProperties(
+          tokens.mobileSm || tokens.mobile || tokens.tablet || tokens.base
+        )}
+      }
+    }
+    `
   );
 }
 
-export const createTokenStyles = (
-  media: Record<string, number>,
-  tokens: ThemeTokens,
-  themes: Themes
-) =>
-  squish(`
-    :root {
-      font-family: ${tokens.base.fontStack};
-      ${createThemeProperties(tokens.base)}
-      ${createThemeProperties(themes.light)}
-      ${createMediaTokenProperties(media, tokens)}
+export const GlobalStyle = createGlobalStyle<{
+  media: Record<string, number>;
+  tokens: ThemeTokens;
+  theme: Theme;
+}>`
+   :root {
+      font-family: ${(props) => props.tokens.base.fontStack};
+      ${(props) => createThemeProperties(props.tokens.base)};
+      ${(props) => createThemeProperties(props.theme as Partial<Theme>)};
     }  
-
-    [data-theme='dark'] {
-      ${createThemeProperties(themes.dark)}
-    }
-  
-    [data-theme='light'] {
-      ${createThemeProperties(themes.light)}
-    }
-  `);
+    ${(props) => createMediaTokenProperties(props.media, props.tokens)};
+`;

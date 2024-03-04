@@ -1,7 +1,12 @@
-import { bearStyled } from '@bearon/utils';
 import React from 'react';
+import styled from 'styled-components';
 import { TextVariant } from '../Text';
-import { ThemeColor } from '../ThemeProvider';
+import {
+  InternalCommonStyleProps,
+  getDefaultClassName,
+  parseColor,
+  parseCommonProps,
+} from '../utils';
 
 const parseSize = (size?: TextVariant) => {
   if (size === 'xs') return `2rem`;
@@ -16,26 +21,25 @@ const parseSize = (size?: TextVariant) => {
   return `3rem`;
 };
 
-export const StyledAvatar = (
-  props: {
+export const StyledAvatar = styled.div<
+  {
     $size?: TextVariant;
-    $background?: ThemeColor;
     $withNotif?: boolean;
     children?: React.ReactNode;
-  } & React.HTMLAttributes<HTMLDivElement>
-) => bearStyled('div', props)`
-    border-radius: 50%;
-    color: white;
-    width: ${parseSize(props.$size)};
-    height: ${parseSize(props.$size)};
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
+  } & InternalCommonStyleProps
+>`
+  border-radius: 50%;
+  color: white;
+  width: ${(props) => parseSize(props.$size)};
+  height: ${(props) => parseSize(props.$size)};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
 
-    ${
-      props.$withNotif
-        ? `&::after {
+  ${(props) =>
+    props.$withNotif
+      ? `&::after {
         content: '';
         background: #c03434;
         width: 10px;
@@ -44,28 +48,54 @@ export const StyledAvatar = (
         position: absolute;
         bottom: -2px;
         right: -2px;
-    }`
-        : ''
     }
+    @keyframes ripple {
+      0% {
+        transform: scale(0.8);
+        opacity: 0.5;
+      }
+      100% {
+        transform: scale(2.4);
+        opacity: 0;
+      }
+    }
+    span::after{
+      position: absolute;
+      bottom: -2px;
+      right: -2px;
+      width: 10px;
+      height: 10px;
+      background: #c03434;
+      border-radius: 50%;
+      animation: 1.2s ease-in-out 0s infinite normal none running ripple;
+      content: "";
+    }  
+    `
+      : ''}
+
+  ${(props) => parseCommonProps(props)}
 `;
 
-export const StyledAvatarGroup = (
-  props: {
+export const StyledAvatarGroup = styled.div<
+  {
     $size?: TextVariant;
     $borderColor?: string;
-  } & React.HTMLAttributes<HTMLDivElement>
-) => bearStyled('div', props)`
-      display: flex;
-      flex-direction: row-reverse;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-      width: min-content;
-      
-      > .bear-avatar-item:not(:last-child){
-        margin-left: -1rem;
-      }
-      > .bear-avatar-item{
-        border: 2px solid ${props.$borderColor || `var(--background)`};
-      }
-  `;
+  } & InternalCommonStyleProps
+>`
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: min-content;
+
+  & > ${'.' + getDefaultClassName('avatarGroup-avatarItem')}:not(:last-child) {
+    margin-left: -1rem;
+  }
+  & > ${'.' + getDefaultClassName('avatarGroup-avatarItem')} {
+    border: 2px solid
+      ${(props) => parseColor(props.$borderColor || '') || `var(--background)`};
+  }
+
+  ${(props) => parseCommonProps(props)};
+`;

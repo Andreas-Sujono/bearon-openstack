@@ -1,20 +1,20 @@
-import { classes } from '@bearon/utils';
 import React, { HTMLAttributes } from 'react';
-import { CloseIcon } from '@bearon/icon';
-import {
-  BearStyleProps,
-  createBearStyleClass,
-  extractStyleProps,
-} from '../utils/styles';
-import Text, { TextVariant } from '../Text';
+import { CloseIcon } from '../Icon';
+import { Text, TextVariant } from '../Text';
 import { ThemeColor } from '../ThemeProvider';
 import { Button } from '../Button/Button';
 import Transition from '../Animation/Transition';
 import { StyledBanner } from './Styles';
+import {
+  CommonStyleProps,
+  classes,
+  getDefaultClassName,
+  parseProps,
+} from '../utils';
 
 export interface BannerProps
-  extends HTMLAttributes<HTMLDivElement>,
-    BearStyleProps {
+  extends Omit<HTMLAttributes<HTMLDivElement>, 'color'>,
+    CommonStyleProps {
   size?: TextVariant;
   icon?: React.ReactElement;
   text?: string;
@@ -29,26 +29,20 @@ export default function Banner({
   text,
   textColor,
   dismissable,
+  background = 'primary',
   ...props
 }: BannerProps) {
   const [showed, setShowed] = React.useState(true);
-
-  const [styleProps, rest] = extractStyleProps(props);
-
-  const styleClass = React.useMemo(() => {
-    styleProps.background = styleProps.background || 'primary';
-    return createBearStyleClass(styleProps);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [...Object.values(styleProps)]);
 
   return (
     <Transition in={showed} unmount timeout={400}>
       {(visible, status) => (
         <StyledBanner
-          className={classes(styleClass, 'bear-banner', className)}
+          className={classes(className, getDefaultClassName('banner'))}
           $size={size}
           data-status={status}
-          {...rest}
+          $background={background}
+          {...parseProps(props)}
         >
           {icon}
           <Text size={size} colour={textColor}>
@@ -58,7 +52,7 @@ export default function Banner({
             <Button
               icon={<CloseIcon color={textColor || 'white'} size="1rem" />}
               variant="text"
-              className="bear-banner-close-btn"
+              className={getDefaultClassName('banner-closeBtn')}
               textColor="white"
               onClick={() => setShowed(false)}
             ></Button>

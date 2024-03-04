@@ -1,17 +1,17 @@
-import { bearCss } from '@bearon/utils';
 import { useState } from 'react';
-import Box from '../../Layout/Box';
+import styled from 'styled-components';
 import type { Meta } from '@storybook/react';
+import { Box } from '../../Layout';
 import Transition from '.';
 
 const meta: Meta<typeof Transition> = {
-  title: 'Animation/Transition',
+  title: 'Components/Transition',
   component: Transition,
   tags: ['autodocs'],
 };
 export default meta;
 
-const boxClass = bearCss`
+const StyledBox = styled(Box)`
   padding: 1rem;
   height: 200px;
   margin-top: 1rem;
@@ -25,10 +25,11 @@ const boxClass = bearCss`
   transition: all 1s ease-in-out;
   opacity: 0;
 
-  &[data-status="entering"], &[data-status="entered"]{
+  &[data-status='entering'],
+  &[data-status='entered'] {
     opacity: 1;
   }
-  &[data-status="exiting"]{
+  &[data-status='exiting'] {
     opacity: 0;
   }
 `;
@@ -41,9 +42,7 @@ const BasicTransitionComponent = () => {
 
       <Transition timeout={800} in={show} unmount>
         {(show, status) => (
-          <Box className={boxClass} data-status={status}>
-            status: {status}
-          </Box>
+          <StyledBox data-status={status}>status: {status}</StyledBox>
         )}
       </Transition>
     </>

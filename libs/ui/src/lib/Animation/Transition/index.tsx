@@ -139,4 +139,5 @@ const TransitionContent = ({
   return children(hasEntered && show ? isPresent : false, status);
 };
 
+export { Transition };
 export default Transition;

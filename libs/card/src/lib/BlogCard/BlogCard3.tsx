@@ -1,10 +1,15 @@
+import {
+  Text,
+  UserIcon,
+  Image,
+  Box,
+  Row,
+  CommonStyleProps,
+  parseProps,
+  SimpleGrid,
+} from '@bearon/ui';
 import { ReactElement } from 'react';
-import { Image } from '../../Image';
-import { Box, Row, SimpleGrid } from '../../Layout';
-import { Text } from '../../Text';
-import { CommonStyleProps, parseProps } from '../../utils';
 import { BlogTags } from './BlogCard1';
-import { UserIcon } from '../../Icon';
 
 interface BlogCard3Props
   extends React.HTMLAttributes<HTMLDivElement>,

@@ -1,6 +1,4 @@
-import { Box, Row } from '../../../Layout';
-import Skeleton from '../../../Loader/Skeleton';
-import { parseProps } from '../../../utils';
+import { Box, Row, Skeleton, parseProps } from '@bearon/ui';
 
 interface BlogCard1SkeletonProps extends React.HTMLAttributes<HTMLDivElement> {
   maxWidth?: string;

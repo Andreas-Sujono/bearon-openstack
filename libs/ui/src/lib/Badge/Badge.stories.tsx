@@ -1,7 +1,7 @@
-import { UserIcon, LightbulbIcon } from '@bearon/icon';
-import Row from '../Layout/Row';
-import Text from '../Text';
+import { Row } from '../Layout';
+import { Text } from '../Text';
 import Badge from './Badge';
+import { UserIcon, LightbulbIcon } from '../Icon';
 import type { Meta } from '@storybook/react';
 
 const meta: Meta<typeof Badge> = {
@@ -70,16 +70,16 @@ export const SubtleColors = {
   render: () => {
     return (
       <Row gap="1rem">
-        <Badge background="primary" backgroundOpacity={0.2}>
+        <Badge background="primary" backgroundOpacity={0.1}>
           <Text colour="primary">badge primary</Text>
         </Badge>
-        <Badge background="secondary" backgroundOpacity={0.2}>
+        <Badge background="secondary" backgroundOpacity={0.1}>
           <Text colour="secondary">badge secondary</Text>
         </Badge>
-        <Badge background="success" backgroundOpacity={0.2}>
+        <Badge background="success" backgroundOpacity={0.1}>
           <Text colour="success">badge success</Text>
         </Badge>
-        <Badge background="warning" backgroundOpacity={0.2}>
+        <Badge background="warning" backgroundOpacity={0.1}>
           <Text colour="warning">badge warning</Text>
         </Badge>
       </Row>

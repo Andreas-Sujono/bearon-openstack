@@ -1,4 +1,20 @@
-import { pxToRem } from '@bearon/utils';
+import { numToPx, pxToRem } from '../utils';
+
+export type MediaType =
+  | 'desktop'
+  | 'laptop'
+  | 'tablet'
+  | 'mobile'
+  | 'mobileSm'
+  | 'base';
+export const media: Record<MediaType, number> = {
+  base: 1240,
+  desktop: 1920,
+  laptop: 1240,
+  tablet: 836,
+  mobile: 480,
+  mobileSm: 348,
+};
 
 // Full list of tokens
 const baseTokens = {
@@ -29,12 +45,15 @@ const baseTokens = {
   fontSizeBodyMd: pxToRem(18),
   fontSizeBodySm: pxToRem(16),
   fontSizeBodyXs: pxToRem(14),
+  fontSizeBodyXxs: pxToRem(12),
   lineHeightTitle: '1.1',
-  lineHeightBody: '1.6',
-  maxWidthSm: '540px',
-  maxWidthMd: '720px',
-  maxWidthLg: '1096px',
-  maxWidthXl: '1680px',
+  lineHeightBody: '1.5',
+  maxWidthXs: numToPx(media.mobileSm),
+  maxWidthSm: numToPx(media.mobile),
+  maxWidthMd: numToPx(media.laptop),
+  maxWidthLg: numToPx(media.laptop + 220),
+  maxWidthXl: numToPx(media.laptop + 340),
+  maxWidthXxl: numToPx(media.desktop),
   spaceOuter: '64px',
   spaceXs: '4px',
   spaceSm: '8px',
@@ -51,6 +70,12 @@ const baseTokens = {
   zIndex3: 16,
   zIndex4: 32,
   zIndex5: 64,
+  boxShadowMd:
+    '0 0 #0000,0 0 #0000,0 4px 6px -1px #0000001a,0 2px 4px -2px #0000001a',
+  boxShadowLg:
+    '0 0 #0000,0 0 #0000,0 10px 15px -3px #0000001a,0 4px 6px -4px #0000001a',
+  boxShadowXl:
+    '0 0 #0000,0 0 #0000,0 20px 25px -5px #0000001a,0 8px 10px -6px #0000001a',
 };
 
 // Tokens that change based on viewport size
@@ -60,6 +85,7 @@ const tokensDesktop = {
 };
 
 const tokensLaptop = {
+  maxWidthXs: '370px',
   maxWidthSm: '480px',
   maxWidthMd: '640px',
   maxWidthLg: '1000px',
@@ -81,6 +107,8 @@ const tokensTablet = {
   fontSizeH3: pxToRem(32),
   fontSizeH4: pxToRem(24),
   fontSizeH5: pxToRem(20),
+  lineHeightTitle: '1.1',
+  lineHeightBody: '1.4',
 };
 
 const tokensMobile = {
@@ -91,9 +119,13 @@ const tokensMobile = {
   fontSizeH3: pxToRem(28),
   fontSizeH4: pxToRem(22),
   fontSizeH5: pxToRem(18),
-  fontSizeBodyL: pxToRem(17),
-  fontSizeBodyM: pxToRem(16),
-  fontSizeBodyS: pxToRem(14),
+  fontSizeBodyLg: pxToRem(17),
+  fontSizeBodyMd: pxToRem(16),
+  fontSizeBodySm: pxToRem(14),
+  fontSizeBodyXs: pxToRem(12),
+  fontSizeBodyXxs: pxToRem(11),
+  lineHeightTitle: '1.1',
+  lineHeightBody: '1.3',
 };
 
 const tokensMobileSmall = {
@@ -103,41 +135,32 @@ const tokensMobileSmall = {
   fontSizeH2: pxToRem(28),
   fontSizeH3: pxToRem(24),
   fontSizeH4: pxToRem(20),
+  fontSizeBodyLg: pxToRem(16),
+  fontSizeBodyMd: pxToRem(15),
+  fontSizeBodySm: pxToRem(14),
 };
 
 // Tokens that change based on theme
 const dark = {
   themeId: 'dark',
-  rgbBackground: '17 17 17', //main page background
-  rgbBackgroundLight: '26 26 26', //secondary background for boxes
-  rgbPrimary: '0 229 255', //cta1
-  rgbSecondary: '255 25 0', //cta2
-  rgbAccent: '0 229 255', //main cta
-  rgbText: '255 255 255',
-  rgbSuccess: '12 132 37',
-  rgbError: '255 55 102',
-  rgbWarning: '249 115 22',
-  rgbInfo: '30 58 138',
-  rgbGrey: '98 101 99',
-
-  background: 'rgb(var(--rgbBackground) / 1)',
-  backgroundLight: 'rgb(var(--rgbBackgroundLight) / 1)',
-  primary: 'rgb(var(--rgbPrimary) / 1)',
-  secondary: 'rgb(var(--rgbSecondary) / 1)',
-  accent: 'rgb(var(--rgbAccent) / 1)',
-  success: 'rgb(var(--rgbSuccess) / 1)',
-  error: 'rgb(var(--rgbError) / 1)',
-  warning: 'rgb(var(--rgbWarning) / 1)',
-  info: 'rgb(var(--rgbInfo) / 1)',
-  grey: 'rgb(var(--rgbGrey) / 1)',
-  textTitle: 'rgb(var(--rgbText) / 1)',
-  textBody: 'rgb(var(--rgbText) / 0.8)',
-  textLight: 'rgb(var(--rgbText) / 0.6)',
+  background: 'rgb(17 17 17)',
+  backgroundLight: 'rgb(26 26 26)',
+  primary: 'rgb(0 229 255)',
+  secondary: 'rgb(255 25 0)',
+  accent: 'rgb(0 229 255)',
+  success: 'rgb(12 132 37)',
+  error: 'rgb(255 55 102)',
+  warning: 'rgb(249 115 22)',
+  info: 'rgb(30 58 138)',
+  grey: 'rgb(98 101 99)',
+  textTitle: 'rgb(255 255 255)',
+  textBody: 'rgb((255 255 255) / 0.8)',
+  textLight: 'rgb((255 255 255) / 0.6)',
   white: '#ffffff',
   black: '#000000',
 };
 
-export type ThemeColor =
+type PredefinedThemeColor =
   | 'background'
   | 'backgroundLight'
   | 'primary'
@@ -153,34 +176,23 @@ export type ThemeColor =
   | 'textLight'
   | 'white'
   | 'black';
+export type ThemeColor = PredefinedThemeColor | (string & Record<never, never>);
 
 const light = {
   themeId: 'light',
-  rgbBackground: '242 242 242', //main page background
-  rgbBackgroundLight: '255 255 255', //secondary background for boxes
-  rgbPrimary: '19 97 240', //cta1
-  rgbSecondary: '222 64 64', //cta2
-  rgbAccent: '64 222 222', //main cta
-  rgbText: '0 0 0',
-  rgbSuccess: '12 132 37',
-  rgbError: '255 0 60',
-  rgbWarning: '249 115 22',
-  rgbInfo: '30 58 138',
-  rgbGrey: '98 101 99',
-
-  background: 'rgb(var(--rgbBackground) / 1)',
-  backgroundLight: 'rgb(var(--rgbBackgroundLight) / 1)',
-  primary: 'rgb(var(--rgbPrimary) / 1)',
-  secondary: 'rgb(var(--rgbSecondary) / 1)',
-  accent: 'rgb(var(--rgbAccent) / 1)',
-  success: 'rgb(var(--rgbSuccess) / 1)',
-  error: 'rgb(var(--rgbError) / 1)',
-  warning: 'rgb(var(--rgbWarning) / 1)',
-  info: 'rgb(var(--rgbInfo) / 1)',
-  grey: 'rgb(var(--rgbGrey) / 1)',
-  textTitle: 'rgb(var(--rgbText) / 1)',
-  textBody: 'rgb(var(--rgbText) / 0.8)',
-  textLight: 'rgb(var(--rgbText) / 0.6)',
+  background: 'rgb(242 242 242)',
+  backgroundLight: 'rgb(255 255 255)',
+  primary: 'rgb(19 97 240)',
+  secondary: 'rgb(222 64 64)',
+  accent: 'rgb(64 222 222)',
+  success: 'rgb(12 132 37)',
+  error: 'rgb(255 0 60)',
+  warning: 'rgb(249 115 22)',
+  info: 'rgb(30 58 138)',
+  grey: 'rgb(98 101 99)',
+  textTitle: 'rgb(0 0 0)',
+  textBody: '#434241',
+  textLight: '#807d79',
   white: '#ffffff',
   black: '#000000',
 };
@@ -191,28 +203,22 @@ export const tokens = {
   laptop: tokensLaptop,
   tablet: tokensTablet,
   mobile: tokensMobile,
-  mobileS: tokensMobileSmall,
-};
-
-export const media = {
-  desktop: 2080,
-  laptop: 1680,
-  tablet: 1040,
-  mobile: 696,
-  mobileS: 400,
+  mobileSm: tokensMobileSmall,
 };
 
 export const mediaScreen = {
   minLaptop: `@media screen and (min-width: ${media.laptop}px)`,
   minTablet: `@media screen and (min-width: ${media.tablet}px) and (max-width: ${media.laptop}px)`,
-  minMobile: `@media screen and (min-width: ${media.mobileS}px) and (max-width: ${media.tablet}px)`,
-  maxMobileS: `@media screen and (max-width: ${media.mobileS}px)`,
+  minMobile: `@media screen and (min-width: ${media.mobile}px) and (max-width: ${media.tablet}px)`,
+  maxMobileSm: `@media screen and (max-width: ${media.mobile}px)`,
 };
 
 export type ThemeToken = typeof baseTokens;
-export type ThemeTokens = Record<string, Partial<ThemeToken>>;
+export type ThemeTokens = Record<MediaType, Partial<ThemeToken>>;
 
-export type Theme = typeof dark;
+export type Theme = Partial<typeof dark>;
 export type Themes = Record<string, Partial<Theme>>;
 
-export const themes = { dark, light };
+export const themes = { dark, light, activeTheme: light };
+
+export const sdkName = 'ntv';

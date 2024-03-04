@@ -1,7 +1,6 @@
 import React from 'react';
-import { CloseIcon, TrashIcon, AddIcon } from '@bearon/icon';
-import Row from '../Layout/Row';
-import Box from '../Layout/Box';
+import { CloseIcon, TrashIcon, AddIcon } from '../Icon';
+import { Row, Box } from '../Layout';
 import { Button } from './Button';
 import { ButtonGroup as ButtonGroupComponent } from './ButtonGroup';
 import type { Meta, StoryObj } from '@storybook/react';
@@ -144,11 +143,12 @@ export const WithIcon: Story = {
       </Button>
 
       <Button
-        icon={<TrashIcon />}
-        sx={{ borderRadius: '50%', padding: '0.75em' }}
+        icon={<TrashIcon size="20px" />}
+        sx={{ borderRadius: '50%', padding: '0.5em' }}
       ></Button>
       <Button
         icon={<AddIcon style={{ color: 'red' }} />}
+        textColor="error"
         sx={{ borderRadius: '50%', padding: '0.75em' }}
         variant="text"
       ></Button>

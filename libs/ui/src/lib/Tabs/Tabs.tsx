@@ -1,18 +1,17 @@
-import { classes } from '@bearon/utils';
 import React, { HTMLAttributes, useEffect, useRef } from 'react';
-import {
-  BearStyleProps,
-  createBearStyleClass,
-  extractStyleProps,
-  parseBackgroundColorCss,
-} from '../utils/styles';
 import { Button } from '../Button';
 import { Divider } from '../Divider';
 import { StyledTabs } from './Styles';
+import {
+  CommonStyleProps,
+  classes,
+  getDefaultClassName,
+  parseProps,
+} from '../utils';
 
 export interface TabsProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, 'onClick'>,
-    BearStyleProps {
+  extends Omit<HTMLAttributes<HTMLDivElement>, 'onClick' | 'color'>,
+    CommonStyleProps {
   items: {
     label: string;
     value: string | number;
@@ -40,22 +39,9 @@ export function Tabs({
   ...props
 }: TabsProps) {
   const containerRef = useRef<HTMLUListElement | null>(null);
-  const [styleProps, rest] = extractStyleProps(props);
-
-  const styleClass = React.useMemo(() => {
-    styleProps.background = undefined;
-    return createBearStyleClass(
-      styleProps,
-      {},
-      {
-        '--tabs-bg': parseBackgroundColorCss(background),
-      }
-    );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [...Object.values(styleProps)]);
+  const parsedProps = parseProps(props);
 
   //calculate underline position
-
   useEffect(() => {
     moveUnderline(value as string);
   }, []);
@@ -126,14 +112,15 @@ export function Tabs({
   return (
     <div>
       <StyledTabs
-        className={classes('bear-tabs', className, styleClass)}
+        className={classes(getDefaultClassName('tabs'), className)}
         $spacing={spacing}
         $variant={variant}
-        {...rest}
+        $background={background}
+        {...parsedProps}
       >
         <ul
           aria-labelledby={ariaLabelledBy}
-          className="bear-tabs-ul"
+          className={getDefaultClassName('tabs-ul')}
           ref={containerRef}
         >
           {items.map((item) => (
@@ -166,7 +153,7 @@ export function Tabs({
           ))}
         </ul>
       </StyledTabs>
-      <Divider background={'grey'} backgroundOpacity={0.2} />
+      <Divider background={'grey'} backgroundOpacity={0} />
     </div>
   );
 }

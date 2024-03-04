@@ -1,7 +1,7 @@
-import { bearStyled } from '@bearon/utils';
-import React from 'react';
 import { TextVariant } from '../Text';
-import { parseFontSize } from '../utils/styles';
+import styled from 'styled-components';
+import { InternalCommonStyleProps, parseCommonProps } from '../utils';
+import { parseFontSize } from '../Text/styles';
 
 const parseSize = (size?: TextVariant) => {
   if (size === 'xs') return `0.325rem 0.5rem`;
@@ -17,21 +17,22 @@ const parseSize = (size?: TextVariant) => {
   return `0.5rem 0.725rem`;
 };
 
-export const StyledBadge = (
-  props: {
+export const StyledBadge = styled.div<
+  {
     $size?: TextVariant;
-    children?: React.ReactNode;
-  } & React.HTMLAttributes<HTMLDivElement>
-) => bearStyled('div', props)`
-    color: white;
-    padding: ${parseSize(props.$size)};
-    font-size: ${parseFontSize(props.$size)};
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    width: min-content;
-    white-space: nowrap;
-    border-radius: 0.5rem;
-    gap: 2px;
+  } & InternalCommonStyleProps
+>`
+  color: white;
+  padding: ${(props) => parseSize(props.$size)};
+  font-size: ${(props) => parseFontSize(props.$size)};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: min-content;
+  white-space: nowrap;
+  border-radius: 0.5rem;
+  gap: 2px;
+  box-sizing: border-box;
+  ${(props) => parseCommonProps(props)};
 `;

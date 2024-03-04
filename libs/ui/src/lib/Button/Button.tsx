@@ -1,14 +1,15 @@
 import React from 'react';
-import { classes } from '@bearon/utils';
-import {
-  BearStyleProps,
-  createBearStyleClass,
-  extractStyleProps,
-} from '../utils/styles';
-import Loader, { LoaderProps } from '../Loader/Loader';
-import Text, { TextVariant } from '../Text';
+import Loader, { CircularLoaderProps } from '../Loader';
+import { Text, TextVariant } from '../Text';
 import { ThemeColor } from '../ThemeProvider/theme';
-import styles from './styles.module.scss';
+import {
+  CommonStyleProps,
+  classes,
+  getDefaultClassName,
+  parseColor,
+  parseProps,
+} from '../utils';
+import { StyledButton } from './Styles';
 
 export type ButtonVariant =
   | 'text'
@@ -17,8 +18,8 @@ export type ButtonVariant =
   | 'outlined-secondary';
 
 export interface ButtonProps
-  extends React.HTMLAttributes<HTMLButtonElement>,
-    BearStyleProps {
+  extends Omit<React.HTMLAttributes<HTMLButtonElement>, 'color'>,
+    CommonStyleProps {
   variant?: ButtonVariant;
   textVariant?: TextVariant;
   textColor?: ThemeColor;
@@ -29,10 +30,11 @@ export interface ButtonProps
   children?: React.ReactNode;
   disabled?: boolean;
   isLoading?: boolean;
-  loaderProps?: LoaderProps; //when loading
+  loaderProps?: CircularLoaderProps; //when loading
   disableRippleEffect?: boolean;
   clip?: boolean;
   fullWidth?: boolean;
+  textShift?: boolean; // in case text padding is not align
 }
 
 export function Button({
@@ -53,21 +55,19 @@ export function Button({
   disableRippleEffect,
   fullWidth,
   clip,
-  sx,
-  sxS,
-  sxM,
-  sxL,
+  textShift,
   ...props
 }: ButtonProps) {
   const [coords, setCoords] = React.useState({ x: -1, y: -1 });
   const [isRippling, setIsRippling] = React.useState(false);
-  const [styleProps, rest] = extractStyleProps(props);
 
   //handle style
-  const styleClass = React.useMemo(() => {
-    let finalBg = `var(--${background})`;
-    let finalTextColor = `var(--${textColor})`;
-    let finalBorderColor = `var(--${borderColor})`;
+  const parsedStyle = React.useMemo(() => {
+    let finalBg = parseColor(background);
+    let finalTextColor = parseColor(textColor);
+    let finalBorderColor = borderColor
+      ? parseColor(borderColor)
+      : 'transparent';
 
     if (variant !== 'contained') {
       finalBg = `transparent`;
@@ -92,35 +92,21 @@ export function Button({
       }
     }
 
-    return createBearStyleClass(
-      { ...styleProps, background: undefined },
-      {
-        color: finalTextColor,
-        borderColor: finalBorderColor,
-        borderStyle: 'solid',
-        borderWidth:
-          variant === 'outlined' || variant === 'outlined-secondary'
-            ? '1px'
-            : 0,
-        width: fullWidth ? '100%' : undefined,
-        padding: !children ? '0.5em' : '0.5em 1em',
-      },
-      {
-        '--btn-background': finalBg,
-        '--btn-color': finalTextColor,
-        '--final-btn-background': finalBg,
-      }
-    );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    ...Object.values(styleProps),
-    textColor,
-    variant,
-    borderColor,
-    clip,
-    fullWidth,
-  ]);
+    return {
+      background: finalBg,
+      color: finalTextColor,
+      borderColor: finalBorderColor || 'transparent',
+      borderStyle: 'solid',
+      borderWidth:
+        variant === 'outlined' || variant === 'outlined-secondary' ? '1px' : 0,
+      width: fullWidth ? '100%' : undefined,
+      padding: !children
+        ? '0.5em'
+        : textVariant === 'xs' || textVariant === 'xxs'
+        ? '0.35em 0.75em'
+        : '0.5em 1em',
+    };
+  }, [textColor, variant, borderColor, fullWidth, background, children]);
 
   //end of handle style
 
@@ -138,8 +124,8 @@ export function Button({
   //end of handle ripple
 
   return (
-    <button
-      className={classes(className, styles.button, 'bear-btn', styleClass)}
+    <StyledButton
+      className={classes(className, getDefaultClassName('btn'))}
       onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
         const rect = (e.target as HTMLElement).getBoundingClientRect();
         setCoords({ x: e.clientX - rect.left, y: e.clientY - rect.top });
@@ -148,7 +134,10 @@ export function Button({
       data-size={textVariant}
       data-variant={variant}
       data-clip={clip}
-      {...rest}
+      $parsedStyle={parsedStyle}
+      $textShift={textShift}
+      $size={textVariant}
+      {...parseProps(props)}
     >
       {iconPosition === 'left' && icon}
       {isLoading && (
@@ -163,13 +152,13 @@ export function Button({
 
       {isRippling && !disableRippleEffect && (
         <span
-          className={styles.ripple}
+          className={getDefaultClassName('btnRipple')}
           style={{
             left: coords.x,
             top: coords.y,
           }}
         />
       )}
-    </button>
+    </StyledButton>
   );
 }

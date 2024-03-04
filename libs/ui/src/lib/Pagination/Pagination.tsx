@@ -1,19 +1,19 @@
-import { classes } from '@bearon/utils';
-import { ChevronLeftIcon, ChevronRightIcon } from '@bearon/icon';
 import React, { HTMLAttributes } from 'react';
-import {
-  BearStyleProps,
-  createBearStyleClass,
-  extractStyleProps,
-} from '../utils/styles';
-import Text, { TextVariant } from '../Text';
+import { TextVariant, Text } from '../Text';
 import { ThemeColor } from '../ThemeProvider';
 import { Button } from '../Button/Button';
 import { StyledPagination, StyledPaginationItem } from './Styles';
+import {
+  CommonStyleProps,
+  classes,
+  getDefaultClassName,
+  parseProps,
+} from '../utils';
+import { ChevronLeftIcon, ChevronRightIcon } from '../Icon';
 
 export interface PaginationProps
-  extends HTMLAttributes<HTMLDivElement>,
-    BearStyleProps {
+  extends Omit<HTMLAttributes<HTMLDivElement>, 'color'>,
+    CommonStyleProps {
   size?: TextVariant;
   activeBackground?: ThemeColor;
   currentPage?: number;
@@ -38,13 +38,7 @@ export function Pagination({
   gap,
   ...props
 }: PaginationProps) {
-  const [styleProps, rest] = extractStyleProps(props);
-
-  const styleClass = React.useMemo(() => {
-    styleProps.background = undefined;
-    return createBearStyleClass(styleProps);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [...Object.values(styleProps)]);
+  const parsedProps = parseProps(props);
 
   const totalPage = Math.ceil(totalCount / pageSize);
   const array = Array.from({ length: totalPage }).map((item, idx) => idx + 1);
@@ -98,17 +92,17 @@ export function Pagination({
 
   return (
     <StyledPagination
-      className={classes(styleClass, 'bear-pagination', className)}
+      className={classes(className, getDefaultClassName('pagination'))}
       $size={size}
       $gap={gap}
-      {...rest}
+      {...parsedProps}
     >
       <Button
         variant="text"
         disabled={currentPage === 1}
         onClick={handleClickPrev}
         textColor={activeBackground}
-        className="bear-pagination-arrow-btn"
+        className={getDefaultClassName('pagination-arrowBtn')}
         icon={
           <ChevronLeftIcon
             color="var(--textLight)"
@@ -159,7 +153,7 @@ export function Pagination({
         variant="text"
         disabled={currentPage === totalPage}
         textColor={activeBackground}
-        className="bear-pagination-arrow-btn"
+        className={getDefaultClassName('pagination-arrowBtn')}
         icon={
           <ChevronRightIcon
             color="var(--textLight)"
@@ -184,13 +178,7 @@ export const MinimalPagination = ({
   gap,
   ...props
 }: PaginationProps) => {
-  const [styleProps, rest] = extractStyleProps(props);
-
-  const styleClass = React.useMemo(() => {
-    styleProps.background = undefined;
-    return createBearStyleClass(styleProps);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [...Object.values(styleProps)]);
+  const parsedProps = parseProps(props);
 
   const totalPage = Math.ceil(totalCount / pageSize);
 
@@ -208,17 +196,17 @@ export const MinimalPagination = ({
 
   return (
     <StyledPagination
-      className={classes(styleClass, 'bear-pagination', className)}
+      className={classes(className, getDefaultClassName('minimalPagination'))}
       $size={size}
       $gap={gap}
-      {...rest}
+      {...parsedProps}
     >
       <Button
         variant="text"
         disabled={currentPage === 1}
         onClick={handleClickPrev}
         textColor={'grey'}
-        className="bear-pagination-arrow-btn"
+        className={getDefaultClassName('pagination-arrowBtn')}
         icon={
           <ChevronLeftIcon color="var(--textBody)" width="18px" height="18px" />
         }
@@ -231,7 +219,7 @@ export const MinimalPagination = ({
         variant="text"
         disabled={currentPage === totalPage}
         textColor="grey"
-        className="bear-pagination-arrow-btn"
+        className={getDefaultClassName('pagination-arrowBtn')}
         icon={
           <ChevronRightIcon
             color="var(--textBody)"

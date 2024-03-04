@@ -1,10 +1,10 @@
-import { TrashIcon } from '@bearon/icon';
-import { Button } from '../Button';
-import Text from '../Text';
-import Row from '../Layout/Row';
-import Box from '../Layout/Box';
-import { Table, TableRow } from './Table';
-import type { Meta } from '@storybook/react';
+import React from 'react';
+import type { Meta, StoryObj } from '@storybook/react';
+import { useSort } from '@bearon/hooks';
+import { Table, TableCell, TableRow } from './Table';
+import { NoData as NoDataComponent } from './NoData';
+import { Button, ButtonGroup } from '../Button';
+import { AddIcon, TrashIcon } from '../Icon';
 
 const meta: Meta<typeof Table> = {
   title: 'Components/Table',
@@ -13,142 +13,139 @@ const meta: Meta<typeof Table> = {
 };
 export default meta;
 
-const headers = [
-  {
-    label: 'id',
-    value: 'id',
-    align: 'left',
-  },
-  {
-    label: 'name',
-    value: 'name',
-    align: 'left',
-  },
-  {
-    label: 'email',
-    value: 'email',
-    align: 'left',
-  },
-  {
-    label: 'Created date',
-    value: 'created_at',
-    align: 'left',
-  },
-  {
-    label: 'Actions',
-    value: 'action',
-    align: 'right',
-  },
-];
+type Story = StoryObj<typeof meta>;
 
-const data = [
+const mockData = [
   {
     id: 1,
-    name: 'name1',
-    email: 'test@gmail.com',
-    created_at: new Date(),
+    name: 'John',
+    email: 'john@gmail.com',
   },
   {
     id: 2,
-    name: 'name2',
-    email: 'test2@gmail.com',
-    created_at: new Date(),
+    name: 'Andre',
+    email: 'Andre@gmail.com',
   },
   {
     id: 3,
-    name: 'John',
-    email: 'test3@gmail.com',
-    created_at: new Date(),
-  },
-  {
-    id: 4,
-    name: 'Angel',
-    email: 'test4@gmail.com',
-    created_at: new Date(),
+    name: 'Bernardd',
+    email: 'bernard@gmail.com',
   },
 ];
-
-export const sampleTable = {
+export const Example: Story = {
   render: () => {
     return (
-      <Box background="background" sx={{ padding: '1rem' }}>
-        <Table
-          headers={headers}
-          data={data}
-          background="backgroundLight"
-          sx={{ width: '100%' }}
-          renderItem={(item) => (
+      <Table
+        heads={['Id', 'Name', 'Email', 'Actions']}
+        items={mockData}
+        theadSx={{
+          fontSize: '0.825rem',
+          color: 'grey',
+        }}
+        renderItem={(item) => {
+          return (
             <TableRow key={item.id}>
-              <td>
-                <Text colour="textLight">{item.id}</Text>
-              </td>
-              <td>
-                <Text colour="textLight">{item.name}</Text>
-              </td>
-              <td>
-                <Text colour="textLight">{item.email}</Text>
-              </td>
-              <td>
-                <Text colour="textLight">
-                  {item.created_at.toLocaleDateString()}
-                </Text>
-              </td>
-              <td>
-                <Row justifyContent="flex-end">
+              <TableCell>{item.id}</TableCell>
+              <TableCell>{item.name}</TableCell>
+              <TableCell>{item.email}</TableCell>
+              <TableCell align="right">
+                <ButtonGroup align="right" spacing="1rem">
+                  <Button icon={<AddIcon />}>Add</Button>
                   <Button
-                    icon={<TrashIcon size="20px" color="var(--grey)" />}
-                    variant="text"
-                  ></Button>
-                </Row>
-              </td>
+                    variant="outlined-secondary"
+                    icon={<TrashIcon />}
+                    textColor="error"
+                    borderColor="error"
+                  >
+                    Delete
+                  </Button>
+                </ButtonGroup>
+              </TableCell>
             </TableRow>
-          )}
-        ></Table>
-      </Box>
+          );
+        }}
+      />
     );
   },
 };
 
-export const StripesTable = {
+export const ClickableRow: Story = {
   render: () => {
     return (
-      <Box background="background" sx={{ padding: '1rem' }}>
-        <Table
-          headers={headers}
-          data={data}
-          background="backgroundLight"
-          sx={{ width: '100%' }}
-          renderItem={(item, idx) => (
-            <TableRow
-              background={idx % 2 === 0 ? 'background' : 'backgroundLight'}
-              key={item.id}
-            >
-              <td>
-                <Text colour="textLight">{item.id}</Text>
-              </td>
-              <td>
-                <Text colour="textLight">{item.name}</Text>
-              </td>
-              <td>
-                <Text colour="textLight">{item.email}</Text>
-              </td>
-              <td>
-                <Text colour="textLight">
-                  {item.created_at.toLocaleDateString()}
-                </Text>
-              </td>
-              <td>
-                <Row justifyContent="flex-end">
-                  <Button
-                    icon={<TrashIcon size="20px" color="var(--grey)" />}
-                    variant="text"
-                  ></Button>
-                </Row>
-              </td>
+      <Table
+        heads={['Id', 'Name', 'Email']}
+        items={mockData}
+        theadSx={{
+          fontSize: '0.825rem',
+          color: 'grey',
+        }}
+        renderItem={(item) => {
+          return (
+            <TableRow key={item.id} clickable>
+              <TableCell>{item.id}</TableCell>
+              <TableCell>{item.name}</TableCell>
+              <TableCell align="right">{item.email}</TableCell>
             </TableRow>
-          )}
-        ></Table>
-      </Box>
+          );
+        }}
+      />
     );
+  },
+};
+
+const SortedRowExample = () => {
+  const { sortKey, sortDirection, onSort, sortedData } = useSort({
+    data: mockData,
+  });
+  return (
+    <Table
+      heads={[
+        {
+          label: 'Id',
+          key: 'id',
+          sortable: true,
+        },
+        {
+          label: 'Name',
+          key: 'name',
+          sortable: true,
+        },
+        {
+          label: 'Email',
+          key: 'email',
+          sortable: true,
+        },
+      ]}
+      items={sortedData}
+      theadSx={{
+        fontSize: '0.825rem',
+        color: 'grey',
+      }}
+      sortKey={sortKey}
+      sortDirection={sortDirection}
+      onSort={(sortKey: string, sortDirection: string) =>
+        onSort(sortKey, sortDirection)
+      }
+      leftAlignAll
+      renderItem={(item) => {
+        return (
+          <TableRow key={item.id} clickable>
+            <TableCell>{item.id}</TableCell>
+            <TableCell>{item.name}</TableCell>
+            <TableCell align="left">{item.email}</TableCell>
+          </TableRow>
+        );
+      }}
+    />
+  );
+};
+
+export const SortedRow: Story = {
+  render: SortedRowExample,
+};
+
+export const NoData: Story = {
+  render: () => {
+    return <NoDataComponent text="No item found" />;
   },
 };

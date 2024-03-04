@@ -125,4 +125,4 @@ const ClickAwayListener: FunctionComponent<Props> = ({
   );
 };
 
-export default ClickAwayListener;
+export { ClickAwayListener };

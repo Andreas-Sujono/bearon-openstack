@@ -1,7 +1,12 @@
-import { Image } from '../../Image';
-import { Box, Row, SimpleGrid } from '../../Layout';
-import { Text } from '../../Text';
-import { CommonStyleProps, parseProps } from '../../utils';
+import {
+  Text,
+  Image,
+  Box,
+  Row,
+  CommonStyleProps,
+  parseProps,
+  SimpleGrid,
+} from '@bearon/ui';
 
 interface BlogCard2Props
   extends React.HTMLAttributes<HTMLDivElement>,

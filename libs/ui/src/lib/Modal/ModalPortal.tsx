@@ -1,13 +1,14 @@
 import { useEffect } from 'react';
-import { classes } from '@bearon/utils';
-import { CloseIcon } from '@bearon/icon';
+import { CloseIcon } from '../Icon';
 import Transition from '../Animation/Transition';
-import ClickAwayListener from '../ClickAwayListener';
-import Row from '../Layout/Row';
+import { ClickAwayListener } from '../ClickAwayListener';
+import { Row } from '../Layout';
 import { Button } from '../Button';
 import { Heading } from '../Text';
+import { classes, getDefaultClassName } from '../utils';
 import { Portal } from './Portal';
 import { StyledModal } from './Styles';
+import { createGlobalStyle } from 'styled-components';
 
 export interface ModalProps {
   children?: React.ReactNode;
@@ -18,7 +19,17 @@ export interface ModalProps {
   overlayClassName?: string;
   contentClassName?: string;
   contentContainerStyle?: React.CSSProperties;
+  overlayStyle?: React.CSSProperties;
+  wrapperId?: string;
+  maxWidth?: string;
 }
+
+const ModalGlobalStyle = createGlobalStyle`
+  body {
+    max-height: 100vh;
+    overflow: overlay;
+  }
+`;
 
 export function Modal({
   children,
@@ -29,6 +40,9 @@ export function Modal({
   overlayClassName,
   contentClassName,
   contentContainerStyle = {},
+  overlayStyle = {},
+  wrapperId,
+  maxWidth,
 }: ModalProps) {
   //handle close on click of esc key
   useEffect(() => {
@@ -45,23 +59,27 @@ export function Modal({
   contentContainerStyle = {
     width: '80%',
     minWidth: '360px',
-    maxWidth: '600px',
-    background: 'var(--background)',
-    padding: '1.5rem 2rem',
+    maxWidth: maxWidth || '600px',
+    background: 'var(--backgroundLight)',
+    padding: '1rem 1rem',
     borderRadius: '0.5rem',
     position: 'relative',
-    top: '-10%',
+    top: '-5vh',
+    border: '1px solid var(--outline)',
     ...contentContainerStyle,
   };
 
   return (
-    <Portal>
+    <Portal wrapperId={wrapperId}>
       <Transition in={isOpen} timeout={{ enter: 200, exit: 300 }} unmount>
         {(visible, status) => (
           <StyledModal
-            className={classes('bear-modal-overlay', overlayClassName)}
+            className={classes(
+              getDefaultClassName('modal-overlay'),
+              overlayClassName
+            )}
             data-status={status}
-            style={{ background: overlayBg || undefined }}
+            style={{ background: overlayBg || undefined, ...overlayStyle }}
           >
             <ClickAwayListener
               onClickAway={() =>
@@ -69,7 +87,10 @@ export function Modal({
               }
             >
               <div
-                className={classes('bear-modal-content', contentClassName)}
+                className={classes(
+                  getDefaultClassName('modal-content'),
+                  contentClassName
+                )}
                 data-status={status}
                 style={contentContainerStyle}
               >
@@ -79,6 +100,7 @@ export function Modal({
           </StyledModal>
         )}
       </Transition>
+      {isOpen && <ModalGlobalStyle />}
     </Portal>
   );
 }
@@ -90,6 +112,9 @@ export const ModalClose = ({ onClose }: { onClose: () => void }) => {
       onClick={onClose}
       variant="text"
       textColor="grey"
+      sx={{
+        borderRadius: '50%',
+      }}
     ></Button>
   );
 };
